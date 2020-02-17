@@ -10,6 +10,8 @@ const Header = styled.div `
   text-align: left;
 `
 // Todo Add Logo here
+// https://www.commercebank.com/about-us/media-relations/commerce-logos
+// Hex codes: dark green (006649), light green (74BD43)
 export default () => (
   <Header>
       Commerce bank
