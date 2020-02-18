@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../Header';
 import NavCol from '../NavCol';
+import { useSelector } from 'react-redux';
 
 // Todo change Container to be a component and not just a box.
 const Container = styled.div `
@@ -16,12 +17,12 @@ const Container = styled.div `
     "header"
     "main";
 `
+// todo remove border
 const Wrapper = styled.div`
   grid-area: main;
-  /* height: 100%; */
+  height: 100%;
   border: 1px solid blue;
 `
-
 
 // move code below into own component
 const GridBox = styled.div `
@@ -32,7 +33,8 @@ const GridBox = styled.div `
  grid-template-areas: "NavCol Space";
 
 `
-//Todo turn this into its own component
+//Todo turn this into its own component function aka break it into its own file
+//Todo remove border after development of UI done
 const Space = styled.div`
   grid-area: Space;
   width: 100%;
@@ -40,19 +42,24 @@ const Space = styled.div`
   poition: relative;
 `
 
-export default ({ children }) => (
+function Layout({ children }){
+  const currentTab = useSelector((state) => state.currentTab );
+  return (
     <Container>
         <Header/>
         <Wrapper>
           <GridBox>
             <NavCol>
-
             </NavCol>
             <Space>
+              {currentTab}
               {children}
             </Space>
           </GridBox>
         </Wrapper>
         {/* foot goes here */}
     </Container>
-)
+  );
+}
+
+export default Layout;

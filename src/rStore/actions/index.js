@@ -1,5 +1,12 @@
-import { ADD_ARTICLE } from "../constants/action-types";
+import types from "../constants/action-types";
+// Put the actions functions here.
 
-export function addArticle(payload) {
-  return { type: ADD_ARTICLE, payload }
+export function renderDashboard() {
+  return { type: types.RENDER_DASHBOARD}
+};
+export function renderTransaction() {
+  return { type: types.RENDER_TRANSACTION}
+};
+export function renderNotification() {
+  return { type: types.RENDER_NOTIFICATION}
 };
