@@ -1,14 +1,16 @@
 import React from 'react';
-import logo from '../logo.svg';
 import '../styles/App.css';
+import Layout from '../components/Layout';
 
 function App() {
+// TODO logic for render component AKA Dashboard, Notification, Transaction
+// will live here. depending on what the state of our redux store we will
+// render a different component
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        
-      </header>
+      <Layout>
+
+      </Layout>
     </div>
   );
 }
