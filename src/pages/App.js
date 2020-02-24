@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/App.css';
 import Layout from '../components/Layout';
+import LoginPage from '../components/Login'
 
 function App() {
 // TODO logic for render component AKA Dashboard, Notification, Transaction
@@ -9,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <Layout>
-        
+        <LoginPage />
       </Layout>
     </div>
   );

@@ -1,8 +1,7 @@
 import React from 'react';
-import { ReactComponent } from '*.svg';
 import UsernamePassword from './UsernamePassword';
 
-class LoginForm extends ReactComponent{
+class LoginForm extends React.Component{
 
     constructor(props) {
         super(props);
@@ -25,7 +24,7 @@ class LoginForm extends ReactComponent{
     }
 
     render () {
-        const {errors, identifier, password, } 
+        const {errors, identifier, password, } = this.state;
         return (
             <form>
                 <h1>Login</h1>
@@ -48,10 +47,12 @@ class LoginForm extends ReactComponent{
                 />
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-lg" disabled={isLoading}>Login</button>
+                    <button className="btn btn-primary btn-lg">Login</button>
                 </div>
 
             </form>
         );
     }
 }
+
+export default LoginForm;
