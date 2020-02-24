@@ -22,11 +22,6 @@ function rootReducer(state = initialState, action) {
         currentTab: "Notification"
       }
     }
-    case types.RENDER_LOGIN: {
-      return {
-        currentTab: "Login"
-      }
-    }
     default: return state;
   }
 }

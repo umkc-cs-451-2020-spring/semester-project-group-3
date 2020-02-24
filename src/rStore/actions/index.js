@@ -10,6 +10,3 @@ export function renderTransaction() {
 export function renderNotification() {
   return { type: types.RENDER_NOTIFICATION}
 };
-export function renderLogin() {
-  return { type: types.RENDER_LOGIN}
-};

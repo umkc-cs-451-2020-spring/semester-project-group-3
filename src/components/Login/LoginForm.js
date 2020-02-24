@@ -9,7 +9,6 @@ class LoginForm extends React.Component{
             identifier: '',
             password: '',
             errors: {},
-            isLoading: false
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -24,14 +23,14 @@ class LoginForm extends React.Component{
     }
 
     render () {
-        const {errors, identifier, password, } = this.state;
+        const {errors, identifier, password} = this.state;
         return (
             <form>
                 <h1>Login</h1>
 
                 <UsernamePassword
                     field="identifier"
-                    label="Username"
+                    label="Username:"
                     value={identifier}
                     errors={errors.identifier}
                     onChange={this.onChange}
@@ -39,7 +38,7 @@ class LoginForm extends React.Component{
 
                 <UsernamePassword
                     field="password"
-                    label="Password"
+                    label="Password:"
                     value={password}
                     errors={errors.password}
                     onChange={this.onChange}
@@ -47,7 +46,7 @@ class LoginForm extends React.Component{
                 />
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-lg">Login</button>
+                    <button className="btn-login">Login</button>
                 </div>
 
             </form>
