@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { renderDashboard, renderTransaction, renderNotification } from "../../rStore/actions/index";
+import { renderDashboard, renderTransaction, renderNotification, renderLogin } from "../../rStore/actions/index";
 
 const Column = styled.div `
   grid-area: NavCol;
@@ -36,6 +36,12 @@ const Tab3 = styled.div`
   align-self: stretch;
   background: ${props => props.page === "Notification" ? "#80ff80": "#ffffff"};
 `
+const Tab4 = styled.div`
+  text-align: Center;
+  border: 2px solid black;
+  align-self: stretch;
+  background: ${props => props.page === "Login" ? "#80ff80": "#ffffff"};
+`
 
 function NavCol(){
   // this is how you access the redux store
@@ -54,6 +60,9 @@ function NavCol(){
         <br/>
         Settings
       </Tab3>
+      <Tab4 onClick={() => dispatch(renderLogin())} page={currentTab}>
+        Login
+      </Tab4>
     </Column>
   );
 }
