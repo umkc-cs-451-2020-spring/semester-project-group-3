@@ -20,7 +20,7 @@ class LoginForm extends React.Component{
     }
 
     onChange(e) {
-        this.setState({ [e.targer.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     render () {
