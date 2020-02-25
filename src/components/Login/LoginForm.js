@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import App from '../../pages/App';
 import logo from './logo.png';
 import UsernamePassword from './UsernamePassword';
 
@@ -27,37 +29,31 @@ class LoginForm extends React.Component{
     render () {
         const {errors, username, password} = this.state;
         return (
-            <div className="App-header">
+            <div>
                 <img className="logo-img" src={logo} alt ="Logo" />
+                <div className="App-header">
                     <h1>Login</h1>
                     <form>
+                          <UsernamePassword
+                            field="username"
+                             label="Username "
+                            value={username}
+                            errors={errors.username}
+                            onChange={this.onChange}
+                        />
 
-                        <div className="form-group">
-                            <UsernamePassword
-                                field="username"
-                                label="Username:"
-                                value={username}
-                                errors={errors.username}
-                                onChange={this.onChange}
-                            />
-                        </div>
+                        <UsernamePassword
+                           field="password"
+                            label="Password "
+                            value={password}
+                            errors={errors.password}
+                            onChange={this.onChange}
+                            type="password"
+                        />
 
-                        <div className="form-group">
-                            <UsernamePassword
-                                field="password"
-                                label="Password:"
-                                value={password}
-                                errors={errors.password}
-                                onChange={this.onChange}
-                                type="password"
-                            />
-                        </div>
-
-                        <div>
-                            <button className="login-btn">Login</button>
-                        </div>
-
+                        <button onClick={this.handleSubmit} className="submit-btn">Submit</button>
                     </form>
+                </div>
             </div>
         );
     }
