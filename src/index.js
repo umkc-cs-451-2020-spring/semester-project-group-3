@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import App from './pages/App';
 import LoginPage from './pages/LoginPage';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
