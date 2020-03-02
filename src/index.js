@@ -10,7 +10,7 @@ import store from "./rStore/store/index";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <LoginPage />
   </Provider>,
   document.getElementById('root'));
 

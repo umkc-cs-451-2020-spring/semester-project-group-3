@@ -19,7 +19,7 @@ class LoginForm extends React.Component{
     }
 
     handleSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
     }
 
     onChange(e) {
@@ -33,7 +33,7 @@ class LoginForm extends React.Component{
                 <img className="logo-img" src={logo} alt ="Logo" />
                 <div className="App-header">
                     <h1>Login</h1>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                           <UsernamePassword
                             field="username"
                              label="Username "
@@ -51,7 +51,7 @@ class LoginForm extends React.Component{
                             type="password"
                         />
 
-                        <button onClick={this.handleSubmit} className="submit-btn">Submit</button>
+                        <button type="submit" className="submit-btn">Submit</button>
                     </form>
                 </div>
             </div>
