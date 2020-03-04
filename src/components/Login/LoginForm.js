@@ -1,8 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from '../../pages/App';
 import logo from './logo.png';
 import UsernamePassword from './UsernamePassword';
+import PropTypes from 'prop-types';
+import validateInput from '../../rStore/validate/login';
+
 
 class LoginForm extends React.Component{
 
@@ -14,12 +16,25 @@ class LoginForm extends React.Component{
             errors: {},
             submitted: false
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
-    handleSubmit(e) {
+    isValid() {
+        const { errors, isValid } = validateInput(this.state);
+
+        if(!isValid) { 
+            this.setState({ errors });
+        }
+        return isValid;
+    }
+
+    onSubmit(e) {
         e.preventDefault();
+        if(this.isValid()) {
+            this.setState({ submitted: true });
+            console.log(this.state);
+        }
     }
 
     onChange(e) {
@@ -33,7 +48,7 @@ class LoginForm extends React.Component{
                 <img className="logo-img" src={logo} alt ="Logo" />
                 <div className="App-header">
                     <h1>Login</h1>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.onSubmit}>
                           <UsernamePassword
                             field="username"
                              label="Username "
@@ -51,7 +66,7 @@ class LoginForm extends React.Component{
                             type="password"
                         />
 
-                        <button type="submit" className="submit-btn">Submit</button>
+                        <button className="submit-btn">Submit</button>
                     </form>
                 </div>
             </div>
