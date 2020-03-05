@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 
 function Login(){
     return (
-      <div className="row"> 
+      <div> 
             <LoginForm />
       </div>
     );

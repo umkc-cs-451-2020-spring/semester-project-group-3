@@ -2,7 +2,6 @@ import React from 'react';
 import App from '../../pages/App';
 import logo from './logo.png';
 import UsernamePassword from './UsernamePassword';
-import PropTypes from 'prop-types';
 import validateInput from '../../rStore/validate/login';
 
 
@@ -32,9 +31,11 @@ class LoginForm extends React.Component{
     onSubmit(e) {
         e.preventDefault();
         if(this.isValid()) {
-            this.setState({ submitted: true });
-            console.log(this.state);
+            this.setState({ errors: {}, submitted: true });
+            // after validating the user we will call login function
+            // from rstore actions to authenticate in the db
         }
+        console.log(this.state);
     }
 
     onChange(e) {
@@ -49,11 +50,12 @@ class LoginForm extends React.Component{
                 <div className="App-header">
                     <h1>Login</h1>
                     <form onSubmit={this.onSubmit}>
-                          <UsernamePassword
+
+                        <UsernamePassword
                             field="username"
-                             label="Username "
+                            label="Username "
                             value={username}
-                            errors={errors.username}
+                            error={errors.username}
                             onChange={this.onChange}
                         />
 
@@ -61,12 +63,12 @@ class LoginForm extends React.Component{
                            field="password"
                             label="Password "
                             value={password}
-                            errors={errors.password}
+                            error={errors.password}
                             onChange={this.onChange}
                             type="password"
                         />
 
-                        <button className="submit-btn">Submit</button>
+                        <button type='submit' className="submit-btn">Submit</button>
                     </form>
                 </div>
             </div>
