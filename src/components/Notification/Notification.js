@@ -4,7 +4,10 @@ import styled from 'styled-components';
 function Notification(){
 
   return (
+    <div>
     //component goes here
+    hello
+    </div>
   );
 }
 
