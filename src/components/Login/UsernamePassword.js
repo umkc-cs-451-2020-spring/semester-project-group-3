@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const UsernamePassword = ({ field, value, label, error, type, onChange, checkUserExists }) => {
   return (
-    <div style= {{paddingBottom: "10px"}}>
-      <label className="login-label">{label}</label>
-      <input style={{paddingBottom: "10px"}}
+    <div style= {{padding: "12px"}}>
+      <label style= {{paddingRight: "8px"}}>{label}</label>
+      <input style={{padding: "10px"}}
         onChange={onChange}
         onBlur={checkUserExists}
         value={value}

@@ -53,7 +53,7 @@ class LoginForm extends React.Component{
 
                         <UsernamePassword
                             field="username"
-                            label="Username "
+                            label="Username:"
                             value={username}
                             error={errors.username}
                             onChange={this.onChange}
@@ -61,14 +61,14 @@ class LoginForm extends React.Component{
 
                         <UsernamePassword
                            field="password"
-                            label="Password "
+                            label="Password: "
                             value={password}
                             error={errors.password}
                             onChange={this.onChange}
                             type="password"
                         />
 
-                        <button type='submit' className="submit-btn">Submit</button>
+                        <div style= {{paddingTop: "20px"}}><button type='submit' className="submit-btn">Submit</button></div>
                     </form>
                 </div>
             </div>

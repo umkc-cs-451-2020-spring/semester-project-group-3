@@ -1,11 +1,11 @@
 import React from 'react';
 import '../styles/App.css';
-import Login from '../components/Login'
+import LoginForm from '../components/Login'
 
 function LoginPage() {
       return (
         <div className="App">
-            <Login />
+            <LoginForm />
         </div>
       );
     }
