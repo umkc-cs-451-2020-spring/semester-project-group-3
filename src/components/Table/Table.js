@@ -31,7 +31,7 @@ const SearchArea = styled.div`
   text-align: "center";
   position: relative;
   float: right;
-  min-width: 400px;
+  min-width: 425px;
 `
 
 const StyledTextField = withStyles(theme => ({
@@ -41,7 +41,11 @@ const StyledTextField = withStyles(theme => ({
 }))(TextField);
 const StyledSelect = withStyles(theme => ({
   root: {
-    height: '35px',
+    height: '30px',
+    verticalAlign: 'middle',
+    textAlign: 'center',
+    marginTop: '5%',
+
   },
 }))(Select);
 const StyledTableCell = withStyles(theme => ({
@@ -78,6 +82,7 @@ function desc(a, b, orderBy) {
 }
 
 function stableSort(query, searchCol, array, cmp) {
+
   array = query ? array.filter(x => x[searchCol].includes(query)) : array;
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -157,6 +162,7 @@ const useToolbarStyles = makeStyles(theme => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
+    minHeight: '70px',
   },
   highlight:
     theme.palette.type === 'light'
@@ -169,13 +175,15 @@ const useToolbarStyles = makeStyles(theme => ({
           backgroundColor: theme.palette.secondary.dark,
         },
   title: {
+    height: '100%',
+    fontSize: '32px',
     flex: '1 1 100%',
   },
 }));
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, handleChange, searchCol, query, handleQuery } = props;
 
   return (
     <Toolbar
@@ -199,13 +207,32 @@ const EnhancedTableToolbar = props => {
             <DeleteIcon /> // TODO add onclick for deleting things
           </IconButton>
         </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      ) : null}
+      <SearchArea>
+        <StyledSelect
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={searchCol}
+          onChange={handleChange}
+        >
+          <MenuItem value={'description'}>Description</MenuItem>
+          <MenuItem value={'transId'}>ID</MenuItem>
+          <MenuItem value={'pDate'}>Date</MenuItem>
+          <MenuItem value={'amount'}>Amount</MenuItem>
+          <MenuItem value={'chargeType'}>Charge Type</MenuItem>
+          <MenuItem value={'balance'}>Balance</MenuItem>
+        </StyledSelect>
+        <StyledTextField
+        id="filled-search"
+        label="Search field"
+        type="search"
+        variant="filled"
+        value={query}
+        onChange={handleQuery}
+        size="small"
+        />
+        <FormHelperText id="component-helper-text">    Select a colum to Search then type</FormHelperText>
+      </SearchArea>
     </Toolbar>
   );
 };
@@ -216,6 +243,7 @@ EnhancedTableToolbar.propTypes = {
 
 const useStyles = makeStyles(theme => ({
   root: {
+    paddingTop: '10px',
     width: '100%',
   },
   paper: {
@@ -313,39 +341,14 @@ export default function EnhancedTable() {
 // Todo fix formating of search bar
   return (
     <div className={classes.root}>
-      <SearchArea>
-        <InputLabel id="demo-simple-select-helper-label">Select Column to search and then type search.</InputLabel>
-        <StyledSelect
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={searchCol}
-          onChange={handleChange}
-        >
-          <MenuItem value={'description'}>Description</MenuItem>
-          <MenuItem value={'transId'}>ID</MenuItem>
-          <MenuItem value={'pDate'}>Date</MenuItem>
-          <MenuItem value={'amount'}>Amount</MenuItem>
-          <MenuItem value={'chargeType'}>Charge Type</MenuItem>
-          <MenuItem value={'balance'}>Balance</MenuItem>
-        </StyledSelect>
-        <StyledTextField
-        id="filled-search"
-        label="Search field"
-        type="search"
-        variant="filled"
-        value={query}
-        onChange={handleQuery}
-        size="small"
-        />
-      </SearchArea>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          handleChange={handleChange}
+          searchCol={searchCol}
+          query={query}
+          handleQuery={handleQuery}
+          />
         <TableContainer>
           <Table
             className={classes.table}
@@ -395,9 +398,9 @@ export default function EnhancedTable() {
                           {row.transId}
                       </StyledTableCell>
                       <TableCell align="right">{row.pDate}</TableCell>
-                      <StyledTableCell align="right">{row.amount}</StyledTableCell>
+                      <StyledTableCell align="right">{row.amount+ (row.amount%1=== 0 ? ".00" : '')}</StyledTableCell>
                       <StyledTableCell align="right">{row.chargeType}</StyledTableCell>
-                      <TableCell align="right">{row.balance}</TableCell>
+                      <TableCell align="right">{row.balance + (row.balance%1=== 0 ? ".00" : '')}</TableCell>
                       <TableCell align="right">{row.description}</TableCell>
                     </TableRow>
                   );
