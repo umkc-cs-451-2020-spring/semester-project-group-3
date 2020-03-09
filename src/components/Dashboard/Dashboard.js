@@ -6,7 +6,7 @@ function Dashboard(){
 
   return (
     <div>
-    Testing
+      // Todo Render Notification triggers here
       <Table>
       </Table>
     </div>

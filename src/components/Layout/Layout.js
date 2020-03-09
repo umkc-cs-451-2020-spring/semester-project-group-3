@@ -44,7 +44,6 @@ const Space = styled.div`
 `
 
 function Layout({ children }){
-  const currentTab = useSelector((state) => state.currentTab );
   return (
     <Container>
         <Header/>
@@ -53,7 +52,6 @@ function Layout({ children }){
             <NavCol>
             </NavCol>
             <Space id="spacee">
-              {currentTab}
               {children}
             </Space>
           </GridBox>

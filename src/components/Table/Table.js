@@ -20,7 +20,30 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import TextField from '@material-ui/core/TextField';
+import styled from 'styled-components';
 
+const SearchArea = styled.div`
+  text-align: "center";
+  position: relative;
+  float: right;
+  min-width: 400px;
+`
+
+const StyledTextField = withStyles(theme => ({
+  root: {
+    width: '300px',
+  },
+}))(TextField);
+const StyledSelect = withStyles(theme => ({
+  root: {
+    height: '35px',
+  },
+}))(Select);
 const StyledTableCell = withStyles(theme => ({
   body: {
     color: 'blue',
@@ -54,7 +77,8 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-function stableSort(array, cmp) {
+function stableSort(query, searchCol, array, cmp) {
+  array = query ? array.filter(x => x[searchCol].includes(query)) : array;
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = cmp(a[0], b[0]);
@@ -90,7 +114,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
+            inputProps={{ 'aria-label': 'select all Transactions' }}
           />
         </TableCell>
         {headCells.map(headCell => (
@@ -275,8 +299,51 @@ export default function EnhancedTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  // search functionality lives below this
+  const [query, setQuery] = React.useState('');
+  const [searchCol, setSearchCol] = React.useState('description');
+
+  const inputLabel = React.useRef(null);
+  const handleQuery = event => {
+    setQuery(event.target.value);
+  };
+  const handleChange = event => {
+    setSearchCol(event.target.value);
+  };
+// Todo fix formating of search bar
   return (
     <div className={classes.root}>
+      <SearchArea>
+        <InputLabel id="demo-simple-select-helper-label">Select Column to search and then type search.</InputLabel>
+        <StyledSelect
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={searchCol}
+          onChange={handleChange}
+        >
+          <MenuItem value={'description'}>Description</MenuItem>
+          <MenuItem value={'transId'}>ID</MenuItem>
+          <MenuItem value={'pDate'}>Date</MenuItem>
+          <MenuItem value={'amount'}>Amount</MenuItem>
+          <MenuItem value={'chargeType'}>Charge Type</MenuItem>
+          <MenuItem value={'balance'}>Balance</MenuItem>
+        </StyledSelect>
+        <StyledTextField
+        id="filled-search"
+        label="Search field"
+        type="search"
+        variant="filled"
+        value={query}
+        onChange={handleQuery}
+        size="small"
+        />
+      </SearchArea>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -296,7 +363,7 @@ export default function EnhancedTable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getSorting(order, orderBy))
+              {stableSort(query, searchCol, rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.transId);
