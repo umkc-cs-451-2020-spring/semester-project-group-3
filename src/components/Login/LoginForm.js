@@ -1,79 +1,85 @@
 import React from 'react';
-import App from '../../pages/App';
+import { useSelector, useDispatch } from 'react-redux';
+import { renderApp } from "../../rStore/actions/index";
 import logo from './logo.png';
-import UsernamePassword from './UsernamePassword';
-import validateInput from '../../rStore/validate/login';
+import { Field, reduxForm } from 'redux-form';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+    const validate = values => {
+        const errors = {}
+        const requiredFields = [
+            'username',
+            'password'
+        ]
+        requiredFields.forEach(field => {
+            if (!values[field]) {
+              errors[field] = 'Required'
+            }
+        })
+        return errors
+    } 
 
-class LoginForm extends React.Component{
+    const renderTextField = ({
+        input,
+        label,
+        meta: { touched, error }
+      }) => (
+        <TextField 
+        id="filled-basic" 
+        label={label} 
+        variant="filled" 
+        color="secondary" 
+        helperText={touched && error}
+        />
+      )
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            errors: {},
-            submitted: false
-        };
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
-    }
-
-    isValid() {
-        const { errors, isValid } = validateInput(this.state);
-
-        if(!isValid) { 
-            this.setState({ errors });
-        }
-        return isValid;
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-        if(this.isValid()) {
-            this.setState({ errors: {}, submitted: true });
-            // after validating the user we will call login function
-            // from rstore actions to authenticate in the db
-        }
-        console.log(this.state);
-    }
-
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    render () {
-        const {errors, username, password} = this.state;
+    const Login = props => {
+        const dispatch = useDispatch();
         return (
             <div>
-                <img className="logo-img" src={logo} alt ="Logo" />
-                <div className="App-header">
-                    <h1>Login</h1>
-                    <form onSubmit={this.onSubmit}>
-
-                        <UsernamePassword
-                            field="username"
-                            label="Username:"
-                            value={username}
-                            error={errors.username}
-                            onChange={this.onChange}
-                        />
-
-                        <UsernamePassword
-                           field="password"
-                            label="Password: "
-                            value={password}
-                            error={errors.password}
-                            onChange={this.onChange}
-                            type="password"
-                        />
-
-                        <div style= {{paddingTop: "20px"}}><button type='submit' className="submit-btn">Submit</button></div>
-                    </form>
-                </div>
+                <br/>
+                    <div className="App-header">
+                        <h1>Login</h1>
+                        <form>
+                            <div style={{padding: "10px"}}>
+                                <Field
+                                    name="username"
+                                    component= {renderTextField}
+                                    label="Username"
+                                />
+                            </div>
+                            <div>
+                                <Field
+                                    name="password"
+                                    component= {renderTextField}
+                                    label="Password"
+                                />
+                            </div>
+                            <div style={{padding: "10px"}}>
+                                <Button 
+                                variant="contained" 
+                                color="secondary"
+                                onClick={() => { dispatch(renderApp()) }}
+                                >
+                                    Submit
+                                </Button>
+                                <FormControlLabel
+                                    value="Remember me"
+                                    control={<Checkbox color="secondary" />}
+                                    label="Remember me"
+                                    labelPlacement="bottom"
+                                />                            
+                            </div>
+                        </form>
+                    </div>
             </div>
         );
     }
-}
 
-export default LoginForm;
+    export default reduxForm({
+        form: 'Login', 
+        validate
+    })(Login)

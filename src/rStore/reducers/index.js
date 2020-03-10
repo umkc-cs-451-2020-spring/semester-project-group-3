@@ -1,7 +1,7 @@
 import types from "../constants/action-types";
 // Declare the initial state of anything in the store here
 const initialState = {
-  currentPage: 'Login',
+  currentPage: "Login",
   currentTab: 'Dashboard'
 };
 
@@ -10,22 +10,26 @@ function rootReducer(state = initialState, action) {
   switch(action.type) {
     case types.RENDER_DASHBOARD: {
       return {
+        currentPage: "App",
         currentTab: "Dashboard"
       }
     }
     case types.RENDER_TRANSACTION: {
       return {
+        currentPage: "App",
         currentTab: "Transaction"
       }
     }
     case types.RENDER_NOTIFICATION: {
       return {
+        currentPage: "App",
         currentTab: "Notification"
       }
     }
     case types.RENDER_APP: {
       return {
-        currentPage: "App"
+        currentPage: "App",
+        currentTab: "Dashboard"
       }
     }
     default: return state;
