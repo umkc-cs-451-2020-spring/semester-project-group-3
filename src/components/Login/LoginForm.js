@@ -22,10 +22,15 @@ const validate = values => {
     return errors
 } 
 
+function handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+}
+
 const renderTextField = ({
     input,
     label,
-    meta: { touched, error }
+    meta: { touched, error },
+    ...custom
     }) => (
     <TextField 
     style={{
@@ -41,21 +46,25 @@ const renderTextField = ({
     label={label} 
     variant="filled" 
     helperText={touched && error}
+    //{...input}
+    {...custom}
     />)
 
-function Login (){
+const Login = props => {
+    const { handleSubmit, pristine, reset, submitting } = props
     const dispatch = useDispatch();
     return (
         <div>
             <br/>
                 <div className="App-header">
                     <h1>Login</h1>
-                    <form>
+                    <form onSubmit={handleSubmit(val => console.log(val))}>
                         <div style={{padding: "10px"}}>
                             <Field
                                 name="username"
                                 component= {renderTextField}
                                 label="Username"
+                                onChange={handleChange}
                             />
                         </div>
                         <div>
@@ -66,13 +75,13 @@ function Login (){
                             />
                         </div>
                         <div style={{padding: "10px"}}>
-                            <Button 
-                            variant="contained" 
-                            color="secondary"
+                            <button 
+                            type="submit"
+                            className="submit-btn"
                             onClick={() => { dispatch(renderApp()) }}
                             >
                                 Submit
-                            </Button>
+                            </button>
                             <FormControlLabel
                                 value="Remember me"
                                 control={<Checkbox color="secondary" />}
