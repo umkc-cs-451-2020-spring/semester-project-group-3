@@ -8,78 +8,85 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-    const validate = values => {
-        const errors = {}
-        const requiredFields = [
-            'username',
-            'password'
-        ]
-        requiredFields.forEach(field => {
-            if (!values[field]) {
-              errors[field] = 'Required'
-            }
-        })
-        return errors
-    } 
+const validate = values => {
+    const errors = {}
+    const requiredFields = [
+        'username',
+        'password'
+    ]
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+          errors[field] = 'Required'
+        }
+    })
+    return errors
+} 
 
-    const renderTextField = ({
-        input,
-        label,
-        meta: { touched, error }
-      }) => (
-        <TextField 
-        id="filled-basic" 
-        label={label} 
-        variant="filled" 
-        color="secondary" 
-        helperText={touched && error}
-        />
-      )
+const renderTextField = ({
+    input,
+    label,
+    meta: { touched, error }
+    }) => (
+    <TextField 
+    style={{
+        backgroundColor: "white"
+    }}
+    InputProps={{
+        style: {
+            color: "black"
+        }
+    }}
+    color="primary"
+    id="filled-basic" 
+    label={label} 
+    variant="filled" 
+    helperText={touched && error}
+    />)
 
-    const Login = props => {
-        const dispatch = useDispatch();
-        return (
-            <div>
-                <br/>
-                    <div className="App-header">
-                        <h1>Login</h1>
-                        <form>
-                            <div style={{padding: "10px"}}>
-                                <Field
-                                    name="username"
-                                    component= {renderTextField}
-                                    label="Username"
-                                />
-                            </div>
-                            <div>
-                                <Field
-                                    name="password"
-                                    component= {renderTextField}
-                                    label="Password"
-                                />
-                            </div>
-                            <div style={{padding: "10px"}}>
-                                <Button 
-                                variant="contained" 
-                                color="secondary"
-                                onClick={() => { dispatch(renderApp()) }}
-                                >
-                                    Submit
-                                </Button>
-                                <FormControlLabel
-                                    value="Remember me"
-                                    control={<Checkbox color="secondary" />}
-                                    label="Remember me"
-                                    labelPlacement="bottom"
-                                />                            
-                            </div>
-                        </form>
-                    </div>
-            </div>
-        );
-    }
+function Login (){
+    const dispatch = useDispatch();
+    return (
+        <div>
+            <br/>
+                <div className="App-header">
+                    <h1>Login</h1>
+                    <form>
+                        <div style={{padding: "10px"}}>
+                            <Field
+                                name="username"
+                                component= {renderTextField}
+                                label="Username"
+                            />
+                        </div>
+                        <div>
+                            <Field
+                                name="password"
+                                component= {renderTextField}
+                                label="Password"
+                            />
+                        </div>
+                        <div style={{padding: "10px"}}>
+                            <Button 
+                            variant="contained" 
+                            color="secondary"
+                            onClick={() => { dispatch(renderApp()) }}
+                            >
+                                Submit
+                            </Button>
+                            <FormControlLabel
+                                value="Remember me"
+                                control={<Checkbox color="secondary" />}
+                                label="Remember me"
+                                labelPlacement="bottom"
+                            />                            
+                        </div>
+                    </form>
+                </div>
+        </div>
+    );
+}
 
-    export default reduxForm({
-        form: 'Login', 
-        validate
-    })(Login)
+export default reduxForm({
+    form: 'Login', 
+    validate
+})(Login)
