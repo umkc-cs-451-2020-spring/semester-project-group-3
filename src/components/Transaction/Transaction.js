@@ -4,7 +4,9 @@ import styled from 'styled-components';
 function Transaction(){
 
   return (
+    <div>
     //component goes here
+    </div>
   );
 }
 
