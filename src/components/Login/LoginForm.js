@@ -22,10 +22,6 @@ const validate = values => {
     return errors
 } 
 
-function handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-}
-
 const renderTextField = ({
     input,
     label,
@@ -64,7 +60,6 @@ const Login = props => {
                                 name="username"
                                 component= {renderTextField}
                                 label="Username"
-                                onChange={handleChange}
                             />
                         </div>
                         <div>
