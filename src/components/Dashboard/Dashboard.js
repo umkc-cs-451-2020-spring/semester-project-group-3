@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import Table from '../Table';
 
 function Dashboard(){
 
   return (
-    //component goes here
+    <div>
+      // Todo Render Notification triggers here
+      <Table>
+      </Table>
+    </div>
   );
 }
 

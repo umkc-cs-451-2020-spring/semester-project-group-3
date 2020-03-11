@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 const GridBox = styled.div `
  display: grid;
  height 100%;
- grid-template-columns: 20% 80%;
+ grid-template-columns: 15% 85%;
  grid-template-rows: 100%;
  grid-template-areas: "NavCol Space";
 
@@ -37,13 +37,13 @@ const GridBox = styled.div `
 //Todo remove border after development of UI done
 const Space = styled.div`
   grid-area: Space;
-  width: 100%;
+  width: 99%;
   border: 1px solid red;
-  poition: relative;
+  padding-left: 5px;
+  padding-right: 5px;
 `
 
 function Layout({ children }){
-  const currentTab = useSelector((state) => state.currentTab );
   return (
     <Container>
         <Header/>
@@ -51,8 +51,7 @@ function Layout({ children }){
           <GridBox>
             <NavCol>
             </NavCol>
-            <Space>
-              {currentTab}
+            <Space id="spacee">
               {children}
             </Space>
           </GridBox>
