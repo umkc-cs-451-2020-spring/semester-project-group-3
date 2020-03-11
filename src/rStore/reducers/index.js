@@ -1,6 +1,7 @@
 import types from "../constants/action-types";
 // Declare the initial state of anything in the store here
 const initialState = {
+  currentPage: 'Login',
   currentTab: 'Dashboard'
 };
 
@@ -22,7 +23,11 @@ function rootReducer(state = initialState, action) {
         currentTab: "Notification"
       }
     }
-
+    case types.RENDER_APP: {
+      return {
+        currentPage: "App"
+      }
+    }
     default: return state;
   }
 }

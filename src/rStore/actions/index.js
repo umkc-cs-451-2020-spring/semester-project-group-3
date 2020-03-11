@@ -10,3 +10,6 @@ export function renderTransaction() {
 export function renderNotification() {
   return { type: types.RENDER_NOTIFICATION}
 };
+export function renderApp() {
+  return { type: types.RENDER_APP}
+}
