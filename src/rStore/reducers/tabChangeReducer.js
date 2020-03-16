@@ -6,7 +6,7 @@ const initialState = {
 };
 
 // add a switch case here for any added actions
-function rootReducer(state = initialState, action) {
+function tabChangeReducer(state = initialState, action) {
   switch(action.type) {
     case types.RENDER_DASHBOARD: {
       return {
@@ -36,4 +36,4 @@ function rootReducer(state = initialState, action) {
   }
 }
 
-export default rootReducer;
+export default tabChangeReducer;

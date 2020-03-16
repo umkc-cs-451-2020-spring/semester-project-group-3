@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { renderDashboard, renderTransaction, renderNotification } from "../../rStore/actions/index";
+import { renderDashboard, renderTransaction, renderNotification } from "../../rStore/actions/tabChangeActions.js";
 
 const Column = styled.div `
   grid-area: NavCol;

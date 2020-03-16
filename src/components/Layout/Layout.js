@@ -41,6 +41,7 @@ const Space = styled.div`
   border: 1px solid red;
   padding-left: 5px;
   padding-right: 5px;
+  overflow: auto;
 `
 
 function Layout({ children }){

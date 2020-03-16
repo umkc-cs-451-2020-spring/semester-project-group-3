@@ -1,4 +1,4 @@
-import rootReducer from "../reducers/index";
+import rootReducer from "../reducers/rootReducer.js";
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import {
