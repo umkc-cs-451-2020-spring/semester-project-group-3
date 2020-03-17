@@ -4,9 +4,9 @@ export const fetchTransactionsBegin = () => ({
   type: types.FETCH_TRANSACTIONS_BEGIN
 });
 
-export const fetchTransactionsSuccess = products => ({
+export const fetchTransactionsSuccess = transactions => ({
   type: types.FETCH_TRANSACTIONS_SUCCESS,
-  payload: { products }
+  payload: { transactions }
 });
 
 export const fetchTransactionsFailure = error => ({

@@ -10,25 +10,48 @@ function Dashboard(){
   var loggedIn = "true";
   const dispatch = useDispatch();
 
-  const error = useSelector((state) => state.error );
-  const loading = useSelector((state) => state.loading );
-  const transactions = useSelector((state) => state.transactions );
-  dispatch(fetchTransactions());
-
-
-
-  if (error) {
-    return <div>Error! {error.message}</div>;
+  function createData(transId, pDate, balance, chargeType, amount, description) {
+    return {transId, pDate, amount, chargeType, balance, description};
   }
+  function createRows(transaction){
+    var tempRows= [];
+    if (transaction){
+      for (var i = 0; i< transaction.length; i++){
+        // todo add formating to date data.
+        tempRows.push(createData(
+          transaction[i].transactionID,
+          transaction[i].processingDate,
+          "Balance",
+          transaction[i].type,
+          transaction[i].amount,
+          transaction[i].description
+        ));
+      }
+    }
+    return tempRows;
+  }
+  async function getTransactions(){
+    await dispatch(fetchTransactions());
+  }
+  // this is called after the component is rendered. 
+  React.useEffect(() => {
+   getTransactions();
+  }, []);
+
+  const error = useSelector((state) => state.transactionsReducer.error );
+  const loading = useSelector((state) => state.transactionsReducer.loading );
+  const transactions = useSelector((state) => state.transactionsReducer.items );
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  if (error) {
+    return <div>Error! {error}</div>;
+  }
   return (
     <div>
       // Todo Render Notification triggers here
-      <Table>
+      <Table rows={createRows(transactions)}>
       </Table>
     </div>
   );

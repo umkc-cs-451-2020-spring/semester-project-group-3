@@ -58,18 +58,6 @@ function createData(transId, pDate, balance, chargeType, amount, description) {
   return {transId, pDate, amount, chargeType, balance, description};
 }
 
-const rows = [
-  createData(1,"11/03/19", 4998.00,	"DR",	2.00,	"Starbucks"),
-  createData(2, "11/03/19",	5798.00,	"CR",	800.00, "Payroll"),
-  createData(3, "11/03/19",	5790.00,	"DR",	8.00, "Chipotle"),
-  createData(4, "11/04/19",	5780.00,	"DR",	10.00, "ATM"),
-  createData(5, "11/05/19",	5748.00,	"DR",	32.00,	"Hoolihans"),
-  createData(6, "11/05/19",	5648.00,	"DR",	100.00,	"KCPL"),
-  createData(7, "11/09/19",	5458.00,	"DR",	190.00,	"Google Fiber"),
-  createData(8, "11/11/19",	5448.01,	"DR",	9.99,	"Netflix"),
-];
-
-
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -266,8 +254,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
   const classes = useStyles();
+  const [rows, setRows] = React.useState(props.rows);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('pDate');
   const [selected, setSelected] = React.useState([]);
@@ -338,7 +327,7 @@ export default function EnhancedTable() {
   const handleChange = event => {
     setSearchCol(event.target.value);
   };
-// Todo fix formating of search bar
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -398,7 +387,7 @@ export default function EnhancedTable() {
                           {row.transId}
                       </StyledTableCell>
                       <TableCell align="right">{row.pDate}</TableCell>
-                      <StyledTableCell align="right">{row.amount+ (row.amount%1=== 0 ? ".00" : '')}</StyledTableCell>
+                      <StyledTableCell align="right">{"$"+row.amount+ (row.amount%1=== 0 ? ".00" : '')}</StyledTableCell>
                       <StyledTableCell align="right">{row.chargeType}</StyledTableCell>
                       <TableCell align="right">{row.balance + (row.balance%1=== 0 ? ".00" : '')}</TableCell>
                       <TableCell align="right">{row.description}</TableCell>

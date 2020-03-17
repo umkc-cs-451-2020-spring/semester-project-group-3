@@ -5,7 +5,8 @@ import App from './App';
 import { useSelector } from 'react-redux';
 
 function LoginPage() {
-  const currentPage = useSelector((state) => state.currentPage );
+  const currentPage = useSelector((state) => state.tabChangeReducer.currentPage );
+  // console.log(currentPage);
   let displayPage;
   if (currentPage === "App") {
     displayPage = <App/>;
@@ -18,5 +19,5 @@ function LoginPage() {
         </div>
       );
     }
-    
+
     export default LoginPage;

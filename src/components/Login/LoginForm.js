@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { renderApp } from "../../rStore/actions/index";
+import { renderApp } from "../../rStore/actions/tabChangeActions.js";
 import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
@@ -20,7 +20,7 @@ const validate = values => {
         }
     })
     return errors
-} 
+}
 
 const renderTextField = ({
     input,
@@ -28,7 +28,7 @@ const renderTextField = ({
     meta: { touched, error },
     ...custom
     }) => (
-    <TextField 
+    <TextField
     style={{
         backgroundColor: "white"
     }}
@@ -38,9 +38,9 @@ const renderTextField = ({
         }
     }}
     color="primary"
-    id="filled-basic" 
-    label={label} 
-    variant="filled" 
+    id="filled-basic"
+    label={label}
+    variant="filled"
     helperText={touched && error}
     //{...input}
     {...custom}
@@ -70,7 +70,7 @@ const Login = props => {
                             />
                         </div>
                         <div style={{padding: "10px"}}>
-                            <button 
+                            <button
                             type="submit"
                             className="submit-btn"
                             onClick={() => { dispatch(renderApp()) }}
@@ -82,7 +82,7 @@ const Login = props => {
                                 control={<Checkbox color="secondary" />}
                                 label="Remember me"
                                 labelPlacement="bottom"
-                            />                            
+                            />
                         </div>
                     </form>
                 </div>
@@ -91,6 +91,6 @@ const Login = props => {
 }
 
 export default reduxForm({
-    form: 'Login', 
+    form: 'Login',
     validate
 })(Login)

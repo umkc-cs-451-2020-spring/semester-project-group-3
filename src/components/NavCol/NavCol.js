@@ -40,7 +40,7 @@ const Tab3 = styled.div`
 function NavCol(){
   // this is how you access the redux store
   const dispatch = useDispatch();
-  const currentTab = useSelector((state) => state.currentTab );
+  const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   return(
     <Column>
       <Tab1 onClick={() => dispatch(renderDashboard())} page={currentTab}>

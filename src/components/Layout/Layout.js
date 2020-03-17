@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../Header';
 import NavCol from '../NavCol';
-import { useSelector } from 'react-redux';
 
 // Todo change Container to be a component and not just a box.
 const Container = styled.div `
