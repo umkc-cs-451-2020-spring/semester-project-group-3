@@ -22,6 +22,13 @@ router.post("/", function(req, res, next) {
     password +
     "';";
 
+  query_2 =
+    "select accountID from Account where email = '" +
+    email +
+    "' and password = '" +
+    password +
+    "';";
+
   connection.getConnection(function(err, connection) {
     // Executing the MySQL query (select all data from the 'users' table).
     connection.query(query, function(error, results, fields) {
@@ -31,11 +38,18 @@ router.post("/", function(req, res, next) {
       console.log("Login Resp:" + results[0]["count(*)"]);
       //   res.send(results);
       var count = results[0]["count(*)"];
+      var ID = "";
 
       if (count > 0) {
-        res.send(true);
+        connection.query(query_2, function(error, results, fields) {
+          if (error) throw error;
+
+          console.log("account ID:" + results[0]["accountID"]);
+          var ID = results[0]["accountID"];
+          res.send({ isLoggedIn: true, accountID: ID });
+        });
       } else {
-        res.send(false);
+        res.send({ isLoggedIn: false, accountID: ID });
       }
     });
   });
