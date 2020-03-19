@@ -22,14 +22,18 @@ const validate = values => {
     return errors
 }
 
-const renderTextField = ({
-    input,
-    label,
-    meta: { touched, error },
-    ...custom
-    }) => (
+const renderTextField = (
+    { input, label, meta: { touched, error }, ...custom },
+  ) => (
     <TextField
-    style={{
+      label={label}
+      variant="filled"
+      hintText={label}
+      floatingLabelText={label}
+      errorText={touched && error}
+      {...input}
+      {...custom}
+      style={{
         backgroundColor: "white"
     }}
     InputProps={{
@@ -37,14 +41,8 @@ const renderTextField = ({
             color: "black"
         }
     }}
-    color="primary"
-    id="filled-basic"
-    label={label}
-    variant="filled"
-    helperText={touched && error}
-    //{...input}
-    {...custom}
-    />)
+    />
+  );
 
 const Login = props => {
     const { handleSubmit, pristine, reset, submitting } = props
@@ -54,12 +52,12 @@ const Login = props => {
             <br/>
                 <div className="App-header">
                     <h1>Login</h1>
-                    <form onSubmit={handleSubmit(val => console.log(val))}>
+                    <form onSubmit={handleSubmit}>
                         <div style={{padding: "10px"}}>
                             <Field
-                                name="username"
+                                name="email"
                                 component= {renderTextField}
-                                label="Username"
+                                label="Email"
                             />
                         </div>
                         <div>
@@ -73,7 +71,7 @@ const Login = props => {
                             <button
                             type="submit"
                             className="submit-btn"
-                            onClick={() => { dispatch(renderApp()) }}
+                            //onClick={() => { dispatch(renderApp()) }}
                             >
                                 Submit
                             </button>
