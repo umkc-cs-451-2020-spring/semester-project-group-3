@@ -1,19 +1,15 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { renderApp } from "../../rStore/actions/tabChangeActions";
 import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import validate from '../../rStore/store/validate';
+import validate from './validate';
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
   ) => (
     <TextField
-      id="filled-error-helper-text"
       label={label}
       variant="filled"
       hintText={label}
@@ -34,7 +30,6 @@ const renderTextField = (
 
 const Login = props => {
     const { handleSubmit, pristine, reset, submitting } = props
-    const dispatch = useDispatch();
     return (
         <div>
             <br/>
@@ -60,7 +55,6 @@ const Login = props => {
                             <button
                             type="submit"
                             className="submit-btn"
-                            //onClick={() => { dispatch(renderApp()) }}
                             >
                                 Submit
                             </button>
