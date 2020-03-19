@@ -1,36 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { renderApp } from "../../rStore/actions/tabChangeActions.js";
+import { renderApp } from "../../rStore/actions/tabChangeActions";
 import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-const validate = values => {
-    const errors = {}
-    const requiredFields = [
-        'username',
-        'password'
-    ]
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-          errors[field] = 'Required'
-        }
-    })
-    return errors
-}
+import validate from '../../rStore/store/validate';
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
   ) => (
     <TextField
+      id="filled-error-helper-text"
       label={label}
       variant="filled"
       hintText={label}
       floatingLabelText={label}
-      errorText={touched && error}
+      helperText={touched && error}
       {...input}
       {...custom}
       style={{
@@ -63,6 +51,7 @@ const Login = props => {
                         <div>
                             <Field
                                 name="password"
+                                type="password"
                                 component= {renderTextField}
                                 label="Password"
                             />
