@@ -1,10 +1,10 @@
 import types from "../constants/action-types";
 
 const initialState = {
-    email: '',
-    loading: false,
-    error: null
-  };
+  accountID: '',
+  loading: false,
+  error: null
+};
 
 export function loginReducer(state = initialState, action) {
   switch (action.type) {
@@ -18,14 +18,14 @@ export function loginReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        email: action.payload.email
+        accountID: action.payload.accountID,
       };
     case types.LOGIN_FAILURE:
         return {
             ...state,
             loading: false,
             error: action.payload.error,
-            emmail: ''
+            accountID: ''
           };
     
         default:

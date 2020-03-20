@@ -4,10 +4,9 @@ export const loginBegin = () => ({
   type: types.LOGIN_BEGIN
 });
 
-// email or acct number?
-export const loginSuccess = email => ({
+export const loginSuccess = accountID => ({
   type: types.LOGIN_SUCCESS,
-  payload: { email }
+  payload: { accountID }
 });
 
 export const loginFailure = error => ({

@@ -32,7 +32,7 @@ const Login = props => {
     const { handleSubmit, pristine, reset, submitting } = props
     return (
         <div>
-            <br/>
+            <img className="logo-img" src={logo} alt ="Logo" />
                 <div className="App-header">
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
