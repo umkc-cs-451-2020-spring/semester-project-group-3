@@ -1,10 +1,10 @@
 import { 
     loginBegin,
-    loginSuccess,
+    setCurrentUser,
     loginFailure } from "../../rStore/actions/loginActions.js";
 
-// todo this will be passed an accound number. 
-export default function fetchAccountID(values) {
+// this isn't right, i am going off what connor did for now
+export default function fetchAccountID(email, password) {
   return dispatch => {
     dispatch(loginBegin());
     return fetch("/email/test@gmail.com")
@@ -12,7 +12,9 @@ export default function fetchAccountID(values) {
       .then(res => res.json())
       .then(json => {
         console.log(json);
-        dispatch(loginSuccess(json));
+        // should set current user acct id and logged id status
+        dispatch(setCurrentUser(json));
+        dispatch(renderApp());
         return json;
       })
       .catch(error => dispatch(loginFailure(error)));

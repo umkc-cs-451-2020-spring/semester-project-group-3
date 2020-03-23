@@ -2,11 +2,12 @@ import types from "../constants/action-types";
 
 const initialState = {
   accountID: '',
+  loggedIN = false,
   loading: false,
   error: null
 };
 
-export function loginReducer(state = initialState, action) {
+function loginReducer(state = initialState, action) {
   switch (action.type) {
     case types.LOGIN_BEGIN:
       return {
@@ -14,20 +15,21 @@ export function loginReducer(state = initialState, action) {
         loading: true,
         error: null
       };
-    case types.LOGIN_SUCCESS:
+    case types.SET_CURRENT_USER:
       return {
         ...state,
         loading: false,
         accountID: action.payload.accountID,
+        loggedIN: action.payload.loggedIN
       };
     case types.LOGIN_FAILURE:
         return {
             ...state,
             loading: false,
             error: action.payload.error,
-            accountID: ''
-          };
-    
+            accountID: '',
+            loggedIN: false
+      };
         default:
           return state;
   }
