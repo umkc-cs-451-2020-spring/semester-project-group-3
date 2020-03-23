@@ -2,7 +2,7 @@ import types from "../constants/action-types";
 
 const initialState = {
   accountID: '',
-  loggedIN = false,
+  isLoggedIn: false,
   loading: false,
   error: null
 };
@@ -20,7 +20,7 @@ function loginReducer(state = initialState, action) {
         ...state,
         loading: false,
         accountID: action.payload.accountID,
-        loggedIN: action.payload.loggedIN
+        isLoggedIn: action.payload.isLoggedIn
       };
     case types.LOGIN_FAILURE:
         return {
@@ -28,7 +28,7 @@ function loginReducer(state = initialState, action) {
             loading: false,
             error: action.payload.error,
             accountID: '',
-            loggedIN: false
+            isLoggedIn: false
       };
         default:
           return state;
