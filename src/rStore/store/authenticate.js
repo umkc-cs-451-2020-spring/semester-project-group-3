@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { renderApp } from "../actions/tabChangeActions";
 
 
-async function login(values) {
+export default function login(values) {
   // need to make this one if fetchAcctID fails / loginFailure has error then throw these submission errors
   if (values.email !== 'test@gmail.com') {
     throw new SubmissionError({
@@ -15,4 +15,4 @@ async function login(values) {
   }
 }
 
-export default login
+//export default login

@@ -5,21 +5,20 @@ import {
 
 // not sure if this is right
 export default function fetchAccountID(values) {
-  return async dispatch => {
+  return dispatch => {
     dispatch(loginBegin());
-    try {
-      const response = await fetch("login/", { method: "post", body: JSON.stringify(values) });
-      const res = await handleErrors(response);
-      const json = res.json();
-      console.log(json);
-      // should set current user acct id and logged in status
-      dispatch(setCurrentUser(json));
-      dispatch(renderApp());
-      return json;
-    }
-    catch (error) {
-      return dispatch(loginFailure(error));
-    }
+    return fetch("login/",  
+    { method: "POST", body: JSON.stringify(values)})
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // should set current user acct id and logged in status
+        dispatch(setCurrentUser(json));
+        dispatch(renderApp());
+        return json;
+      })
+      .catch(error => dispatch(loginFailure(error)));
   };
 }
 
