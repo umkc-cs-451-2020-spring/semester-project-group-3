@@ -26,7 +26,7 @@ function LoginPage() {
           if(loggedIn)
             {dispatch(renderApp());}
           else {
-            dispatch(loginFailure("Incorrect email/password..."));
+            dispatch(loginFailure("User not found"));
             window.alert('Incorrect email/password...');
             throw new SubmissionError({
               _error: 'Login failed!'
