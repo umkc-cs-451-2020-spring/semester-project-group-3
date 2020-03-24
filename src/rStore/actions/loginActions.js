@@ -4,9 +4,9 @@ export const loginBegin = () => ({
   type: types.LOGIN_BEGIN
 });
 
-export const setCurrentUser = login => ({
+export const setCurrentUser = accountID => ({
   type: types.SET_CURRENT_USER,
-  payload: { login }
+  payload: { accountID }
 });
 
 export const loginFailure = error => ({

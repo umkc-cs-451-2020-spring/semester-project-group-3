@@ -29,7 +29,7 @@ const renderTextField = (
   );
 
 const Login = props => {
-    const { handleSubmit, pristine, reset, submitting } = props
+    const { handleSubmit, pristine, submitting } = props
     return (
         <div>
             <img className="logo-img" src={logo} alt ="Logo" />
@@ -55,6 +55,7 @@ const Login = props => {
                             <button
                             type="submit"
                             className="submit-btn"
+                            disabled={ pristine || submitting}
                             >
                                 Submit
                             </button>
