@@ -9,6 +9,7 @@ function Dashboard(){
   var username = "connor";
   var loggedIn = "true";
   const dispatch = useDispatch();
+  const acctID = useSelector((state) => state.loginReducer.accountID );
 
   function createData(transId, pDate, balance, chargeType, amount, description) {
     return {transId, pDate, amount, chargeType, balance, description};
@@ -31,7 +32,7 @@ function Dashboard(){
     return tempRows;
   }
   async function getTransactions(){
-    await dispatch(fetchTransactions());
+    await dispatch(fetchTransactions(acctID));
   }
   // this is called after the component is rendered. 
   React.useEffect(() => {

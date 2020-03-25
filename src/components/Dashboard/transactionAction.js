@@ -4,10 +4,10 @@ import {
   fetchTransactionsFailure } from "../../rStore/actions/transactionActions.js";
 
 // todo this will be passed an accound number. 
-export default function fetchTransactions() {
+export default function fetchTransactions(acctID) {
   return dispatch => {
     dispatch(fetchTransactionsBegin());
-    return fetch("/transactions/211111110")
+    return fetch("/transactions/" + acctID)
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
