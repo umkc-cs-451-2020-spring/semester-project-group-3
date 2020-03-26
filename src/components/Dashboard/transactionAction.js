@@ -5,25 +5,16 @@ import {
 
 // todo this will be passed an accound number. 
 export default function fetchTransactions(acctID) {
+  const axios = require('axios');
   return dispatch => {
     dispatch(fetchTransactionsBegin());
-    return fetch("/transactions/" + acctID)
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        dispatch(fetchTransactionsSuccess(json));
-        return json;
+    axios.get('/transactions/' + acctID)
+      .then(function(response) {
+        console.log(response);
+        dispatch(fetchTransactionsSuccess(response.data));
       })
-      .catch(error => dispatch(fetchTransactionsFailure(error)));
+      .catch(function(error) {
+        dispatch(fetchTransactionsFailure(error))
+      });
   };
-}
-
-// Handle HTTP errors since fetch won't.
-function handleErrors(response) {
-  if (!response.ok) {
-
-    throw Error(response.statusText);
-  }
-  return response;
 }
