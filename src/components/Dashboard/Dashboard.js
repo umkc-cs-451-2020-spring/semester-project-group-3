@@ -22,7 +22,7 @@ function Dashboard(){
         tempRows.push(createData(
           transaction[i].transactionID,
           transaction[i].processingDate,
-          "Balance",
+          transaction[i].historicBalance,
           transaction[i].type,
           transaction[i].amount,
           transaction[i].description
