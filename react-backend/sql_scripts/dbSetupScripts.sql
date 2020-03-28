@@ -15,7 +15,7 @@ create table Transaction (
     type varchar (30),
     amount decimal unsigned,
     description varchar (320),
-    historicBalance decimal unsigned,
+    historicBalance decimal,
     primary key (transactionID)
 ) engine = InnoDB;
 
@@ -26,8 +26,11 @@ add
 
 create table NotificationTrigger (
     notificationTriggerID int(11) not null auto_increment,
-    associatedAccount varchar (320) unique,
+    associatedAccount varchar (320),
     type varchar (30),
+	active bool default true,
+    amount decimal(11, 2),
+    startDate date default current_timestamp,
     description varchar (320),
     primary key (notificationTriggerID)
 ) engine = InnoDB;
