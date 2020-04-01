@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Table from '../Table';
+import NotificationTriggers from '../NotificationTriggers';
 import fetchTransactions from "./transactionAction.js";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -34,7 +35,7 @@ function Dashboard(){
   async function getTransactions(){
     await dispatch(fetchTransactions(acctID));
   }
-  // this is called after the component is rendered. 
+  // this is called after the component is rendered.
   React.useEffect(() => {
    getTransactions();
   }, []);
@@ -51,7 +52,7 @@ function Dashboard(){
   }
   return (
     <div>
-      // Todo Render Notification triggers here
+      <NotificationTriggers/>
       <Table rows={createRows(transactions)}>
       </Table>
     </div>
