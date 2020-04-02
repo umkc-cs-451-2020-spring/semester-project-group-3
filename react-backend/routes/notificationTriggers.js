@@ -15,8 +15,21 @@ router.post("/", function(req, res, next) {
   var associatedAccount = req.query.account;
   var type = req.query.type;
   var amount = req.query.amount;
+  var value = req.query.value;
   var startDate = req.query.startDate;
   var description = req.query.description;
+
+  // convert undefined to null
+
+  if (amount == undefined) {
+    amount = null;
+  }
+
+  if (value == undefined) {
+    value = null;
+  } else {
+    value = "'" + value + "'";
+  }
 
   if (startDate == undefined) {
     startDate = null;
@@ -24,6 +37,7 @@ router.post("/", function(req, res, next) {
     startDate = "'" + startDate + "'";
   }
 
+  // build query
   query =
     "call createNotificationTrigger('" +
     associatedAccount +
@@ -32,13 +46,14 @@ router.post("/", function(req, res, next) {
     "'," +
     amount +
     "," +
+    value +
+    "," +
     startDate +
     ",'" +
     description +
     "');";
 
   connection.getConnection(function(err, connection) {
-    // Executing the MySQL query (select all data from the 'users' table).
     connection.query(query, function(error, results, fields) {
       // If some error occurs, we throw an error.
       if (error) throw error;
@@ -58,7 +73,6 @@ router.get("/:associatedAccount", function(req, res, next) {
     res.send("associatedAccount not defined");
   } else {
     connection.getConnection(function(err, connection) {
-      // Executing the MySQL query (select all data from the 'users' table).
       connection.query(
         "select * from NotificationTrigger where associatedAccount =" + account,
         function(error, results, fields) {
@@ -82,7 +96,6 @@ router.post("/delete/", function(req, res, next) {
     ";";
 
   connection.getConnection(function(err, connection) {
-    // Executing the MySQL query (select all data from the 'users' table).
     connection.query(query, function(error, results, fields) {
       // If some error occurs, we throw an error.
       if (error) throw error;

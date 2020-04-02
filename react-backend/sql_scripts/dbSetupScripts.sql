@@ -30,6 +30,7 @@ create table NotificationTrigger (
     type varchar (30),
 	active bool default true,
     amount decimal(11, 2),
+    value varchar(30),
     startDate date default current_timestamp,
     description varchar (320),
     primary key (notificationTriggerID)
