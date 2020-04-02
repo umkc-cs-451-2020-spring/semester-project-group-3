@@ -1,26 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import icon from './icon.png';
+import { useDispatch } from 'react-redux';
 
 const Header = styled.div `
   grid-area: header;
   min-height: 60px;
   width: 100%;
   margin: 0 auto;
-  background: #006649;
+  background: white;
   text-align: left;
-  color: white;
+  color: #006649;
   font-size: 80px;
   font-weight: bold;
   vertical-align: center;
-  padding-left: 10px;
+  padding-left: 20px;
 `
 
 // Todo Add Logo here
 // https://www.commercebank.com/about-us/media-relations/commerce-logos
 // Hex codes: dark green (006649), light green (74BD43)
-export default () => (
-  <Header>
-      Commerce Bank
-  </Header>
-)
+export default function header() { 
+  const dispatch = useDispatch()
+  return (
+    <Header>
+        Commerce Bank <button className="logout-btn">Logout</button>
+    </Header>
+  );
+}
