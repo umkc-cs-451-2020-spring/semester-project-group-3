@@ -18,7 +18,8 @@ const renderTextField = (
       {...input}
       {...custom}
       style={{
-        backgroundColor: "white"
+        backgroundColor: "white",
+        width: "200px"
     }}
     InputProps={{
         style: {
