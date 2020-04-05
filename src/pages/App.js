@@ -11,7 +11,7 @@ function App() {
 // TODO logic for render component AKA Dashboard, Notification, Transaction
 // will live here. depending on what the state of our redux store we will
 // render a different component
-  const currentTab = useSelector((state) => state.currentTab );
+  const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   let currentPage;
   if (currentTab === "Dashboard") {
     currentPage = <Dashboard/>;

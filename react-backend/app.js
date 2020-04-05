@@ -9,6 +9,7 @@ var usersRouter = require("./routes/users");
 var accountsRouter = require("./routes/accounts");
 var transactionsRouter = require("./routes/transactions");
 var loginRouter = require("./routes/login");
+var notificationTriggersRouter = require("./routes/notificationTriggers");
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use("/users", usersRouter);
 app.use("/accounts", accountsRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/login", loginRouter);
+app.use("/notificationTriggers", notificationTriggersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

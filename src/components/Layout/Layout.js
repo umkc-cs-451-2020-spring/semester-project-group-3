@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../Header';
 import NavCol from '../NavCol';
-import { useSelector } from 'react-redux';
 
 // Todo change Container to be a component and not just a box.
 const Container = styled.div `
@@ -12,7 +11,7 @@ const Container = styled.div `
   width: 100%;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 8% 92%;
+  grid-template-rows: 15% 85%;
   grid-template-areas:
     "header"
     "main";
@@ -21,13 +20,13 @@ const Container = styled.div `
 const Wrapper = styled.div`
   grid-area: main;
   height: 100%;
-  border: 1px solid blue;
 `
 
 // move code below into own component
 const GridBox = styled.div `
  display: grid;
  height 100%;
+ background: #006649;
  grid-template-columns: 15% 85%;
  grid-template-rows: 100%;
  grid-template-areas: "NavCol Space";
@@ -38,9 +37,9 @@ const GridBox = styled.div `
 const Space = styled.div`
   grid-area: Space;
   width: 99%;
-  border: 1px solid red;
-  padding-left: 5px;
   padding-right: 5px;
+  overflow: auto;
+  background: #006649;
 `
 
 function Layout({ children }){

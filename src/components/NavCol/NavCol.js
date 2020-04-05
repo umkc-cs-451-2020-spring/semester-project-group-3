@@ -1,61 +1,97 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { renderDashboard, renderTransaction, renderNotification } from "../../rStore/actions/index";
+import { renderDashboard, renderTransaction, renderNotification } from "../../rStore/actions/tabChangeActions.js";
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
-const Column = styled.div `
-  grid-area: NavCol;
-  margin: 0 auto;
-  height: 100%;
-  width: 100%;
-  border: 1px solid blue;
-  position: relative;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 10% 10% 10%;
-`
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-// this is in 3 seperate components becuase if it was one all 3 would change color.
-// might need refactor to make this looks prettier.
-// todo add Css onhover to these components
-const Tab1 = styled.div`
-  text-align: Center;
-  border: 2px solid black;
-  align-self: stretch;
-  background: ${props => props.page === "Dashboard" ? "#80ff80": "#ffffff"};
-`
-const Tab2 = styled.div`
-  text-align: Center;
-  border: 2px solid black;
-  align-self: stretch;
-  background: ${props => props.page === "Transaction" ? "#80ff80": "#ffffff"};
-`
-const Tab3 = styled.div`
-  text-align: Center;
-  border: 2px solid black;
-  align-self: stretch;
-  background: ${props => props.page === "Notification" ? "#80ff80": "#ffffff"};
-`
-
-function NavCol(){
-  // this is how you access the redux store
-  const dispatch = useDispatch();
-  const currentTab = useSelector((state) => state.currentTab );
-  return(
-    <Column>
-      <Tab1 onClick={() => dispatch(renderDashboard())} page={currentTab}>
-        Dashboard
-      </Tab1>
-      <Tab2 onClick={() => dispatch(renderTransaction())} page={currentTab}>
-        Transactions
-      </Tab2>
-      <Tab3 onClick={() => dispatch(renderNotification())} page={currentTab}>
-        Notification
-        <br/>
-        Settings
-      </Tab3>
-    </Column>
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
   );
 }
 
-export default NavCol;
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingTop: "5px",
+    flexGrow: 3,
+    backgroundColor: '#006649',
+    display: 'flex',
+    height: '156px',
+    width: '110%'
+    
+  },
+  tabs: {
+    color: 'white',
+    borderRight: '1px solid #74BD43',
+  },
+}));
+
+export default function VerticalTabs() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch();
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    if(newValue === 0) {
+      dispatch(renderDashboard());
+    } else if(newValue === 1) {
+      dispatch(renderTransaction());
+    } else if (newValue === 1) {
+      dispatch(renderNotification());
+    }
+  };
+
+  return (
+    <div className={classes.root}>
+      <Tabs
+        orientation="vertical"
+        value={value}
+        onChange={handleChange}
+        className={classes.tabs}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "#74BD43"
+          }}}
+      >
+        <Tab label="Dashboard" {...a11yProps(0)}/>
+        <Tab label="Transactions" {...a11yProps(1)}/>
+        <Tab label="Notification Settings" {...a11yProps(2)}/>
+      </Tabs>
+      <TabPanel value={value} index={0}>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      </TabPanel>
+    </div>
+  );
+}

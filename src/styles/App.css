@@ -37,3 +37,15 @@
   display: inline-block;
   font-size: 20px;
 }
+
+.logout-btn {
+  position: absolute;
+  right: 0;
+  background-color: #74BD43;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  border-color: #006649;
+  display: inline-block;
+  font-size: 20px;
+}

@@ -1,79 +1,62 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { renderApp } from "../../rStore/actions/index";
 import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import validate from './validate';
 
-const validate = values => {
-    const errors = {}
-    const requiredFields = [
-        'username',
-        'password'
-    ]
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-          errors[field] = 'Required'
-        }
-    })
-    return errors
-} 
-
-const renderTextField = ({
-    input,
-    label,
-    meta: { touched, error },
-    ...custom
-    }) => (
-    <TextField 
-    style={{
-        backgroundColor: "white"
+const renderTextField = (
+    { input, label, meta: { touched, error }, ...custom },
+  ) => (
+    <TextField
+      label={label}
+      variant="filled"
+      hintText={label}
+      floatingLabelText={label}
+      helperText={touched && error}
+      {...input}
+      {...custom}
+      style={{
+        backgroundColor: "white",
+        width: "200px"
     }}
     InputProps={{
         style: {
             color: "black"
         }
     }}
-    color="primary"
-    id="filled-basic" 
-    label={label} 
-    variant="filled" 
-    helperText={touched && error}
-    //{...input}
-    {...custom}
-    />)
+    />
+  );
 
 const Login = props => {
-    const { handleSubmit, pristine, reset, submitting } = props
-    const dispatch = useDispatch();
+    const { handleSubmit, pristine, submitting } = props
     return (
         <div>
-            <br/>
+            <img className="logo-img" src={logo} alt ="Logo" />
                 <div className="App-header">
                     <h1>Login</h1>
-                    <form onSubmit={handleSubmit(val => console.log(val))}>
+                    <form onSubmit={handleSubmit}>
                         <div style={{padding: "10px"}}>
                             <Field
-                                name="username"
+                                name="email"
                                 component= {renderTextField}
-                                label="Username"
+                                label="Email"
                             />
                         </div>
                         <div>
                             <Field
                                 name="password"
+                                type="password"
                                 component= {renderTextField}
                                 label="Password"
                             />
                         </div>
                         <div style={{padding: "10px"}}>
-                            <button 
+                            <button
                             type="submit"
                             className="submit-btn"
-                            onClick={() => { dispatch(renderApp()) }}
+                            disabled={ pristine || submitting}
                             >
                                 Submit
                             </button>
@@ -82,7 +65,7 @@ const Login = props => {
                                 control={<Checkbox color="secondary" />}
                                 label="Remember me"
                                 labelPlacement="bottom"
-                            />                            
+                            />
                         </div>
                     </form>
                 </div>
@@ -91,6 +74,6 @@ const Login = props => {
 }
 
 export default reduxForm({
-    form: 'Login', 
+    form: 'Login',
     validate
 })(Login)
