@@ -70,7 +70,6 @@ function desc(a, b, orderBy) {
 }
 
 function stableSort(query, searchCol, array, cmp) {
-
   array = query ? array.filter(x => x[searchCol].includes(query)) : array;
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
