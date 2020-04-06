@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 
 const Header = styled.div `
   grid-area: header;
@@ -20,7 +19,6 @@ const Header = styled.div `
 // https://www.commercebank.com/about-us/media-relations/commerce-logos
 // Hex codes: dark green (006649), light green (74BD43)
 export default function header() { 
-  const dispatch = useDispatch()
   return (
     <Header>
         Commerce Bank <button className="logout-btn">Logout</button>
