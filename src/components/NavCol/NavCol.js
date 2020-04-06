@@ -65,7 +65,7 @@ export default function VerticalTabs() {
       dispatch(renderDashboard());
     } else if(newValue === 1) {
       dispatch(renderTransaction());
-    } else if (newValue === 1) {
+    } else if (newValue === 2) {
       dispatch(renderNotification());
     }
   };
