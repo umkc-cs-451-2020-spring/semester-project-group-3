@@ -18,15 +18,13 @@ router.post("/", function(req, res, next) {
   query =
     "select count(*) from Account where email = " +
     connection.escape(email) +
-    " and password = " +
-    connection.escape(password) +
-    ";";
+    " and password = AES_ENCRYPT(" +
+    connection.escape(password) + ", '" + config.password + 
+    "');";
 
   query_2 =
     "select accountID from Account where email = " +
     connection.escape(email) +
-    " and password = " +
-    connection.escape(password) +
     ";";
 
   connection.getConnection(function(err, connection) {
