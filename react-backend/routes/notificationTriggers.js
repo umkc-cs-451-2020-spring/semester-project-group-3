@@ -40,17 +40,17 @@ router.post("/", function(req, res, next) {
   // build query
   query =
     "call createNotificationTrigger('" +
-    associatedAccount +
+    connection.escape(associatedAccount) +
     "','" +
-    type +
+    connection.escape(type) +
     "'," +
-    amount +
+    connection.escape(amount) +
     "," +
-    value +
+    connection.escape(value) +
     "," +
-    startDate +
+    connection.escape(startDate) +
     ",'" +
-    description +
+    connection.escape(description) +
     "');";
 
   connection.getConnection(function(err, connection) {
