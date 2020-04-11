@@ -95,7 +95,6 @@ const SignUp = props => {
                         > 
                         Cancel 
                         </button>
-                        <br/><br/>
                     </div>
                 </form>
             </div>
