@@ -16,15 +16,18 @@ router.post("/", function(req, res, next) {
   var email = req.query.email;
   var password = req.query.password;
   var balance = req.query.balance;
+  
   query =
     "insert into account (accountID, email, password, balance) " + 
-    "values (?, ?, AES_ENCRYPT(?, '" + config.password + "', ?);";
+    "values (" + connection.escape(accountID) + ", " + connection.escape(email) + 
+    ", AES_ENCRYPT(" + connection.escape(password) + ", '" + config.password +
+     "', " + connection.escape(balance) + ");";
 
   testQuery = 
   "select * from account where accountID = " + connection.escape(accountID) + ";"
 
   connection.getConnection(function(err, connection) {
-    connection.query(query, [accountID, email, password, balance], function(error, results, fields) {
+    connection.query(query, function(error, results, fields) {
       // If some error occurs, we throw an error.
       if (error) throw error;
 
