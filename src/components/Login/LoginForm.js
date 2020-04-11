@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import { renderSignUp } from '../../rStore/actions/tabChangeActions'
@@ -34,8 +33,8 @@ const Login = props => {
     const { handleSubmit, pristine, submitting } = props
     const dispatch = useDispatch();
     return (
-        <div>
-            <img className="logo-img" src={logo} alt ="Logo" />
+        <div className="login-page">
+            <img className="logo-img" src="/logo.png" alt ="Logo" />
                 <div className="App-header">
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
@@ -72,6 +71,7 @@ const Login = props => {
                             Sign Up 
                             </button>
                         </div>
+                        <br/><br/>
                     </form>
                 </div>
         </div>

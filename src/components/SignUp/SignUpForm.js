@@ -36,8 +36,8 @@ const SignUp = props => {
     const { handleSubmit, pristine, submitting } = props
     const dispatch = useDispatch();
     return (
-        <div>
-            <br/><br/>
+        <div className="login-page">
+            <img className="logo-img" src="/logo.png" alt ="Logo" />
             <div className="App-header">
                 <h1>Sign Up</h1>
                 <form onSubmit={handleSubmit}>
@@ -79,7 +79,7 @@ const SignUp = props => {
                         />
                     </div>
                     <br/>
-                    <div style={{padding: "10px"}}>
+                    <div style={{padding: "5px"}}>
                         <button
                         type="submit"
                         className="submit-btn"

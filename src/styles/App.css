@@ -4,13 +4,11 @@
 
 .logo-img {
   max-width: 100%;
-  background-color: white;
 }
 
 .App-header {
   background-color: #006649;
-  min-height: 60vh;
-  width: 40%;
+  width: 30%;
   padding-top: 20px;
   display: relative;
   flex-direction: column;
@@ -19,13 +17,16 @@
   font-size: calc(10px + 2vmin);
   display: inline-block;
   color: white;
-  border: #74BD43;
-  border-style: double;
-  border-radius: 20px;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.login-page {
+  background-image: url("/background.jpg"); 
+  /* free image from: https://www.pexels.com/photo/green-leaf-1353938/ */
+  min-height: 100vh;
 }
 
 .submit-btn {
@@ -36,6 +37,7 @@
   border-radius: 5px;
   display: inline-block;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .logout-btn {
@@ -48,6 +50,7 @@
   border-color: #006649;
   display: inline-block;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .link-btn {
