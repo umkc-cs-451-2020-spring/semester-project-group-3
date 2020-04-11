@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/App.css';
-import LoginForm from '../components/Login'
+import LoginForm from '../components/Login';
+import SignUpForm from '../components/SignUp/SignUpForm';
 import App from './App';
 import { SubmissionError } from 'redux-form'
 import axios from 'axios';
@@ -12,10 +13,12 @@ function LoginPage() {
   const axios = require('axios');
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.tabChangeReducer.currentPage );
-  // console.log(currentPage);
   let displayPage;
+  
   if (currentPage === "App") {
     displayPage = <App/>;
+  }else if (currentPage === "SignUp") {
+    displayPage = <SignUpForm/>
   }else if (currentPage === "Login") {
       displayPage = <LoginForm onSubmit={values=> {
         dispatch(loginBegin());
