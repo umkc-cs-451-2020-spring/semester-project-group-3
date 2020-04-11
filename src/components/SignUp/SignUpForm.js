@@ -1,8 +1,13 @@
 import React from 'react';
-import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
+import { renderLogin } from '../../rStore/actions/tabChangeActions';
 import validate from './validate';
+import { useDispatch } from 'react-redux';
+
+function handleClick(e) {
+    e.preventDefault();
+  }
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -29,12 +34,14 @@ const renderTextField = (
 
 const SignUp = props => {
     const { handleSubmit, pristine, submitting } = props
+    const dispatch = useDispatch();
     return (
         <div>
+            <br/><br/>
             <div className="App-header">
                 <h1>Sign Up</h1>
                 <form onSubmit={handleSubmit}>
-                <div style={{padding: "10px"}}>
+                <div>
                         <Field
                             name="accountID"
                             component= {renderTextField}
@@ -71,6 +78,7 @@ const SignUp = props => {
                             label="Balance"
                         />
                     </div>
+                    <br/>
                     <div style={{padding: "10px"}}>
                         <button
                         type="submit"
@@ -79,6 +87,15 @@ const SignUp = props => {
                         >
                         Submit
                         </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button 
+                        type="button" 
+                        className="link-btn" 
+                        onClick={() => dispatch(renderLogin())}
+                        > 
+                        Cancel 
+                        </button>
+                        <br/><br/>
                     </div>
                 </form>
             </div>

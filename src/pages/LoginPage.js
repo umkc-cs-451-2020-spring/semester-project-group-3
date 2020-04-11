@@ -14,11 +14,25 @@ function LoginPage() {
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.tabChangeReducer.currentPage );
   let displayPage;
-  
+
   if (currentPage === "App") {
     displayPage = <App/>;
   }else if (currentPage === "SignUp") {
-    displayPage = <SignUpForm/>
+    displayPage = <SignUpForm onSubmit={values=> {
+      axios.post('/signup?accountID=' + values.accountID + '&email=' + values.email +
+      '&password=' + values.password + '&balance=' + values.balance)
+      .then(function(response) {
+        if (response.data === 'Success') {
+          dispatch(setCurrentUser(values.accountID));
+          dispatch(renderApp());
+        }else {
+          window.alert(response.data);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+    }}/>;
   }else if (currentPage === "Login") {
       displayPage = <LoginForm onSubmit={values=> {
         dispatch(loginBegin());

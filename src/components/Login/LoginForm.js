@@ -2,9 +2,9 @@ import React from 'react';
 import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { renderSignUp } from '../../rStore/actions/tabChangeActions'
 import validate from './validate';
+import { useDispatch } from 'react-redux';
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -13,6 +13,7 @@ const renderTextField = (
       label={label}
       variant="filled"
       hintText={label}
+      autoComplete='off'
       floatingLabelText={label}
       helperText={touched && error}
       {...input}
@@ -31,6 +32,7 @@ const renderTextField = (
 
 const Login = props => {
     const { handleSubmit, pristine, submitting } = props
+    const dispatch = useDispatch();
     return (
         <div>
             <img className="logo-img" src={logo} alt ="Logo" />
@@ -52,6 +54,7 @@ const Login = props => {
                                 label="Password"
                             />
                         </div>
+                        <br/>
                         <div style={{padding: "10px"}}>
                             <button
                             type="submit"
@@ -60,12 +63,14 @@ const Login = props => {
                             >
                                 Submit
                             </button>
-                            <FormControlLabel
-                                value="Remember me"
-                                control={<Checkbox color="secondary" />}
-                                label="Remember me"
-                                labelPlacement="bottom"
-                            />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button 
+                            type="button" 
+                            className="link-btn" 
+                            onClick={() => dispatch(renderSignUp())}
+                            > 
+                            Sign Up 
+                            </button>
                         </div>
                     </form>
                 </div>

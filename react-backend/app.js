@@ -9,13 +9,14 @@ var usersRouter = require("./routes/users");
 var accountsRouter = require("./routes/accounts");
 var transactionsRouter = require("./routes/transactions");
 var loginRouter = require("./routes/login");
+var signupRouter = require("./routes/signup");
 var notificationTriggersRouter = require("./routes/notificationTriggers");
 
 var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.set("view engine", "pug");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -28,6 +29,7 @@ app.use("/users", usersRouter);
 app.use("/accounts", accountsRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/login", loginRouter);
+app.use("/signup", signupRouter);
 app.use("/notificationTriggers", notificationTriggersRouter);
 
 // catch 404 and forward to error handler

@@ -24,14 +24,14 @@ export default function(values) {
         errors.confirmedPword = 'Passwords do not match';
       }
     if (
-        values.password.length !== 6
-        ) {
-        errors.confirmedPword = 'Password is too short';
-        }
-    if (
         values.balance && !/^[0-9]{1,6}$/i.test(values.balance)
         ) {
         errors.balance = 'Balance must be a positive number';
+        }
+      if (
+        values.accountID && !/^[0-9]{9}$/i.test(values.accountID)
+        ) {
+        errors.accountID = 'Must be a 9 digits number';
         }
     return errors;
   }

@@ -32,6 +32,18 @@ function tabChangeReducer(state = initialState, action) {
         currentTab: "Dashboard"
       }
     }
+    case types.LOGOUT: {
+      return {
+        currentPage: "Login",
+        currentTab: "Dashboard"
+      }
+    }
+    case types.SIGNUP: {
+      return {
+        currentPage: "SignUp",
+        currentTab: "Dashboard"
+      }
+    }
     default: return state;
   }
 }
