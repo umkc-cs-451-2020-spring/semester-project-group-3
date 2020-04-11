@@ -60,7 +60,7 @@ function Dashboard() {
   }
   return (
     <div>
-      <Notifications acctID={acctID} />
+      <Notifications />
       <Table rows={createRows(transactions)}></Table>
     </div>
   );

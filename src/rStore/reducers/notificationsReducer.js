@@ -1,9 +1,9 @@
 import types from "../constants/action-types";
 
 const initialState = {
-  items: [],
-  loading: false,
-  error: null,
+  notif_items: [],
+  notif_loading: false,
+  notif_error: null,
 };
 
 function notificationsReducer(state = initialState, action) {
@@ -12,23 +12,23 @@ function notificationsReducer(state = initialState, action) {
       // Mark the state as "loading" so we can show a spinner or something
       return {
         ...state,
-        loading: true,
-        error: null,
+        notif_loading: true,
+        notif_error: null,
       };
 
     case types.FETCH_NOTIFICATIONS_SUCCESS:
       return {
         ...state,
-        loading: false,
-        items: action.payload.notifications,
+        notif_loading: false,
+        notif_items: action.payload.notifications,
       };
 
     case types.FETCH_NOTIFICATIONS_FAILURE:
       return {
         ...state,
-        loading: false,
-        error: action.payload.error,
-        items: [],
+        notif_loading: false,
+        notif_error: action.payload.error,
+        notif_items: [],
       };
 
     default:

@@ -467,11 +467,11 @@ function EnhancedTable(notifications) {
 }
 
 // This is the Defualt Compoent that will export.
-function Notifications(props) {
-  const acctID = props.acctID;
-
+function Notifications() {
   const [notificationList, setNotificationList] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+
+  const acctID = useSelector((state) => state.loginReducer.accountID);
 
   const dispatch = useDispatch();
 
@@ -483,18 +483,22 @@ function Notifications(props) {
     getNotifications(acctID);
   }, []);
 
-  // const error = useSelector((state) => state.notificationsReducer.error);
-  // const loading = useSelector((state) => state.notificationsReducer.loading);
+  const notif_error = useSelector((state) =>
+    console.log(state.notificationsReducer.notif_error)
+  );
+  const notif_loading = useSelector(
+    (state) => state.notificationsReducer.notif_loading
+  );
   const notifications = useSelector(
-    (state) => state.notificationsReducer.items
+    (state) => state.notificationsReducer.notif_items
   );
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-  // if (error) {
-  //   return <div>Error! {error}</div>;
-  // }
+  if (notif_loading) {
+    return <div>Loading...</div>;
+  }
+  if (notif_error) {
+    return <div>Error! {notif_error}</div>;
+  }
 
   return EnhancedTable(notifications);
 }
