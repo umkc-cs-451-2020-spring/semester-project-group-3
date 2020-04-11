@@ -6,7 +6,7 @@ values
     (
         "211111110",
         "test@gmail.com",
-        "P@ssword1",        -- AES_ENCRYPT("P@ssword1", "Gr0up3!2020")
+        "P@ssword1",        -- update account set password = AES_ENCRYPT("P@ssword1", "Gr0up3!2020") where accountID = "211111110"
         5000.00
     );
 
