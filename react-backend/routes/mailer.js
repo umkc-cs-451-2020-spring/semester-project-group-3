@@ -39,25 +39,25 @@ router.post("/", function(req, res, next) {
             console.log(results);
 
             var transporter = nodemailer.createTransport({
-              service: 'Yahoo',
+              service: 'gmail',
               auth: {
-                user: 'Group3Commerce2020@yahoo.com',
+                user: 'Group3Commerce2020@gmail.com',
                 pass: 'Gr0up3!2020'
               }
             });
 
             var mailOptions = {
                 from: 'Group3Commerce2020@gmail.com',
-                to: "samfeye@gmail.com",
+                to: connection.escape(email),
                 subject: 'Recover password, Commerce Bank',
-                text: 'Here is your recovered password: ' + results
+                text: 'Here is your recovered password: ' + results[0]["password"]
             };
 
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
-                    res.send("Email wasn't sent, Sam will fix this!")
-                    //console.log(error);
+                    console.log(error);
                 } else {
+                    res.send("Email sent successfully to '" + email + "' !");
                     console.log('Email sent: ' + info.response);
                 }
             });
