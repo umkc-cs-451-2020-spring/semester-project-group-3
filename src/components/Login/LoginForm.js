@@ -89,10 +89,18 @@ const Login = props => {
                         <div style={{padding: "10px"}}>
                             <button
                             type="submit"
-                            className="submit-btn"
+                            className="login-btn"
                             disabled={ pristine || submitting}
                             >
-                                Submit
+                                Login
+                            </button>
+                        </div>
+                        <button 
+                            type="button" 
+                            className="link-btn" 
+                            onClick={() => dispatch(renderSignUp())}
+                            > 
+                            Sign Up 
                             </button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button 
@@ -100,9 +108,8 @@ const Login = props => {
                             className="link-btn" 
                             onClick={() => dispatch(renderSignUp())}
                             > 
-                            Sign Up 
+                            Forgot password 
                             </button>
-                        </div>
                     </form>
                 </div>
         </div>

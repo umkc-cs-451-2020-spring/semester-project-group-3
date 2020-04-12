@@ -35,6 +35,19 @@
   color: white;
   padding: 6px 10px;
   text-align: center;
+  min-width: 100px;
+  /* border-radius: 5px; */
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #74BD43;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  min-width: 200px;
   /* border-radius: 5px; */
   display: inline-block;
   font-size: 20px;
@@ -59,7 +72,7 @@
   border: none;
   padding: 0!important;
   font-family: arial, sans-serif;
-  font-size: 20px;
+  font-size: 15px;
   color: white;
   text-decoration: underline;
   cursor: pointer;
