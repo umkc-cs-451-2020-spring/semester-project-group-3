@@ -34,7 +34,15 @@ function LoginPage() {
       })
     }}/>;
   }else if (currentPage === "ForgotPass"){
-    displayPage = <ForgotPass />
+    displayPage = <ForgotPass onSubmit={values=> {
+      axios.post('/mailer?email=' + values.email)
+      .then(function(response) {
+        window.alert(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+    }}/>
   }else if (currentPage === "Login") {
       displayPage = <LoginForm onSubmit={values=> {
         dispatch(loginBegin());
