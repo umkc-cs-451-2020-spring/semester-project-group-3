@@ -9,6 +9,7 @@ var usersRouter = require("./routes/users");
 var accountsRouter = require("./routes/accounts");
 var transactionsRouter = require("./routes/transactions");
 var loginRouter = require("./routes/login");
+var mailerRouter = require("./routes/mailer");
 var signupRouter = require("./routes/signup");
 var notificationTriggersRouter = require("./routes/notificationTriggers");
 
@@ -29,6 +30,7 @@ app.use("/users", usersRouter);
 app.use("/accounts", accountsRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/login", loginRouter);
+app.use("/mailer", mailerRouter);
 app.use("/signup", signupRouter);
 app.use("/notificationTriggers", notificationTriggersRouter);
 

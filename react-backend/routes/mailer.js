@@ -12,14 +12,6 @@ const connection = mysql.createPool({
     database: config.database
   });
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'Group3Commerce2020@gmail.com',
-    pass: 'Gr0up3!2020'
-  }
-});
-
 router.post("/", function(req, res, next) {
     console.log("EMAIL:" + req.query.email);
     var email = req.query.email;
@@ -29,7 +21,7 @@ router.post("/", function(req, res, next) {
       connection.escape(email) + ";";
   
     query_2 =
-      "select AES_DECRYPT(password, '" + config.password + "')(CHAR) from Account where email = " +
+      "select password from Account where email = " +
       connection.escape(email) + ";";
 
     connection.getConnection(function(err, connection) {
@@ -38,21 +30,33 @@ router.post("/", function(req, res, next) {
       // If some error occurs, we throw an error.
       if (error) throw error;
 
-      if(results[0] > 0) {
-        connection.query(query2, function(error, results, fields) {
+      var count = results[0]["count(*)"];
+      if(count > 0) {
+        connection.query(query_2, function(error, results, fields) {
             // If some error occurs, we throw an error.
             if (error) throw error;
 
+            console.log(results);
+
+            var transporter = nodemailer.createTransport({
+              service: 'Yahoo',
+              auth: {
+                user: 'Group3Commerce2020@yahoo.com',
+                pass: 'Gr0up3!2020'
+              }
+            });
+
             var mailOptions = {
                 from: 'Group3Commerce2020@gmail.com',
-                to: connection.escape(email),
+                to: "samfeye@gmail.com",
                 subject: 'Recover password, Commerce Bank',
-                text: 'Here is your recovered password: ' + results[0]
+                text: 'Here is your recovered password: ' + results
             };
 
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
-                    console.log(error);
+                    res.send("Email wasn't sent, Sam will fix this!")
+                    //console.log(error);
                 } else {
                     console.log('Email sent: ' + info.response);
                 }
@@ -64,3 +68,5 @@ router.post("/", function(req, res, next) {
         });
     }); 
 });
+
+module.exports = router;
