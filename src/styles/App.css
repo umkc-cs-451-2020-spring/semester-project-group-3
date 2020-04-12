@@ -17,6 +17,7 @@
   font-size: calc(10px + 2vmin);
   display: inline-block;
   color: white;
+  opacity: 95%;
 }
 
 .App-link {

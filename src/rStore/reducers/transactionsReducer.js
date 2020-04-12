@@ -32,6 +32,14 @@ function transactionsReducer(state = initialState, action) {
         items: []
       };
 
+      case types.LOGOUT:
+
+      return {
+        items: [],
+        loading: false,
+        error: null
+      };
+
     default:
       return state;
   }

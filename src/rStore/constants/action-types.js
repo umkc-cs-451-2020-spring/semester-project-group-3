@@ -11,6 +11,8 @@ const LOGIN_BEGIN                = 'LOGIN_BEGIN';
 const LOGIN_FAILURE              = 'LOGIN_FAILURE';
 const LOGOUT                     = 'LOGOUT';
 const SIGNUP                     = 'SIGNUP';
+const REMEMBER_ME                = 'REMEMBER_ME';
+const NO_REMEMBER                = 'NO_REMEMBER';
 
 
 export default {
@@ -25,5 +27,7 @@ export default {
   LOGIN_BEGIN,
   LOGIN_FAILURE,
   LOGOUT,
-  SIGNUP
+  SIGNUP,
+  REMEMBER_ME,
+  NO_REMEMBER
 }

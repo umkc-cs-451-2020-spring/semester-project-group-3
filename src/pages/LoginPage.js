@@ -13,6 +13,7 @@ function LoginPage() {
   const axios = require('axios');
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.tabChangeReducer.currentPage );
+  const rememberMe = useSelector((state) => state.loginReducer.rememberMe)
   let displayPage;
 
   if (currentPage === "App") {
@@ -40,9 +41,11 @@ function LoginPage() {
         .then(function(response) {
           dispatch(setCurrentUser(response.data.accountID));
           const loggedIn = response.data.isLoggedIn;
-          if(loggedIn)
-            {dispatch(renderApp());}
-          else {
+          if(loggedIn){
+            localStorage.setItem('rememberMe', rememberMe);
+            localStorage.setItem('user', rememberMe ? response.data.accountID : '');
+            dispatch(renderApp());
+          }else {
             dispatch(loginFailure("User not found"));
             window.alert('Incorrect email/password...');
             throw new SubmissionError({
