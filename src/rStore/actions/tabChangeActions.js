@@ -19,3 +19,6 @@ export function renderLogin() {
 export function renderSignUp() {
   return { type: types.SIGNUP}
 }
+export function renderForgotPass() {
+  return { type: types.FORGOT_PASS}
+}

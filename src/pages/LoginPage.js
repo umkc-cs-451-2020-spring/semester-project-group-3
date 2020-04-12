@@ -2,9 +2,9 @@ import React from 'react';
 import '../styles/App.css';
 import LoginForm from '../components/Login';
 import SignUpForm from '../components/SignUp/SignUpForm';
+import ForgotPass from '../components/ForgotPass/forgotPass';
 import App from './App';
 import { SubmissionError } from 'redux-form'
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginBegin, setCurrentUser, loginFailure } from '../rStore/actions/loginActions';
 import { renderApp } from '../rStore/actions/tabChangeActions';
@@ -28,12 +28,13 @@ function LoginPage() {
           dispatch(renderApp());
         }else {
           window.alert(response.data);
-        }
-      })
+        }})
       .catch(function(error) {
         console.log(error);
       })
     }}/>;
+  }else if (currentPage === "ForgotPass"){
+    displayPage = <ForgotPass />
   }else if (currentPage === "Login") {
       displayPage = <LoginForm onSubmit={values=> {
         dispatch(loginBegin());
@@ -51,14 +52,12 @@ function LoginPage() {
             throw new SubmissionError({
               _error: 'Login failed!'
             });
-          }
-        })
+          }})
         .catch(function(error) {
           dispatch(loginFailure(error))
           console.log(error);
         })
-      }
-    }/>;
+      }}/>;
   }
       return (
         <div className="App">

@@ -13,6 +13,7 @@ const LOGOUT                     = 'LOGOUT';
 const SIGNUP                     = 'SIGNUP';
 const REMEMBER_ME                = 'REMEMBER_ME';
 const NO_REMEMBER                = 'NO_REMEMBER';
+const FORGOT_PASS                = 'FORGOT_PASS';
 
 
 export default {
@@ -29,5 +30,6 @@ export default {
   LOGOUT,
   SIGNUP,
   REMEMBER_ME,
-  NO_REMEMBER
+  NO_REMEMBER,
+  FORGOT_PASS
 }

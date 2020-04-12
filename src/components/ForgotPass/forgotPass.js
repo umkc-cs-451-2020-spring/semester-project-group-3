@@ -28,50 +28,20 @@ const renderTextField = (
     />
   );
 
-const SignUp = props => {
+const forgotPass = props => {
     const { handleSubmit, pristine, submitting } = props
     const dispatch = useDispatch();
     return (
         <div className="login-page">
             <img className="logo-img" src="/logo.png" alt ="Logo" />
             <div className="App-header">
-                <h1>Sign Up</h1>
+                <h2>Forgot Password</h2>
                 <form onSubmit={handleSubmit}>
-                <div>
-                        <Field
-                            name="accountID"
-                            component= {renderTextField}
-                            label="Account Number"
-                        />
-                    </div>
                     <div>
                         <Field
                             name="email"
                             component= {renderTextField}
                             label="Email"
-                        />
-                    </div>
-                    <div>
-                        <Field
-                            name="password"
-                            type="password"
-                            component= {renderTextField}
-                            label="Password"
-                        />
-                    </div>
-                    <div>
-                        <Field
-                            name="confirmedPword"
-                            type="password"
-                            component= {renderTextField}
-                            label="Confirm Password"
-                        />
-                    </div>
-                    <div>
-                        <Field
-                            name="balance"
-                            component= {renderTextField}
-                            label="Balance"
                         />
                     </div>
                     <br/>
@@ -99,6 +69,6 @@ const SignUp = props => {
 }
 
 export default reduxForm({
-    form: 'SignUp',
+    form: 'forgotPass',
     validate
-})(SignUp)
+})(forgotPass)

@@ -44,6 +44,12 @@ function tabChangeReducer(state = initialState, action) {
         currentTab: "Dashboard"
       }
     }
+    case types.FORGOT_PASS: {
+      return {
+        currentPage: "ForgotPass",
+        currentTab: "Dashboard"
+      }
+    }
     default: return state;
   }
 }

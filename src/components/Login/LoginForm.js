@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { renderSignUp, renderApp, renderLogin } from '../../rStore/actions/tabChangeActions';
+import { renderSignUp, renderApp, renderForgotPass } from '../../rStore/actions/tabChangeActions';
 import { rememberMe, noRemember, setCurrentUser } from '../../rStore/actions/loginActions';
 import validate from './validate';
 import { useDispatch } from 'react-redux';
@@ -106,7 +106,7 @@ const Login = props => {
                             <button 
                             type="button" 
                             className="link-btn" 
-                            onClick={() => dispatch(renderSignUp())}
+                            onClick={() => dispatch(renderForgotPass())}
                             > 
                             Forgot password 
                             </button>
