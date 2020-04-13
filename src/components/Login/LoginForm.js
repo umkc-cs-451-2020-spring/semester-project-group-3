@@ -1,10 +1,12 @@
 import React from 'react';
-import logo from './logo.png';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { renderSignUp, renderApp, renderForgotPass } from '../../rStore/actions/tabChangeActions';
+import { rememberMe, noRemember, setCurrentUser } from '../../rStore/actions/loginActions';
 import validate from './validate';
+import { useDispatch } from 'react-redux';
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -13,6 +15,7 @@ const renderTextField = (
       label={label}
       variant="filled"
       hintText={label}
+      autoComplete='off'
       floatingLabelText={label}
       helperText={touched && error}
       {...input}
@@ -31,9 +34,30 @@ const renderTextField = (
 
 const Login = props => {
     const { handleSubmit, pristine, submitting } = props
+    const [checked, setChecked] = React.useState(false);
+
+    React.useEffect(() => {
+        const remembered = localStorage.getItem('rememberMe') === 'true';
+        const accountID = rememberMe ? localStorage.getItem('user') : '';
+        if(remembered) {
+            dispatch(setCurrentUser(accountID));
+            dispatch(renderApp());
+        }
+    });
+  
+    const handleChange = (event) => {
+      setChecked(event.target.checked);
+      if(event.target.checked === true) {
+        dispatch(rememberMe())
+      }else{
+          dispatch(noRemember())
+      }
+    };
+
+    const dispatch = useDispatch();
     return (
-        <div>
-            <img className="logo-img" src={logo} alt ="Logo" />
+        <div className="login-page">
+            <img className="logo-img" src="/logo.png" alt ="Logo" />
                 <div className="App-header">
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
@@ -52,21 +76,40 @@ const Login = props => {
                                 label="Password"
                             />
                         </div>
+                        <div>
+                            <FormControlLabel
+                                value="Remember me"
+                                control={<Checkbox  color="secondary" 
+                                                    defaultUnchecked
+                                                    onChange={handleChange} 
+                                                    checked={checked} />}
+                                label="Remember me"
+                                labelPlacement="right"/>
+                        </div>
                         <div style={{padding: "10px"}}>
                             <button
                             type="submit"
-                            className="submit-btn"
+                            className="login-btn"
                             disabled={ pristine || submitting}
                             >
-                                Submit
+                                Login
                             </button>
-                            <FormControlLabel
-                                value="Remember me"
-                                control={<Checkbox color="secondary" />}
-                                label="Remember me"
-                                labelPlacement="bottom"
-                            />
                         </div>
+                        <button 
+                            type="button" 
+                            className="link-btn" 
+                            onClick={() => dispatch(renderSignUp())}
+                            > 
+                            Sign Up 
+                            </button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button 
+                            type="button" 
+                            className="link-btn" 
+                            onClick={() => dispatch(renderForgotPass())}
+                            > 
+                            Forgot password 
+                            </button>
                     </form>
                 </div>
         </div>

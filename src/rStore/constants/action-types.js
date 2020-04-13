@@ -10,6 +10,10 @@ const FETCH_TRANSACTIONS_FAILURE = 'FETCH_TRANSACTIONS_FAILURE';
 const LOGIN_BEGIN                = 'LOGIN_BEGIN';
 const LOGIN_FAILURE              = 'LOGIN_FAILURE';
 const LOGOUT                     = 'LOGOUT';
+const SIGNUP                     = 'SIGNUP';
+const REMEMBER_ME                = 'REMEMBER_ME';
+const NO_REMEMBER                = 'NO_REMEMBER';
+const FORGOT_PASS                = 'FORGOT_PASS';
 
 
 export default {
@@ -23,5 +27,9 @@ export default {
   FETCH_TRANSACTIONS_FAILURE,
   LOGIN_BEGIN,
   LOGIN_FAILURE,
-  LOGOUT
+  LOGOUT,
+  SIGNUP,
+  REMEMBER_ME,
+  NO_REMEMBER,
+  FORGOT_PASS
 }

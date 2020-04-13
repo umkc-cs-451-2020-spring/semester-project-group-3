@@ -5,6 +5,7 @@ import NavCol from '../NavCol';
 
 // Todo change Container to be a component and not just a box.
 const Container = styled.div `
+  background-image: url("/background.jpg"); 
   position: absolute;
   margin: 0 auto;
   height: 100%;
@@ -20,6 +21,8 @@ const Container = styled.div `
 const Wrapper = styled.div`
   grid-area: main;
   height: 100%;
+  opacity: 95%;
+
 `
 
 // move code below into own component
