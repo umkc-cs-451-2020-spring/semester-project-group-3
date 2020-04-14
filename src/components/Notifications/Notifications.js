@@ -26,8 +26,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
-import { useSelector, useDispatch } from "react-redux";
-import fetchNotifications from "./notificationAction.js";
 
 // I added all the inports youll need for material UI table.
 // Most likely i added to much.
@@ -467,39 +465,12 @@ function EnhancedTable(notifications) {
 }
 
 // This is the Defualt Compoent that will export.
-function Notifications() {
+function Notifications(props) {
   const [notificationList, setNotificationList] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
-  const acctID = useSelector((state) => state.loginReducer.accountID);
+  console.log(props.notifications);
 
-  const dispatch = useDispatch();
-
-  async function getNotifications(acctID) {
-    await dispatch(fetchNotifications(acctID));
-  }
-  // this is called after the component is rendered.
-  React.useEffect(() => {
-    getNotifications(acctID);
-  }, []);
-
-  const notif_error = useSelector((state) =>
-    console.log(state.notificationsReducer.notif_error)
-  );
-  const notif_loading = useSelector(
-    (state) => state.notificationsReducer.notif_loading
-  );
-  const notifications = useSelector(
-    (state) => state.notificationsReducer.notif_items
-  );
-
-  if (notif_loading) {
-    return <div>Loading...</div>;
-  }
-  if (notif_error) {
-    return <div>Error! {notif_error}</div>;
-  }
-
-  return EnhancedTable(notifications);
+  return EnhancedTable(props.notifications);
 }
 export default Notifications;

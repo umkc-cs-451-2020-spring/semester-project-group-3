@@ -4,7 +4,7 @@ import {
   fetchNotificationsFailure,
 } from "../../rStore/actions/notificationActions.js";
 
-// todo this will be passed an accound number.
+// todo this will be passed an account number.
 export default function fetchNotifications(acctID) {
   const axios = require("axios");
   return (dispatch) => {

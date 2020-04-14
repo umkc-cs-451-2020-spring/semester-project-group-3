@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Table from "../Table";
 import Notifications from "../Notifications";
 import fetchTransactions from "./transactionAction.js";
+import fetchNotifications from "./notificationAction.js";
 import { useSelector, useDispatch } from "react-redux";
 
 function Dashboard() {
@@ -40,6 +41,15 @@ function Dashboard() {
     }
     return tempRows;
   }
+
+  async function getNotifications() {
+    await dispatch(fetchNotifications(acctID));
+  }
+  // this is called after the component is rendered.
+  React.useEffect(() => {
+    getNotifications();
+  }, []);
+
   async function getTransactions() {
     await dispatch(fetchTransactions(acctID));
   }
@@ -52,15 +62,28 @@ function Dashboard() {
   const loading = useSelector((state) => state.transactionsReducer.loading);
   const transactions = useSelector((state) => state.transactionsReducer.items);
 
-  if (loading) {
+  const notif_error = useSelector((state) =>
+    console.log(state.notificationsReducer.notif_error)
+  );
+  const notif_loading = useSelector(
+    (state) => state.notificationsReducer.notif_loading
+  );
+  const notifications = useSelector(
+    (state) => state.notificationsReducer.notif_items
+  );
+
+  if (loading || notif_loading) {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>Error! {error}</div>;
+    return <div>Error while fetching transactions: {error}</div>;
+  }
+  if (notif_error) {
+    return <div>Error while fetching notifications: {notif_error}</div>;
   }
   return (
     <div>
-      <Notifications />
+      <Notifications notifications={notifications} />
       <Table rows={createRows(transactions)}></Table>
     </div>
   );
