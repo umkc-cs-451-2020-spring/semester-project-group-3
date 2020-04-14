@@ -14,13 +14,6 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -35,16 +28,6 @@ const Wrapper = styled.div`
   width: 100%;
   border: 1px solid blue;
 `;
-// Defualt functions for sorting. Leave these the same.
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
 
 const SearchArea = styled.div`
   text-align: "center";
@@ -95,24 +78,14 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-function stableSort(query, searchCol, array, cmp) {
-  array = query ? array.filter((x) => x[searchCol].includes(query)) : array;
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-function getSorting(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => desc(a, b, orderBy)
-    : (a, b) => -desc(a, b, orderBy);
-}
 // put header here
 const headCells = [
-  { id: "pDate", numeric: true, disablePadding: true, label: "Date" },
+  {
+    id: "processingDate",
+    numeric: true,
+    disablePadding: true,
+    label: "Date",
+  },
   { id: "type", numeric: true, disablePadding: false, label: "Type" },
   {
     id: "description",
@@ -122,8 +95,8 @@ const headCells = [
   },
 ];
 // take data from database and pass into this function that will convert it into an object.
-function createData(pDate, type, description) {
-  return { pDate, type, description };
+function createData(processingDate, type, description) {
+  return { processingDate, type, description };
 }
 function createRows(notifications) {
   var tempRows = [];
@@ -144,30 +117,11 @@ function createRows(notifications) {
 
 // Table header lives here
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  const { classes, order, orderBy, numSelected } = props;
 
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all Notifications" }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -178,7 +132,6 @@ function EnhancedTableHead(props) {
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -196,9 +149,6 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -225,42 +175,9 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Transactions
+          Notifications
         </Typography>
       )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon /> // TODO add onclick for deleting things
-          </IconButton>
-        </Tooltip>
-      ) : null}
-      <SearchArea>
-        <StyledSelect
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={searchCol}
-          onChange={handleChange}
-        >
-          <MenuItem value={"description"}>Description</MenuItem>
-          <MenuItem value={"pDate"}>Date</MenuItem>
-          <MenuItem value={"type"}>Type</MenuItem>
-        </StyledSelect>
-        <StyledTextField
-          id="filled-search"
-          label="Search field"
-          type="search"
-          variant="filled"
-          value={query}
-          onChange={handleQuery}
-          size="small"
-        />
-        <FormHelperText id="component-helper-text">
-          {" "}
-          Select a colum to Search then type
-        </FormHelperText>
-      </SearchArea>
     </Toolbar>
   );
 };
@@ -295,46 +212,11 @@ function EnhancedTable(notifications) {
   const classes = useStyles();
   const [rows, setRows] = React.useState(createRows(notifications));
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("pDate");
+  const [orderBy, setOrderBy] = React.useState("processingDate");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.transId);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, transId) => {
-    const selectedIndex = selected.indexOf(transId);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, transId);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
+  const [rowsPerPage, setRowsPerPage] = React.useState(3);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -345,37 +227,13 @@ function EnhancedTable(notifications) {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (transId) => selected.indexOf(transId) !== -1;
-
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-  // search functionality lives below this
-  const [query, setQuery] = React.useState("");
-  const [searchCol, setSearchCol] = React.useState("description");
-
-  const inputLabel = React.useRef(null);
-  const handleQuery = (event) => {
-    setQuery(event.target.value);
-  };
-  const handleChange = (event) => {
-    setSearchCol(event.target.value);
-  };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          handleChange={handleChange}
-          searchCol={searchCol}
-          query={query}
-          handleQuery={handleQuery}
-        />
+        <EnhancedTableToolbar />
         <TableContainer>
           <Table
             className={classes.table}
@@ -385,55 +243,20 @@ function EnhancedTable(notifications) {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(query, searchCol, rows, getSorting(order, orderBy))
+              {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.transId);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.transId)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.transId}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </TableCell>
-                      <StyledTableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                        align="right"
-                      >
-                        {row.transId}
-                      </StyledTableCell>
-                      <TableCell align="right">{row.pDate}</TableCell>
+                    <TableRow hover tabIndex={-1} key={row.processingDate}>
+                      <TableCell align="right">{row.processingDate}</TableCell>
                       <StyledTableCell align="right">
-                        {"$" + row.amount + (row.amount % 1 === 0 ? ".00" : "")}
+                        {row.type}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {row.chargeType}
-                      </StyledTableCell>
-                      <TableCell align="right">
-                        {row.balance + (row.balance % 1 === 0 ? ".00" : "")}
-                      </TableCell>
                       <TableCell align="right">{row.description}</TableCell>
                     </TableRow>
                   );
@@ -447,7 +270,7 @@ function EnhancedTable(notifications) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[3, 10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -456,10 +279,6 @@ function EnhancedTable(notifications) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
