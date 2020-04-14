@@ -1,4 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Group 3 Commerce Bank Project
+
+Please navigate to our [WIKI](https://github.com/umkc-cs-451-2020-spring/semester-project-group-3/wiki) for additional screenshots and workflow.
+
+---
+| About | User Guide | Architecture | Community | Testing Plan |
+| :-----------:| :-----------: | :-----------: | :-----------: | :-----------: |
+|![image](https://user-images.githubusercontent.com/37005498/78102181-51f98700-73af-11ea-96f7-68efc81ec436.png)|![image](https://user-images.githubusercontent.com/37005498/78102219-6a69a180-73af-11ea-995a-45cfde5d6f10.png)|![image](https://user-images.githubusercontent.com/37005498/78102241-7ce3db00-73af-11ea-9bfc-638ec6a6b5af.png)|![image](https://user-images.githubusercontent.com/37005498/78102288-a00e8a80-73af-11ea-959a-296a7c9f019b.png)|![image](https://user-images.githubusercontent.com/37005498/78102266-8ec57e00-73af-11ea-9859-4825e8df84c7.png)|
+|[About Our Team ](https://github.com/umkc-cs-451-2020-spring/semester-project-group-3/wiki/About)|[User Guide](https://github.com/umkc-cs-451-2020-spring/semester-project-group-3/wiki/User-Guide)|[Architecture](https://github.com/umkc-cs-451-2020-spring/semester-project-group-3/wiki/Architecture)|[Community](https://github.com/umkc-cs-451-2020-spring/semester-project-group-3/wiki/Community)|[Testing Plan](https://github.com/umkc-cs-451-2020-spring/semester-project-group-3/wiki/Testing-Plan)|
+
+---
 
 ## Available Scripts
 
