@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { renderLogin } from '../../rStore/actions/tabChangeActions';
 import { useDispatch } from 'react-redux';
 
-const Header = styled.div `
+const Header1 = styled.div `
   grid-area: header;
   min-height: 60px;
   width: 100%;
@@ -20,7 +20,7 @@ const Header = styled.div `
 // Todo Add Logo here
 // https://www.commercebank.com/about-us/media-relations/commerce-logos
 // Hex codes: dark green (006649), light green (74BD43)
-export default function header() { 
+export default function Header() {
   const dispatch = useDispatch();
 
   const handleClickLogout = (event) => {
@@ -29,8 +29,8 @@ export default function header() {
   }
 
   return (
-    <Header>
+    <Header1>
         Commerce Bank <button className="logout-btn" onClick={handleClickLogout}>Logout</button>
-    </Header>
+    </Header1>
   );
 }

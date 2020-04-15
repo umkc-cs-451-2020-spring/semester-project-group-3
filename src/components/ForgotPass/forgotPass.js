@@ -28,7 +28,7 @@ const renderTextField = (
     />
   );
 
-const forgotPass = props => {
+const ForgotPass = props => {
     const { handleSubmit, pristine, submitting } = props
     const dispatch = useDispatch();
 
@@ -59,12 +59,12 @@ const forgotPass = props => {
                         Submit
                         </button>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button 
-                        type="button" 
-                        className="link-btn" 
+                        <button
+                        type="button"
+                        className="link-btn"
                         onClick={handleClickCancel}
-                        > 
-                        Cancel 
+                        >
+                        Cancel
                         </button>
                     </div>
                 </form>
@@ -76,4 +76,4 @@ const forgotPass = props => {
 export default reduxForm({
     form: 'forgotPass',
     validate
-})(forgotPass)
+})(ForgotPass)
