@@ -18,7 +18,7 @@ router.post("/", function(req, res, next) {
   query =
     "select count(*) from Account where email = " +
     connection.escape(email) +
-    " and cast(AES_DECRYPT(password, '" + config.password + "') as char) = " +
+    " and AES_DECRYPT(password, '" + config.password + "') = " +
     connection.escape(password) + 
     ";";
 
