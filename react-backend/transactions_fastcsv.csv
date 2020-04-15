@@ -1,4 +1,0 @@
-transactionID,associatedAccount,processingDate,type,amount,description,historicBalance
-1,211111110,2019-11-01T05:00:00.000Z,DR,2,Starbucks,4998
-2,211111110,2019-12-01T06:00:00.000Z,DR,35,Gas,4963
-3,211111110,2020-01-12T06:00:00.000Z,CR,100,Payday,5063
