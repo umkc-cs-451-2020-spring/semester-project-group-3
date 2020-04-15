@@ -6,7 +6,18 @@ import Table from '../Table';
 
 function Transaction(){
   const dispatch = useDispatch();
+  const axios = require('axios');
   const acctID = useSelector((state) => state.loginReducer.accountID );
+
+  const handleClick = (event) => {
+    axios.get('/export/' + acctID)
+    .then(function(response) {
+      window.alert(response.data);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  }
 
   function createData(transId, pDate, balance, chargeType, amount, description) {
     return {transId, pDate, amount, chargeType, balance, description};
@@ -50,7 +61,11 @@ function Transaction(){
     <div>
       <Table rows={createRows(transactions)}>
       </Table>
-      // Todo add export button 
+      <button type="button"
+              className="submit-btn"
+              onClick={handleClick}> 
+      Export to CSV
+      </button>
     </div>
   );
 }
