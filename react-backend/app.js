@@ -12,6 +12,7 @@ var loginRouter = require("./routes/login");
 var mailerRouter = require("./routes/mailer");
 var signupRouter = require("./routes/signup");
 var notificationTriggersRouter = require("./routes/notificationTriggers");
+var exportRouter = require("./routes/export");
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use("/login", loginRouter);
 app.use("/mailer", mailerRouter);
 app.use("/signup", signupRouter);
 app.use("/notificationTriggers", notificationTriggersRouter);
+app.use("/export", exportRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
