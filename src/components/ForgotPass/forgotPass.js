@@ -28,9 +28,14 @@ const renderTextField = (
     />
   );
 
-const forgotPass = props => {
+const ForgotPass = props => {
     const { handleSubmit, pristine, submitting } = props
     const dispatch = useDispatch();
+
+    const handleClickCancel = (event) => {
+        dispatch(renderLogin())
+    }
+
     return (
         <div className="login-page">
             <img className="logo-img" src="/logo.png" alt ="Logo" />
@@ -54,12 +59,12 @@ const forgotPass = props => {
                         Submit
                         </button>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button 
-                        type="button" 
-                        className="link-btn" 
-                        onClick={() => dispatch(renderLogin())}
-                        > 
-                        Cancel 
+                        <button
+                        type="button"
+                        className="link-btn"
+                        onClick={handleClickCancel}
+                        >
+                        Cancel
                         </button>
                     </div>
                 </form>
@@ -71,4 +76,4 @@ const forgotPass = props => {
 export default reduxForm({
     form: 'forgotPass',
     validate
-})(forgotPass)
+})(ForgotPass)

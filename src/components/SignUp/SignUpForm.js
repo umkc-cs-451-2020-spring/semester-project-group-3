@@ -31,6 +31,11 @@ const renderTextField = (
 const SignUp = props => {
     const { handleSubmit, pristine, submitting } = props
     const dispatch = useDispatch();
+
+    const handleClickCancel = (event) => {
+        dispatch(renderLogin())
+    }
+
     return (
         <div className="login-page">
             <img className="logo-img" src="/logo.png" alt ="Logo" />
@@ -87,7 +92,7 @@ const SignUp = props => {
                         <button 
                         type="button" 
                         className="link-btn" 
-                        onClick={() => dispatch(renderLogin())}
+                        onClick={handleClickCancel}
                         > 
                         Cancel 
                         </button>
