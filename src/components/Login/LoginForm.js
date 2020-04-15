@@ -45,6 +45,14 @@ const Login = props => {
         }
     });
   
+    const handleClickSignUp = (event) => {
+        dispatch(renderSignUp());
+    }
+
+    const handleClickForgot = (event) => {
+        dispatch(renderForgotPass());
+    }
+
     const handleChange = (event) => {
       setChecked(event.target.checked);
       if(event.target.checked === true) {
@@ -98,7 +106,7 @@ const Login = props => {
                         <button 
                             type="button" 
                             className="link-btn" 
-                            onClick={() => dispatch(renderSignUp())}
+                            onClick={handleClickSignUp}
                             > 
                             Sign Up 
                             </button>
@@ -106,7 +114,7 @@ const Login = props => {
                             <button 
                             type="button" 
                             className="link-btn" 
-                            onClick={() => dispatch(renderForgotPass())}
+                            onClick={handleClickForgot}
                             > 
                             Forgot password 
                             </button>

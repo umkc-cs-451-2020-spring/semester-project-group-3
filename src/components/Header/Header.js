@@ -22,9 +22,15 @@ const Header = styled.div `
 // Hex codes: dark green (006649), light green (74BD43)
 export default function header() { 
   const dispatch = useDispatch();
+
+  const handleClickLogout = (event) => {
+    localStorage.clear();
+    dispatch(renderLogin())
+  }
+
   return (
     <Header>
-        Commerce Bank <button className="logout-btn" onClick={() => {localStorage.clear(), dispatch(renderLogin())}}>Logout</button>
+        Commerce Bank <button className="logout-btn" onClick={handleClickLogout}>Logout</button>
     </Header>
   );
 }
