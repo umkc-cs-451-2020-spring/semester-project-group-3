@@ -5,7 +5,6 @@ var config = require("../config");
 var bodyParser = require("body-parser");
 const fastcsv = require("fast-csv");
 const fs = require("fs");
-const ws = fs.createWriteStream("transactions_fastcsv.csv");
 
 const connection = mysql.createPool({
   host: config.host,
@@ -33,6 +32,7 @@ router.get("/:associatedAccount", function(req, res, next) {
           // Getting the 'response' from the database and sending it to our route. This is were the data is.
           const jsonData = JSON.parse(JSON.stringify(results));
           console.log("jsonData", jsonData);
+          const ws = fs.createWriteStream("transactions_fastcsv.csv");
 
           fastcsv
           .write(jsonData, { headers: true })
