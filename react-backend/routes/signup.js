@@ -21,24 +21,14 @@ router.post("/", function(req, res, next) {
     "insert into account (accountID, email, password, balance) " + 
     "values (" + connection.escape(accountID) + ", " + connection.escape(email) + 
     ", AES_ENCRYPT(" + connection.escape(password) + ", '" + config.password +
-     "', " + connection.escape(balance) + ");";
-
-  testQuery = 
-  "select * from account where accountID = " + connection.escape(accountID) + ";"
+     "'), " + connection.escape(balance) + ");";
 
   connection.getConnection(function(err, connection) {
     connection.query(query, function(error, results, fields) {
       // If some error occurs, we throw an error.
       if (error) throw error;
 
-      res.sent("Success")
-
-      connection.query(testQuery, function(error, results, fields) {
-        // If some error occurs, we throw an error.
-        if (error) throw error;
-  
-        console.log(results)
-      });
+      res.sent("Successfully created a new account!");
     });
   });
 });

@@ -41,13 +41,13 @@ router.post("/", function(req, res, next) {
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
-                user: 'Group3Commerce2020@gmail.com',
-                pass: 'Gr0up3!2020'
+                user: config.email,
+                pass: config.password
               }
             });
 
             var mailOptions = {
-                from: 'Group3Commerce2020@gmail.com',
+                from: config.email,
                 to: connection.escape(email),
                 subject: 'Recover password, Commerce Bank',
                 text: 'Here is your recovered password: ' + results[0]["password"]
