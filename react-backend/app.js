@@ -9,6 +9,8 @@ var usersRouter = require("./routes/users");
 var accountsRouter = require("./routes/accounts");
 var transactionsRouter = require("./routes/transactions");
 var loginRouter = require("./routes/login");
+var mailerRouter = require("./routes/mailer");
+var signupRouter = require("./routes/signup");
 var notificationTriggersRouter = require("./routes/notificationTriggers");
 var notificationsRouter = require("./routes/notifications");
 
@@ -16,7 +18,7 @@ var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.set("view engine", "pug");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -29,6 +31,8 @@ app.use("/users", usersRouter);
 app.use("/accounts", accountsRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/login", loginRouter);
+app.use("/mailer", mailerRouter);
+app.use("/signup", signupRouter);
 app.use("/notificationTriggers", notificationTriggersRouter);
 app.use("/notifications", notificationsRouter);
 

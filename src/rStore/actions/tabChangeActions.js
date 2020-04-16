@@ -12,4 +12,13 @@ export function renderNotification() {
 };
 export function renderApp() {
   return { type: types.RENDER_APP}
+};
+export function renderLogin() {
+  return { type: types.LOGOUT}
+}
+export function renderSignUp() {
+  return { type: types.SIGNUP}
+}
+export function renderForgotPass() {
+  return { type: types.FORGOT_PASS}
 }
