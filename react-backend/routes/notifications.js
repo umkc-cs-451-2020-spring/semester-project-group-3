@@ -13,7 +13,7 @@ const connection = mysql.createPool({
 });
 
 class NotificationHandler {
-  constructor(accountID) {
+  constructor(accountID, res) {
     this.conn = mysql.createPool({
       host: config.host,
       user: config.user,
@@ -23,6 +23,7 @@ class NotificationHandler {
     });
     this.accountID = this.conn.escape(accountID);
     this.dateTimeFormat = "'%Y-%m-%d %T'";
+    this.res = res;
   }
 
   getNewNotifications() {
@@ -102,6 +103,8 @@ class NotificationHandler {
           balanceBelowTransactions.forEach((transaction) => {
             console.log(transaction["description"]);
           });
+
+          self.res.send(balanceBelowTransactions);
         });
       });
     });
@@ -128,16 +131,16 @@ class NotificationHandler {
 /* GET users listing. */
 router.get("/:associatedAccount", function (req, res, next) {
   var account = req.params.associatedAccount;
-  var handler = new NotificationHandler(account);
+  var handler = new NotificationHandler(account, res);
   handler.getNewNotifications();
 
-  res.send([
-    {
-      processingDate: "2019-11-01T05:00:00.000Z",
-      type: "balanceBelow",
-      description: "You're out of money dawg.",
-    },
-  ]);
+  // res.send([
+  //   {
+  //     processingDate: "2019-11-01T05:00:00.000Z",
+  //     type: "balanceBelow",
+  //     description: "You're out of money dawg.",
+  //   },
+  // ]);
 });
 
 module.exports = router;
