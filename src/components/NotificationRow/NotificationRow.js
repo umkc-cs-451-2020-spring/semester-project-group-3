@@ -246,7 +246,7 @@ function NotificationRow(props){
   const [numEditNotifs, setNumEditNotifs] = React.useState([]);
   const [showEdit, setShowEdit] = React.useState(false);
   const [notifPresent, setNotifPresent] = React.useState(false);
-
+  // todo add  dispatch here. 
   const handleAddNumNotifs = () => {
     setNotifPresent(true);
     const values = [...numEditNotifs];
