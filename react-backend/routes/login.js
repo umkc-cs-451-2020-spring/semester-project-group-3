@@ -16,18 +16,16 @@ router.post("/", function(req, res, next) {
   var email = req.query.email;
   var password = req.query.password;
   query =
-    "select count(*) from Account where email = '" +
-    email +
-    "' and password = '" +
-    password +
-    "';";
+    "select count(*) from Account where email = " +
+    connection.escape(email) +
+    " and AES_DECRYPT(password, '" + config.password + "') = " +
+    connection.escape(password) + 
+    ";";
 
   query_2 =
-    "select accountID from Account where email = '" +
-    email +
-    "' and password = '" +
-    password +
-    "';";
+    "select accountID from Account where email = " +
+    connection.escape(email) +
+    ";";
 
   connection.getConnection(function(err, connection) {
     // Executing the MySQL query (select all data from the 'users' table).
