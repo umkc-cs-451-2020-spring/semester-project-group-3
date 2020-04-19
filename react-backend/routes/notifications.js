@@ -108,6 +108,7 @@ class NotificationHandler {
     return newNotifications;
   }
 
+  //generate list of notifications from given lists of transactions and triggers
   getNotificationsFromTransactions(transactions, triggers) {
     var notifications = [];
 
@@ -184,6 +185,7 @@ class NotificationHandler {
     return notifications;
   }
 
+  //get notification object with amount and value params inserted into the description
   createNotification(
     processingDate,
     type,
@@ -200,6 +202,7 @@ class NotificationHandler {
     };
   }
 
+  //get transactions whose historic balance falls below a specified amount
   getIfBalanceBelow(transactions, minBalance) {
     var guiltyTransactions = [];
     transactions.forEach((transaction, idx, array) => {
@@ -210,6 +213,7 @@ class NotificationHandler {
     return guiltyTransactions;
   }
 
+  //get transactions whose amount goes above a specified amount
   getIfAmountAbove(transactions, maxAmount) {
     var guiltyTransactions = [];
     transactions.forEach((transaction, idx, array) => {
@@ -220,6 +224,7 @@ class NotificationHandler {
     return guiltyTransactions;
   }
 
+  //get transactions whose description contains a specified value
   getIfDescriptionContains(transactions, value) {
     var guiltyTransactions = [];
     var value = value.toLowerCase();
@@ -233,6 +238,7 @@ class NotificationHandler {
     return guiltyTransactions;
   }
 
+  //write given list of notifications to the database for long-term keeping
   archiveNotifications(notifications) {
     const conn = this.conn;
 
@@ -249,6 +255,7 @@ class NotificationHandler {
     }
   }
 
+  //build insert query for given notification object
   buildArchiveQuery(notification) {
     var archiveNotificationsQuery =
       "insert into Notification(type, processingDate, description) values(";
@@ -264,6 +271,7 @@ class NotificationHandler {
     );
   }
 
+  //update last notification check field to now in the database
   updateLastNotificationCheckToNow() {
     const conn = this.conn;
 
@@ -282,7 +290,6 @@ class NotificationHandler {
   }
 }
 
-/* GET users listing. */
 router.get("/:associatedAccount", function (req, res, next) {
   var account = req.params.associatedAccount;
   var handler = new NotificationHandler(account, res);
