@@ -16,14 +16,15 @@ router.get("/:associatedAccount", function(req, res, next) {
   var account = req.params.associatedAccount;
   console.log("method:" + req.method);
   console.log("body:" + account);
+  var query = "select * from Transaction where associatedAccount = " + connection.escape(account) + ";";
+
   if (!account) {
     console.log("associatedAccount not defined");
     res.send("associatedAccount not defined");
   } else {
     connection.getConnection(function(err, connection) {
       // Executing the MySQL query (select all data from the 'users' table).
-      connection.query(
-        "select * from Transaction where associatedAccount =" + account,
+      connection.query(query,
         function(error, results, fields) {
           // If some error occurs, we throw an error.
           if (error) throw error;

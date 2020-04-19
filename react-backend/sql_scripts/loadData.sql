@@ -1,14 +1,15 @@
 use landonvolkmann_commerce_project;
 
-insert into
+ insert into
     Account (accountID, email, password, balance)
 values
     (
         "211111110",
         "test@gmail.com",
-        "P@ssword1",
+        aes_encrypt("P@ssword1", "Gr0up3!2020"),
         5000.00
     );
+
 
 call setTransaction(
     "211111110",
