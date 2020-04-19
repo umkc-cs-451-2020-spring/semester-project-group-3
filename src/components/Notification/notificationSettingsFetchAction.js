@@ -10,7 +10,7 @@ export default function fetchNotificationSettings(acctID) {
   return (dispatch) => {
     dispatch(fetchNotificationSettingsBegin());
     axios
-      .get("/notifications/" + acctID)
+      .get("/notificationTriggers/" + acctID)
       .then(function (response) {
         console.log(response);
         dispatch(fetchNotificationSettingsSuccess(response.data));

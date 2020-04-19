@@ -10,8 +10,10 @@ export default function postNotificationSetting(acctID) {
   return (dispatch) => {
     dispatch(postNotificationSettingsBegin());
     axios
-      .get("/notifications/" + acctID)
-      // Todo above gets changed
+      .post("/notificationTriggers?account=" + account +"&type=" +
+            type + "&amount=" + amount +"&value="+ value+"&startDate="
+            + startDate + "&description=" + description)
+      // Todo above gets changed and make sure it works
       .then(function (response) {
         console.log(response);
         dispatch(postNotificationSettingsSuccess(response.data));

@@ -3,7 +3,6 @@ import {
   fetchTransactionsSuccess,
   fetchTransactionsFailure } from "../../rStore/actions/transactionActions.js";
 
-// todo this will be passed an accound number. 
 export default function fetchTransactions(acctID) {
   const axios = require('axios');
   return dispatch => {

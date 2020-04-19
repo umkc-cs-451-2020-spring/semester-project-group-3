@@ -7,8 +7,6 @@ import fetchNotifications from "./notificationAction.js";
 import { useSelector, useDispatch } from "react-redux";
 
 function Dashboard() {
-  var username = "connor";
-  var loggedIn = "true";
   const dispatch = useDispatch();
   const acctID = useSelector((state) => state.loginReducer.accountID);
 

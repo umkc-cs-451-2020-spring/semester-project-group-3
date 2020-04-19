@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { green, red } from '@material-ui/core/colors';
 import CancelIcon from '@material-ui/icons/Cancel';
+// import postNotificationSetting from "./notificationSettingsPostAction.js";
+import { useSelector, useDispatch } from "react-redux";
 
 const GreenCheckbox = withStyles({
   root: {
@@ -246,7 +248,12 @@ function NotificationRow(props){
   const [numEditNotifs, setNumEditNotifs] = React.useState([]);
   const [showEdit, setShowEdit] = React.useState(false);
   const [notifPresent, setNotifPresent] = React.useState(false);
-  // todo add  dispatch here. 
+  const dispatch = useDispatch();
+  const acctID = useSelector((state) => state.loginReducer.accountID);
+
+
+
+  // todo add  dispatch here.
   const handleAddNumNotifs = () => {
     setNotifPresent(true);
     const values = [...numEditNotifs];
@@ -269,10 +276,23 @@ function NotificationRow(props){
   const handleSaveNumNotifs = () => {
     setNotifPresent(true);
 
-
+    // post goes here
 
   };
+  // todo add function to handle deleting of settings
+  // ********************
+      // Start here
+      //  need to move the get to the outer component and add some sorting
+      // so in the right place
+      //  move the blank notif to outer component
+      // make this one just handle the edit notif
+      // will handle the post route for setting s
 
+      // outer will deal with delete and update.
+      // the update will use the edit notif    which might get rearranged.
+  // ********************
+
+  // this needs alot of work
   // ****************************  will use part below
   // Notif Render component.
   // Need to put numEditNotifs into own component so it updates on return not before it.
