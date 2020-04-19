@@ -13,6 +13,8 @@ var mailerRouter = require("./routes/mailer");
 var signupRouter = require("./routes/signup");
 var notificationTriggersRouter = require("./routes/notificationTriggers");
 var notificationsRouter = require("./routes/notifications");
+
+var exportRouter = require("./routes/export");
 var app = express();
 
 // view engine setup
@@ -34,6 +36,8 @@ app.use("/mailer", mailerRouter);
 app.use("/signup", signupRouter);
 app.use("/notificationTriggers", notificationTriggersRouter);
 app.use("/notifications", notificationsRouter);
+app.use("/export", exportRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

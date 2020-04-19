@@ -294,6 +294,7 @@ router.get("/:associatedAccount", function (req, res, next) {
   var account = req.params.associatedAccount;
   var handler = new NotificationHandler(account, res);
   handler.getNewNotifications();
+
 });
 
 module.exports = router;

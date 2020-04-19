@@ -21,7 +21,7 @@ router.post("/", function(req, res, next) {
       connection.escape(email) + ";";
   
     query_2 =
-      "select password from Account where email = " +
+      "select cast(AES_DECRYPT(password, '" + config.password + "') as char) as pass from Account where email = " +
       connection.escape(email) + ";";
 
     connection.getConnection(function(err, connection) {
@@ -41,16 +41,16 @@ router.post("/", function(req, res, next) {
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
-                user: 'Group3Commerce2020@gmail.com',
-                pass: 'Gr0up3!2020'
+                user: config.email,
+                pass: config.password
               }
             });
 
             var mailOptions = {
-                from: 'Group3Commerce2020@gmail.com',
+                from: config.email,
                 to: connection.escape(email),
                 subject: 'Recover password, Commerce Bank',
-                text: 'Here is your recovered password: ' + results[0]["password"]
+                text: 'Here is your recovered password: ' + results[0]["pass"]
             };
 
             transporter.sendMail(mailOptions, function(error, info){
