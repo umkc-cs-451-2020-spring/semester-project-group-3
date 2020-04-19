@@ -26,11 +26,11 @@ class NotificationHandler {
     this.res = res;
   }
 
+  //Gets, sends, and archives notifications generated after last check and then updates last check to now
   getNewNotifications() {
     let self = this;
     const conn = this.conn;
 
-    console.log("getNewNotifications entered...");
     var newNotifications = [];
 
     const getLastNotificationCheckQuery = `select date_format(lastNotificationCheck, ${self.dateTimeFormat}) as lastNotificationCheck from Account where accountID = ${self.accountID};`;
@@ -43,8 +43,6 @@ class NotificationHandler {
         // If some error occurs, we throw an error.
         if (error) throw error;
 
-        console.log("\nRESPONSE:");
-        console.log(results);
         var lastNotificationCheck = results[0][0]["lastNotificationCheck"];
 
         console.log("\nLast Notification Check: " + lastNotificationCheck);
@@ -101,6 +99,7 @@ class NotificationHandler {
           );
           self.res.send(newNotifications);
           self.archiveNotifications(newNotifications);
+          self.updateLastNotificationCheckToNow();
           return newNotifications;
         });
       });
@@ -204,9 +203,6 @@ class NotificationHandler {
   getIfBalanceBelow(transactions, minBalance) {
     var guiltyTransactions = [];
     transactions.forEach((transaction, idx, array) => {
-      console.log(
-        "Comparing " + transaction["historicBalance"] + " and " + minBalance
-      );
       if (transaction["historicBalance"] <= minBalance) {
         guiltyTransactions.push(transaction);
       }
@@ -266,6 +262,23 @@ class NotificationHandler {
       notification["description"] +
       "');"
     );
+  }
+
+  updateLastNotificationCheckToNow() {
+    const conn = this.conn;
+
+    var updateLastNotificationCheckQuery =
+      "update Account set lastNotificationCheck = current_timestamp where accountID = " +
+      this.accountID +
+      ";";
+
+    conn.getConnection(function (err, conn) {
+      conn.query(updateLastNotificationCheckQuery, function (
+        error,
+        results,
+        fields
+      ) {});
+    });
   }
 }
 
