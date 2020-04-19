@@ -44,12 +44,8 @@ add
 
 create table Notification (
     notificationID int(11) not null auto_increment,
-    associatedNotificationTrigger int (11) not null,
-    processingDate datetime not null,
+	type varchar (30),
+    processingDate datetime,
+    description varchar (320),
     primary key (notificationID)
 ) engine = InnoDB;
-
-alter table
-    Notification
-add
-    foreign key(associatedNotificationTrigger) references NotificationTrigger(notificationTriggerID);

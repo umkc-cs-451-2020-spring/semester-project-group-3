@@ -138,29 +138,43 @@ class NotificationHandler {
 
           break;
         case "transactionAmountAbove":
-          var amountAboveTransactions = this.getIfAmountAbove(transactions, amount);
+          var amountAboveTransactions = this.getIfAmountAbove(
+            transactions,
+            amount
+          );
           amountAboveTransactions.forEach((transaction) => {
             notifications.push(
               this.createNotification(
-                transaction["processingDate"], type, description, amount, value)
+                transaction["processingDate"],
+                type,
+                description,
+                amount,
+                value
+              )
             );
           });
           break;
-        
+
         case "descriptionContains":
-          var descriptionContainsTransactions = this.getIfDescriptionContains(transactions, value);
+          var descriptionContainsTransactions = this.getIfDescriptionContains(
+            transactions,
+            value
+          );
           descriptionContainsTransactions.forEach((transaction) => {
             notifications.push(
               this.createNotification(
-                transaction["processingDate"], type, description, amount, value
+                transaction["processingDate"],
+                type,
+                description,
+                amount,
+                value
               )
             );
-          })
+          });
 
           break;
 
         case "recurringDescription":
-
           //TODO: figure out a way to develop this without comparing every transaction every time
 
           break;
@@ -212,21 +226,46 @@ class NotificationHandler {
 
   getIfDescriptionContains(transactions, value) {
     var guiltyTransactions = [];
+    var value = value.toLowerCase();
     transactions.forEach((transaction, idx, array) => {
-
       var description = transaction["description"].toLowerCase();
-      var value = value.toLowerCase();
 
       if (description.includes(value)) {
         guiltyTransactions.push(transaction);
       }
-
     });
     return guiltyTransactions;
   }
 
   archiveNotifications(notifications) {
-    //TODO: archiveNotifications
+    const conn = this.conn;
+
+    var multiQuery = "";
+
+    notifications.forEach((notification) => {
+      multiQuery += this.buildArchiveQuery(notification);
+    });
+
+    if (multiQuery != "") {
+      conn.getConnection(function (err, conn) {
+        conn.query(multiQuery, function (error, results, fields) {});
+      });
+    }
+  }
+
+  buildArchiveQuery(notification) {
+    var archiveNotificationsQuery =
+      "insert into Notification(type, processingDate, description) values(";
+    return (
+      archiveNotificationsQuery +
+      "'" +
+      notification["type"] +
+      "','" +
+      notification["processingDate"] +
+      "','" +
+      notification["description"] +
+      "');"
+    );
   }
 }
 
