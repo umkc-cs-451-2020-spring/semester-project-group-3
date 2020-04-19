@@ -95,21 +95,68 @@ class NotificationHandler {
             });
           });
 
-          var balanceBelowTransactions = self.getIfBalanceBelow(
+          var newNotifications = self.getNotificationsFromTransactions(
             newTransactions,
-            0.0
+            notificationTriggers
           );
-
-          balanceBelowTransactions.forEach((transaction) => {
-            console.log(transaction["description"]);
-          });
-
-          self.res.send(balanceBelowTransactions);
+          self.res.send(newNotifications);
+          self.archiveNotifications(newNotifications);
+          return newNotifications;
         });
       });
     });
 
     return newNotifications;
+  }
+
+  getNotificationsFromTransactions(transactions, triggers) {
+    var notifications = [];
+
+    triggers.forEach((trigger) => {
+      var type = trigger["type"];
+      var amount = trigger["amount"];
+      var value = trigger["value"];
+      var description = trigger["description"];
+
+      switch (type) {
+        case "balanceBelow":
+          var balanceBelowTransactions = this.getIfBalanceBelow(
+            transactions,
+            0.0
+          );
+          balanceBelowTransactions.forEach((transaction) => {
+            notifications.push(
+              this.createNotification(
+                transaction["processingDate"],
+                type,
+                description,
+                amount
+              )
+            );
+          });
+
+          break;
+        default:
+          console.log("Type Unrecognized..." + type);
+      }
+    });
+    return notifications;
+  }
+
+  createNotification(
+    processingDate,
+    type,
+    description,
+    amount = "",
+    value = ""
+  ) {
+    description = description.replace("${amount}", amount);
+    description = description.replace("${value}", value);
+    return {
+      processingDate: processingDate,
+      type: type,
+      description: description,
+    };
   }
 
   getIfBalanceBelow(transactions, minBalance) {
@@ -125,7 +172,9 @@ class NotificationHandler {
     return guiltyTransactions;
   }
 
-  archiveNotifications(notifications) {}
+  archiveNotifications(notifications) {
+    //TODO: archiveNotifications
+  }
 }
 
 /* GET users listing. */
@@ -133,14 +182,6 @@ router.get("/:associatedAccount", function (req, res, next) {
   var account = req.params.associatedAccount;
   var handler = new NotificationHandler(account, res);
   handler.getNewNotifications();
-
-  // res.send([
-  //   {
-  //     processingDate: "2019-11-01T05:00:00.000Z",
-  //     type: "balanceBelow",
-  //     description: "You're out of money dawg.",
-  //   },
-  // ]);
 });
 
 module.exports = router;
