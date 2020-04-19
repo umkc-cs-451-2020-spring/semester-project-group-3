@@ -130,10 +130,38 @@ class NotificationHandler {
                 transaction["processingDate"],
                 type,
                 description,
-                amount
+                amount,
+                value
               )
             );
           });
+
+          break;
+        case "transactionAmountAbove":
+          var amountAboveTransactions = this.getIfAmountAbove(transactions, amount);
+          amountAboveTransactions.forEach((transaction) => {
+            notifications.push(
+              this.createNotification(
+                transaction["processingDate"], type, description, amount, value)
+            );
+          });
+          break;
+        
+        case "descriptionContains":
+          var descriptionContainsTransactions = this.getIfDescriptionContains(transactions, value);
+          descriptionContainsTransactions.forEach((transaction) => {
+            notifications.push(
+              this.createNotification(
+                transaction["processingDate"], type, description, amount, value
+              )
+            );
+          })
+
+          break;
+
+        case "recurringDescription":
+
+          //TODO: figure out a way to develop this without comparing every transaction every time
 
           break;
         default:
@@ -168,6 +196,31 @@ class NotificationHandler {
       if (transaction["historicBalance"] <= minBalance) {
         guiltyTransactions.push(transaction);
       }
+    });
+    return guiltyTransactions;
+  }
+
+  getIfAmountAbove(transactions, maxAmount) {
+    var guiltyTransactions = [];
+    transactions.forEach((transaction, idx, array) => {
+      if (transaction["amount"] >= maxAmount) {
+        guiltyTransactions.push(transaction);
+      }
+    });
+    return guiltyTransactions;
+  }
+
+  getIfDescriptionContains(transactions, value) {
+    var guiltyTransactions = [];
+    transactions.forEach((transaction, idx, array) => {
+
+      var description = transaction["description"].toLowerCase();
+      var value = value.toLowerCase();
+
+      if (description.includes(value)) {
+        guiltyTransactions.push(transaction);
+      }
+
     });
     return guiltyTransactions;
   }
