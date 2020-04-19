@@ -95,6 +95,80 @@ const Empty = styled.div`
   padding-Top: 2px;
   display: ${props => props.isHidden === false ? "block" : "none"};
 `
+
+// 4 columns
+function SettingsRow(props){
+  const {rowData} = props;
+  console.log(rowData);
+  return(
+    <Wrapper2>
+      <Header>
+        <HeadCell>Description</HeadCell>
+        <HeadCell>Date Added</HeadCell>
+        <HeadCell>Value</HeadCell>
+        <HeadCell>Status</HeadCell>
+      </Header>
+      {rowData.map((row,index) => {
+        console.log("inside row mapping: ", row);
+        var value ="";
+        if (row.type==="descriptionMatch"){
+           value= row.value;
+        }else{
+          value= row.amount;
+        }
+        return(
+          <BodyArea index={index}>
+            <BodyCell>{row.description}</BodyCell>
+            <BodyCell>{row.startDate}</BodyCell>
+            <BodyCell>{value}</BodyCell>
+            <BodyCell>{row.active}</BodyCell>
+          </BodyArea>
+        );
+      })}
+
+    </Wrapper2>
+
+  );
+}
+const Wrapper2 = styled.div`
+  height: 100%;
+  width: 100%;
+  position: block;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 30px auto;
+  padding-left: 20px;
+
+`
+const Header = styled.div `
+  font-size: 18px;
+  width: 100%;
+  border-bottom: 2px solid grey;
+  display: grid;
+  grid-template-columns: 30% 25% 15% 30%;;
+  grid-template-rows: auto;
+  font-weight: bold;
+  text-align: left;
+`
+const HeadCell = styled.div `
+  width: 100%;
+`
+
+const BodyArea = styled.div`
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30% 25% 15% 30%;
+  grid-template-rows: auto;
+  text-align: left;
+`
+const BodyCell = styled.div `
+  border-right: 1px solid black;
+  font-size: 16px;
+  margin:4px;
+  width: 100%;
+`
+
 function EmptyNotif(props){
   const { isHidden } = props;
   console.log(isHidden);
@@ -103,44 +177,6 @@ function EmptyNotif(props){
   );
 }
 
-// notif create functions
-// function createData(transId, pDate, balance, chargeType, amount, description) {
-//   return {transId, pDate, amount, chargeType, balance, description};
-// }
-// function createBlankNotif(notif, type){
-//     switch (type) {
-//       case "Transaction":
-//         createTNofis()
-//         break;
-//       case "Balance":
-//         createBNofis()
-//         break;
-//       case "Description":
-//         createDNofis()
-//         break;
-//       case "Recurring Alert":
-//         createRNofis()
-//         break;
-//       default:
-//
-//     }
-//
-//   var tempRows= [];
-//   if (transaction){
-//     for (var i = 0; i< transaction.length; i++){
-//       // todo add formating to date data.
-//       tempRows.push(createData(
-//         transaction[i].transactionID,
-//         transaction[i].processingDate,
-//         transaction[i].historicBalance,
-//         transaction[i].type,
-//         transaction[i].amount,
-//         transaction[i].description
-//       ));
-//     }
-//   }
-//   return tempRows;
-// }
 
 // data component.
 function Notif(){
@@ -245,9 +281,16 @@ function EditNotif(props){
 // Todo Add a condition to render the permanent notifs that will be read from
 // data base
 function NotificationRow(props){
+  const {rows} = props;
+  var present ="";
+  if (rows.length>0 ){
+    present = true;
+  }else {
+    present = false;
+  }
   const [numEditNotifs, setNumEditNotifs] = React.useState([]);
   const [showEdit, setShowEdit] = React.useState(false);
-  const [notifPresent, setNotifPresent] = React.useState(false);
+  const [notifPresent, setNotifPresent] = React.useState(present);
   const dispatch = useDispatch();
   const acctID = useSelector((state) => state.loginReducer.accountID);
 
@@ -267,9 +310,11 @@ function NotificationRow(props){
     values.splice(idx, 1);
     setNumEditNotifs(values);
 
-    if (numEditNotifs.length === 0){
+    if (numEditNotifs.length === 1 && rows.length === 0){
       // Todo to check if there is any if the database
       setNotifPresent(false);
+      console.log("inside handleDelete: " , rows.length, notifPresent);
+
     }
 
   };
@@ -282,13 +327,11 @@ function NotificationRow(props){
   // todo add function to handle deleting of settings
   // ********************
       // Start here
-      //  need to move the get to the outer component and add some sorting
-      // so in the right place
-      //  move the blank notif to outer component
-      // make this one just handle the edit notif
-      // will handle the post route for setting s
 
       // outer will deal with delete and update.
+      // need to pass in the delete and update functions.
+
+      // Do that next 
       // the update will use the edit notif    which might get rearranged.
   // ********************
 
@@ -299,13 +342,12 @@ function NotificationRow(props){
   let notifData;
   if (!notifPresent){
     notifData = <EmptyNotif isHidden={notifPresent}/>;
-    // notifData = <div>This will render data from database</div>
   }
-  // else {
-  //   notifData = <EmptyNotif isHidden={notifPresent}/>;
-  // }
-  // {notifData}
-
+  else {
+    if (rows.length > 0){
+      notifData = <SettingsRow rowData={rows}/>;
+    }
+  }
   return (
     <Wrapper>
       <Title>

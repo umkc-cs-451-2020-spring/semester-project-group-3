@@ -1,7 +1,7 @@
 import types from "../constants/action-types";
 
 const initialState = {
-  setting_items: [],
+  items: [],
   delete_message: "",
   post_message: "",
   update_message: "",
@@ -30,14 +30,14 @@ function notificationSettingsReducer(state = initialState, action) {
       return {
         ...state,
         fetch_loading: false,
-        setting_items: action.payload.settings
+        items: action.payload.settings
       };
     case types.FETCH_NOTIFICATION_SETTINGS_FAILURE:
       return {
         ...state,
         fetch_loading: false,
         fetch_error: action.payload.error,
-        setting_items: []
+        items: []
       };
     // POST *******************************************************************
     case types.POST_NOTIFICATION_SETTINGS_BEGIN:

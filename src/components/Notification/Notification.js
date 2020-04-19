@@ -47,8 +47,8 @@ function Notification(){
     (state) => state.notificationSettingsReducer.fetch_error
   );
   // todo change above to a console.log
-  const settingsArray = useSelector(
-    (state) => state.notificationSettingsReducer.setting_items
+  const setting_items = useSelector(
+    (state) => state.notificationSettingsReducer.items
   );
 
 
@@ -56,17 +56,16 @@ function Notification(){
   if (fetch_loading ) {
     return <div>Loading...</div>;
   }
-  else{
-    return (
-      <Outer>
-        <Title>Notification Settings
-          <Description>Add Notifications below by Category.</Description>
-        </Title>
-        <Settings rows={settingsArray}/>
-      </Outer>
+
+  return (
+    <Outer>
+      <Title>Notification Settings
+        <Description>Add Notifications below by Category.</Description>
+      </Title>
+      <Settings rows={setting_items}/>
+    </Outer>
 
   );
-  }
 }
 
 export default Notification;

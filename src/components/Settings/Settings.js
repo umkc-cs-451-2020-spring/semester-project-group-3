@@ -1,82 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import NotificationRow from '../NotificationRow'
+
 function Settings(props){
   const {rows} = props;
   console.log(rows);
-  // const tSettings = settingsArray.filter(x=> x.);
-  // const bSettings = ;
-  // const dSettings = ;
-  // const rSettings = ;
+  const tSettings = rows.filter(x=> x.type == "transactionAmount");
+  const bSettings = rows.filter(x=> x.type == "balanceBelow");
+  const dSettings = rows.filter(x=> x.type == "descriptionMatch");
+  const rSettings = rows.filter(x=> x.type == "recurringCharge");
 
-
-  function createData(
-    notificationTriggerID,
-    active,
-    amount,
-    value,
-    startDate,
-    description
-  ){
-    return{ notificationTriggerID,
-      active,
-      amount,
-      value,
-      startDate,
-      description }
-  }
-  function createRows(settings){
-    var temptSettings =[];
-    var tempbSettings =[];
-    var tempdSettings =[];
-    var temprSettings =[];
-    for (var i =0; i < settings.length; i++){
-      switch (settings[i].type) {
-        case "transactionAmount":
-          temptSettings.push(createData(
-            settings[i].notificationTriggerID,
-            settings[i].active,
-            settings[i].amount,
-            settings[i].value,
-            settings[i].startDate,
-            settings[i].description));
-          break;
-        case "balanceBelow":
-          tempbSettings.push(createData(
-            settings[i].notificationTriggerID,
-            settings[i].active,
-            settings[i].amount,
-            settings[i].value,
-            settings[i].startDate,
-            settings[i].description));
-          break;
-        case "descriptionMatch":
-          tempdSettings.push(createData(
-            settings[i].notificationTriggerID,
-            settings[i].active,
-            settings[i].amount,
-            settings[i].value,
-            settings[i].startDate,
-            settings[i].description));
-          break;
-        case "recurring":
-          temprSettings.push(createData(
-            settings[i].notificationTriggerID,
-            settings[i].active,
-            settings[i].amount,
-            settings[i].value,
-            settings[i].startDate,
-            settings[i].description));
-          break;
-        default:
-          console.log(settings[i]);
-      }
-    }
-
-  }
   return (
     <div>
-
+      <NotificationRow key={1} type="Transaction" rows={tSettings}></NotificationRow>
+      <NotificationRow key={2} type="Balance" rows={bSettings}></NotificationRow>
+      <NotificationRow key={3} type="Description" rows={dSettings}></NotificationRow>
+      <NotificationRow key={4} type="Recurring Alert" rows={rSettings}></NotificationRow>
     </div>
   );
 }
