@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import NotificationRow from '../NotificationRow';
 import Settings from "../Settings";
 import fetchNotificationSettings from "./notificationSettingsFetchAction.js";
-import deleteNotificationSetting from "./notificationSettingsDeleteAction.js";
 import updateNotificationSetting from "./notificationSettingsUpdateAction.js";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -38,7 +37,9 @@ function Notification(){
   React.useEffect(() => {
     getSettings();
   }, []);
-
+  function reRenderSettings(){
+    getSettings();
+  }
   const fetch_loading = useSelector(
     (state) => state.notificationSettingsReducer.fetch_loading
   );
@@ -62,7 +63,7 @@ function Notification(){
       <Title>Notification Settings
         <Description>Add Notifications below by Category.</Description>
       </Title>
-      <Settings rows={setting_items}/>
+      <Settings key={1} rows={setting_items} reRenderSettings={reRenderSettings}/>
     </Outer>
 
   );

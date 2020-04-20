@@ -10,7 +10,7 @@ export default function deleteNotificationSetting(triggerID) {
   return (dispatch) => {
     dispatch(deleteNotificationSettingsBegin());
     axios
-      .post("/notificationTriggers?notificationTriggerID=" + triggerID)
+      .post("/notificationTriggers/delete?notificationTriggerID=" + triggerID)
       // TODO above gets changed
       .then(function (response) {
         console.log(response);

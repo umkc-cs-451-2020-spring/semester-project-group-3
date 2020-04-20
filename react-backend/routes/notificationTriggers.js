@@ -83,7 +83,7 @@ router.get("/:associatedAccount", function(req, res, next) {
   }
 });
 
-router.post("/delete/", function(req, res, next) {
+router.post("/delete", function(req, res, next) {
   var notificationTriggerID = req.query.notificationTriggerID;
 
   query =
