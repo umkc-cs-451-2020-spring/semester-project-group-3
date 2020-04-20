@@ -15,20 +15,18 @@ router.post("/", function(req, res, next) {
   var accountID = req.query.accountID;
   var email = req.query.email;
   var password = req.query.password;
-  var balance = req.query.balance;
   
   query =
-    "insert into account (accountID, email, password, balance) " + 
+    "insert into Account (accountID, email, password, balance) " + 
     "values (" + connection.escape(accountID) + ", " + connection.escape(email) + 
-    ", AES_ENCRYPT(" + connection.escape(password) + ", '" + config.password +
-     "'), " + connection.escape(balance) + ");";
+    ", AES_ENCRYPT(" + connection.escape(password) + ", '" + config.password + "'), 0);";
 
   connection.getConnection(function(err, connection) {
     connection.query(query, function(error, results, fields) {
       // If some error occurs, we throw an error.
       if (error) throw error;
 
-      res.sent("Successfully created a new account!");
+      res.send("Successfully created a new account!");
     });
   });
 });
