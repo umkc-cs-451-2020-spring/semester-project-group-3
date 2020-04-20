@@ -61,6 +61,7 @@ function Transaction(){
     <div>
       <Table rows={createRows(transactions)}>
       </Table>
+      <br/>
       <button type="button"
               className="submit-btn"
               onClick={handleClick}> 

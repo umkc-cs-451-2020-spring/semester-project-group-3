@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 const Header1 = styled.div `
   grid-area: header;
   min-height: 60px;
-  width: 100%;
+  width: calc(100% - 20px) ;
   margin: 0 auto;
   background: white;
   text-align: left;
@@ -17,9 +17,6 @@ const Header1 = styled.div `
   padding-left: 20px;
 `
 
-// Todo Add Logo here
-// https://www.commercebank.com/about-us/media-relations/commerce-logos
-// Hex codes: dark green (006649), light green (74BD43)
 export default function Header() {
   const dispatch = useDispatch();
 
@@ -29,8 +26,8 @@ export default function Header() {
   }
 
   return (
-    <Header1>
-        Commerce Bank <button className="logout-btn" onClick={handleClickLogout}>Logout</button>
-    </Header1>
+      <Header1>
+          Commerce Bank <button className="logout-btn" onClick={handleClickLogout}>Logout</button>
+      </Header1>
   );
 }
