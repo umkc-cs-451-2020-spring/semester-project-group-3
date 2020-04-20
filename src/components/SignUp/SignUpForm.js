@@ -72,13 +72,6 @@ const SignUp = props => {
                             label="Confirm Password"
                         />
                     </div>
-                    <div>
-                        <Field
-                            name="balance"
-                            component= {renderTextField}
-                            label="Balance"
-                        />
-                    </div>
                     <br/>
                     <div style={{padding: "5px"}}>
                         <button
