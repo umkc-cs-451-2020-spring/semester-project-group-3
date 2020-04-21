@@ -34,3 +34,12 @@ call setTransaction(
     100.00,
     "Payday"
 );
+
+call createNotificationTrigger(
+'211111110',
+'balanceBelow',
+0.0,
+null,
+null,
+'Your balance has fallen below ${amount}.');
+

@@ -13,8 +13,8 @@ var mailerRouter = require("./routes/mailer");
 var signupRouter = require("./routes/signup");
 var notificationTriggersRouter = require("./routes/notificationTriggers");
 var notificationsRouter = require("./routes/notifications");
-var exportRouter = require("./routes/export");
 
+var exportRouter = require("./routes/export");
 var app = express();
 
 // view engine setup
