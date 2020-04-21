@@ -1,12 +1,14 @@
 import tabChangeReducer from "./tabChangeReducer.js";
 import transactionsReducer from "./transactionsReducer.js";
 import loginReducer from "./loginReducer.js";
+import notificationsReducer from "./notificationsReducer.js";
 import { combineReducers } from "redux";
-import { reducer as reduxFormReducer } from 'redux-form';
+import { reducer as reduxFormReducer } from "redux-form";
 
 export default combineReducers({
   tabChangeReducer,
   transactionsReducer,
   loginReducer,
-  form: reduxFormReducer
+  notificationsReducer,
+  form: reduxFormReducer,
 });

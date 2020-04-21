@@ -13,3 +13,11 @@ export const loginFailure = error => ({
   type: types.LOGIN_FAILURE,
   payload: { error }
 });
+
+export const rememberMe = () => ({
+  type: types.REMEMBER_ME
+});
+
+export const noRemember = () => ({
+  type: types.NO_REMEMBER
+});

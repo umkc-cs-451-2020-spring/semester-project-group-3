@@ -27,31 +27,27 @@ router.post("/", function(req, res, next) {
 
   if (value == undefined) {
     value = null;
-  } else {
-    value = "'" + value + "'";
   }
 
   if (startDate == undefined) {
     startDate = null;
-  } else {
-    startDate = "'" + startDate + "'";
   }
 
   // build query
   query =
-    "call createNotificationTrigger('" +
-    associatedAccount +
-    "','" +
-    type +
-    "'," +
-    amount +
+    "call createNotificationTrigger(" +
+    connection.escape(associatedAccount) +
     "," +
-    value +
+    connection.escape(type) +
     "," +
-    startDate +
-    ",'" +
-    description +
-    "');";
+    connection.escape(amount) +
+    "," +
+    connection.escape(value) +
+    "," +
+    connection.escape(startDate) +
+    "," +
+    connection.escape(description) +
+    ");";
 
   connection.getConnection(function(err, connection) {
     connection.query(query, function(error, results, fields) {

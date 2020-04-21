@@ -5,10 +5,13 @@ import NavCol from '../NavCol';
 
 // Todo change Container to be a component and not just a box.
 const Container = styled.div `
+  background-image: url("/background.jpg"); 
   position: absolute;
   margin: 0 auto;
   height: 100%;
   width: 100%;
+  min-height: 600px;
+  min-width: 1200px;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 15% 85%;
@@ -19,13 +22,19 @@ const Container = styled.div `
 // todo remove border
 const Wrapper = styled.div`
   grid-area: main;
-  height: 100%;
+  height: (100% - 5px);
+  opacity: 95%;
+  width: 100%;
+  border-top-style: solid;
+  border-top-width: 5px;
+  border-top-color: #006649;
 `
 
 // move code below into own component
 const GridBox = styled.div `
  display: grid;
- height 100%;
+ height: 100%;
+ min-width: 1200px;
  background: #006649;
  grid-template-columns: 15% 85%;
  grid-template-rows: 100%;
@@ -37,7 +46,6 @@ const GridBox = styled.div `
 const Space = styled.div`
   grid-area: Space;
   width: 99%;
-  padding-right: 5px;
   overflow: auto;
   background: #006649;
 `
