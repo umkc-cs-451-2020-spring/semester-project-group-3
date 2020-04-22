@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import fetchTransactions from "../Dashboard/transactionAction.js";
 import { useSelector, useDispatch } from 'react-redux';
 import Table from '../Table';

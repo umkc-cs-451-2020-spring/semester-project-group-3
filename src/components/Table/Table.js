@@ -19,11 +19,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
@@ -33,6 +32,29 @@ const SearchArea = styled.div`
   float: right;
   min-width: 425px;
 `
+const theme = createMuiTheme({
+  overrides: {
+    MuiFormControlLabel: {
+      root: {
+        color: 'white'
+      },
+    },
+  },
+});
+
+const GSwitch = withStyles({
+  switchBase: {
+    color: "#74BD43",
+    '&$checked': {
+      color: "#74BD43",
+    },
+    '&$checked + $track': {
+      backgroundColor: "#74BD43",
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 const StyledTextField = withStyles(theme => ({
   root: {
@@ -411,10 +433,12 @@ export default function EnhancedTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      <ThemeProvider theme={theme}>
+        <FormControlLabel
+          control={<GSwitch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        />
+      </ThemeProvider>
     </div>
   );
 }
