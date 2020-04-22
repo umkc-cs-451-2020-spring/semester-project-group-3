@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import Dashboard from '../components/Dashboard';
 import Transaction from '../components/Transaction';
 import Notification from '../components/Notification';
+import AddTransaction from '../components/AddTransaction/AddTransactionForm';
 import { useSelector } from 'react-redux';
 
 
@@ -19,6 +20,8 @@ function App() {
     currentPage = <Transaction/>;
   }else if (currentTab === "Notification") {
     currentPage = <Notification/>;
+  } else if (currentTab === "Add Transaction") {
+    currentPage = <AddTransaction/>
   }
   // todo add another else with a lodding symbol to display when async
   // calls are being made

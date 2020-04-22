@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import fetchTransactions from "../Dashboard/transactionAction.js";
+import { renderAddTransactionForm } from '../../rStore/actions/tabChangeActions';
 import { useSelector, useDispatch } from 'react-redux';
 import Table from '../Table';
 
@@ -8,6 +9,10 @@ function Transaction(){
   const dispatch = useDispatch();
   const axios = require('axios');
   const acctID = useSelector((state) => state.loginReducer.accountID );
+
+  const handleAddTransaction = (event) => {
+    dispatch(renderAddTransactionForm());
+  }
 
   const handleClick = (event) => {
     axios.get('/export/' + acctID)
@@ -62,6 +67,12 @@ function Transaction(){
       <Table rows={createRows(transactions)}>
       </Table>
       <br/>
+      <button type="button"
+              className="submit-btn"
+              onClick={handleAddTransaction}>
+        Add Transaction
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <button type="button"
               className="submit-btn"
               onClick={handleClick}> 
