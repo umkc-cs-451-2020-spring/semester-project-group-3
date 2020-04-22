@@ -16,6 +16,7 @@ function App() {
   const dispatch = useDispatch();
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   const acctID = useSelector((state) => state.loginReducer.accountID );
+  const type = useSelector((state) => state.transactionsReducer.items );
   let currentPage;
   if (currentTab === "Dashboard") {
     currentPage = <Dashboard/>;
@@ -25,7 +26,7 @@ function App() {
     currentPage = <Notification/>;
   } else if (currentTab === "Add Transaction") {
     currentPage = <AddTransaction onSubmit={values=> {
-      dispatch(addTransactionAction(acctID, "DR", values.amount, values.description));
+      dispatch(addTransactionAction(acctID, type, values.amount, values.description));
     }}/>
   }
   // todo add another else with a lodding symbol to display when async

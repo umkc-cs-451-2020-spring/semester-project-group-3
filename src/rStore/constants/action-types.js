@@ -19,6 +19,7 @@ const REMEMBER_ME                = 'REMEMBER_ME';
 const NO_REMEMBER                = 'NO_REMEMBER';
 const FORGOT_PASS                = 'FORGOT_PASS';
 const ADD_TRANSACTION            = 'ADD_TRANSACTION';
+const TRANSACTION_TYPE            = 'TRANSACTION_TYPE';
 
 
 export default {
@@ -40,5 +41,6 @@ export default {
   REMEMBER_ME,
   NO_REMEMBER,
   FORGOT_PASS,
-  ADD_TRANSACTION
+  ADD_TRANSACTION,
+  TRANSACTION_TYPE
 };

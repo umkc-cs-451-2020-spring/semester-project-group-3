@@ -39,7 +39,12 @@ function transactionsReducer(state = initialState, action) {
         loading: false,
         error: null
       };
-
+      case types.TRANSACTION_TYPE:
+      return {
+        ...state,
+        loading: false,
+        items: action.payload.tt
+      };
     default:
       return state;
   }

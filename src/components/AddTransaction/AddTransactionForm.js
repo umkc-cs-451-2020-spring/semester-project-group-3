@@ -10,6 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { renderTransaction } from '../../rStore/actions/tabChangeActions';
 import validate from './validate';
 import { useDispatch } from 'react-redux';
+import { transactionType } from '../../rStore/actions/transactionActions';
 
 const theme = createMuiTheme({
     overrides: {
@@ -56,9 +57,10 @@ const renderTextField = (
 
 const AddTransactionForm = props => {
     const { handleSubmit, pristine, submitting } = props
-    const [value, setValue] = React.useState('debit');
+    const [value, setValue] = React.useState('DR');
     const dispatch = useDispatch();
-
+    dispatch(transactionType(value))
+    
     const handleClickCancel = (event) => {
         dispatch(renderTransaction())
     }
@@ -90,8 +92,8 @@ const AddTransactionForm = props => {
                     <ThemeProvider theme={theme}>
                         <FormControl component="fieldset">
                             <RadioGroup value={value} onChange={handleChange}>
-                                <FormControlLabel value="debit" control={<GRadio />} label="Debit" />
-                                <FormControlLabel value="credit" control={<GRadio />} label="Credit" />
+                                <FormControlLabel value="DR" control={<GRadio />} label="Debit" />
+                                <FormControlLabel value="CR" control={<GRadio />} label="Credit" />
                             </RadioGroup>
                         </FormControl>
                     </ThemeProvider>
