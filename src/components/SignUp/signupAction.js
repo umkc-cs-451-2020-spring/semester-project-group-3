@@ -12,7 +12,7 @@ export default function signup(accountID, email, password) {
           dispatch(renderApp());
           })
         .catch(function(error) {
-          console.log(error);
+          window.alert(error);
         })
     }
 }
