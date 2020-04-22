@@ -1,7 +1,7 @@
 use landonvolkmann_commerce_project;
 
 create table Account (
-    accountID varchar(320) not null,
+    accountID int(11) not null auto_increment,
     email varchar(320) not null,
     password varchar(512) not null,
     balance decimal,
@@ -11,7 +11,7 @@ create table Account (
 
 create table Transaction (
     transactionID int(11) not null auto_increment,
-    associatedAccount varchar (320),
+    associatedAccount int(11),
     processingDate datetime not null,
     type varchar (30),
     amount decimal unsigned,
@@ -27,7 +27,7 @@ add
 
 create table NotificationTrigger (
     notificationTriggerID int(11) not null auto_increment,
-    associatedAccount varchar (320),
+    associatedAccount int(11),
     type varchar (30),
 	active bool default true,
     amount decimal(11, 2),
