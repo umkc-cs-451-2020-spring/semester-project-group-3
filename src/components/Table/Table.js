@@ -278,8 +278,8 @@ const useStyles = makeStyles(theme => ({
 export default function EnhancedTable(props) {
   const classes = useStyles();
   const [rows, setRows] = React.useState(props.rows);
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('pDate');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('transId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(true);
@@ -340,7 +340,6 @@ export default function EnhancedTable(props) {
   // search functionality lives below this
   const [query, setQuery] = React.useState('');
   const [searchCol, setSearchCol] = React.useState('description');
-
   const inputLabel = React.useRef(null);
   const handleQuery = event => {
     setQuery(event.target.value);
@@ -348,7 +347,6 @@ export default function EnhancedTable(props) {
   const handleChange = event => {
     setSearchCol(event.target.value);
   };
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -409,8 +407,8 @@ export default function EnhancedTable(props) {
                       </StyledTableCell>
                       <TableCell align="right">{row.pDate}</TableCell>
                       <StyledTableCell align="right">{"$"+row.amount+ (row.amount%1=== 0 ? ".00" : '')}</StyledTableCell>
-                      <StyledTableCell align="right">{row.chargeType}</StyledTableCell>
-                      <TableCell align="right">{row.balance + (row.balance%1=== 0 ? ".00" : '')}</TableCell>
+                      <TableCell align="right">{row.chargeType}</TableCell>
+                      <StyledTableCell align="right">{"$"+row.balance + (row.balance%1=== 0 ? ".00" : '')}</StyledTableCell>
                       <TableCell align="right">{row.description}</TableCell>
                     </TableRow>
                   );

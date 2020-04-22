@@ -1,11 +1,13 @@
 import React from 'react';
 import fetchTransactions from "../Dashboard/transactionAction.js";
 import { useSelector, useDispatch } from 'react-redux';
+import Moment from 'moment';
 import Table from '../Table';
 
 function Transaction(){
   const dispatch = useDispatch();
   const axios = require('axios');
+  Moment.locale('en');
   const acctID = useSelector((state) => state.loginReducer.accountID );
 
   const handleClick = (event) => {
@@ -26,9 +28,14 @@ function Transaction(){
     if (transaction){
       for (var i = 0; i< transaction.length; i++){
         // todo add formating to date data.
+        if(transaction[i].type === "DR") {
+          transaction[i].type = "Debit";
+        }else{
+          transaction[i].type = "Credit";
+        }
         tempRows.push(createData(
           transaction[i].transactionID,
-          transaction[i].processingDate,
+          Moment(transaction[i].processingDate).format('MM/DD/YYYY'),
           transaction[i].historicBalance,
           transaction[i].type,
           transaction[i].amount,

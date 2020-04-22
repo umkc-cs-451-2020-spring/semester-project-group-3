@@ -3,10 +3,12 @@ import Table from "../Table";
 import Notifications from "../Notifications";
 import fetchTransactions from "./transactionAction.js";
 import fetchNotifications from "./notificationAction.js";
+import Moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 
 function Dashboard() {
   const dispatch = useDispatch();
+  Moment.locale('en');
   const acctID = useSelector((state) => state.loginReducer.accountID);
 
   function createData(
@@ -24,10 +26,15 @@ function Dashboard() {
     if (transaction) {
       for (var i = 0; i < transaction.length; i++) {
         // todo add formating to date data.
+        if(transaction[i].type === "DR") {
+          transaction[i].type = "Debit";
+        }else{
+          transaction[i].type = "Credit";
+        }
         tempRows.push(
           createData(
             transaction[i].transactionID,
-            transaction[i].processingDate,
+            Moment(transaction[i].processingDate).format('MM/DD/YYYY'),
             transaction[i].historicBalance,
             transaction[i].type,
             transaction[i].amount,
