@@ -25,12 +25,8 @@ function Dashboard() {
     var tempRows = [];
     if (transaction) {
       for (var i = 0; i < transaction.length; i++) {
-        // todo add formating to date data.
-        if(transaction[i].type === "DR") {
-          transaction[i].type = "Debit";
-        }else{
-          transaction[i].type = "Credit";
-        }
+        transaction[i].type === "DR" ? transaction[i].type = "Debit" : transaction[i].type = "Credit"
+        
         tempRows.push(
           createData(
             transaction[i].transactionID,
