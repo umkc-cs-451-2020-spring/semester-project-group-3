@@ -77,7 +77,7 @@ function Dashboard() {
   );
 
   if (loading || notif_loading) {
-    return <div>Loading...</div>;
+    return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
   if (error) {
     return <div>Error while fetching transactions: {error}</div>;

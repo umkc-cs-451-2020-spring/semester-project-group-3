@@ -58,7 +58,7 @@ function Transaction(){
   const transactions = useSelector((state) => state.transactionsReducer.items );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
   if (error) {
     return <div>Error! {error}</div>;
