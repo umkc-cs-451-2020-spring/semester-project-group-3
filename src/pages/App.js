@@ -16,7 +16,7 @@ function App() {
   const dispatch = useDispatch();
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   const acctID = useSelector((state) => state.loginReducer.accountID );
-  const type = useSelector((state) => state.transactionsReducer.items );
+  const type = useSelector((state) => state.transactionsReducer.type );
   let currentPage;
   if (currentTab === "Dashboard") {
     currentPage = <Dashboard/>;
