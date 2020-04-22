@@ -42,13 +42,6 @@ const SignUp = props => {
             <div className="App-header">
                 <h1>Sign Up</h1>
                 <form onSubmit={handleSubmit}>
-                <div>
-                        <Field
-                            name="accountID"
-                            component= {renderTextField}
-                            label="Account Number"
-                        />
-                    </div>
                     <div>
                         <Field
                             name="email"
