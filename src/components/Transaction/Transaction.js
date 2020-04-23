@@ -1,13 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
 import fetchTransactions from "../Dashboard/transactionAction.js";
 import { renderAddTransactionForm } from '../../rStore/actions/tabChangeActions';
 import { useSelector, useDispatch } from 'react-redux';
+import Moment from 'moment';
 import Table from '../Table';
 
 function Transaction(){
   const dispatch = useDispatch();
   const axios = require('axios');
+  Moment.locale('en');
   const acctID = useSelector((state) => state.loginReducer.accountID );
 
   const handleAddTransaction = (event) => {
@@ -31,10 +32,11 @@ function Transaction(){
     var tempRows= [];
     if (transaction){
       for (var i = 0; i< transaction.length; i++){
-        // todo add formating to date data.
+        transaction[i].type === "DR" ? transaction[i].type = "Debit" : transaction[i].type = "Credit"
+
         tempRows.push(createData(
           transaction[i].transactionID,
-          transaction[i].processingDate,
+          Moment(transaction[i].processingDate).format('MM/DD/YYYY'),
           transaction[i].historicBalance,
           transaction[i].type,
           transaction[i].amount,
@@ -57,7 +59,7 @@ function Transaction(){
   const transactions = useSelector((state) => state.transactionsReducer.items );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
   if (error) {
     return <div>Error! {error}</div>;

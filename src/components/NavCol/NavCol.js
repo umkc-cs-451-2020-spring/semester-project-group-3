@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { renderDashboard, renderTransaction, renderNotification } from "../../rStore/actions/tabChangeActions.js";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
