@@ -22,3 +22,6 @@ export function renderSignUp() {
 export function renderForgotPass() {
   return { type: types.FORGOT_PASS}
 }
+export function renderAddTransactionForm() {
+  return { type: types.ADD_TRANSACTION}
+}

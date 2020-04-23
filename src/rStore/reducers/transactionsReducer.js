@@ -3,7 +3,8 @@ import types from "../constants/action-types";
 const initialState = {
   items: [],
   loading: false,
-  error: null
+  error: null,
+  type: ""
 };
 
 function transactionsReducer(state = initialState, action) {
@@ -39,7 +40,12 @@ function transactionsReducer(state = initialState, action) {
         loading: false,
         error: null
       };
-
+      case types.TRANSACTION_TYPE:
+      return {
+        ...state,
+        loading: false,
+        type: action.payload.tt
+      };
     default:
       return state;
   }
