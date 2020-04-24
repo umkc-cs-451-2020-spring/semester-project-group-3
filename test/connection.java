@@ -19,22 +19,32 @@ public class connection {
     static final String url = "jdbc:mariadb://landonvolkmann.com/landonvolkmann_commerce_project";
     static final String user = "landonvolkmann_admin";
     static final String password = "Gr0up3!2020";
-    static Connection myConn;
+    
+    public static Connection set_conn() {
+        try {
+            final Connection myConn = DriverManager.getConnection(url, user, password);
+            return myConn;
+        }
+        catch (SQLException e) {
+            System.out.println("Error while executing query");
+            return null;
+        }
+    }
+    
 
     public static void main(String[] args) {
         //setup_db();
-        teardown_db();
+        //teardown_db();
         
 
     }
-
 
     public static void setup_db() {
 
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            myConn = DriverManager.getConnection(url, user, password);
-            
+            Connection myConn = DriverManager.getConnection(url, user, password);
+
             ScriptRunner sr = new ScriptRunner(myConn);
             //teardown scripts
             Reader reader = new BufferedReader(new FileReader(".\\react-backend\\sql_scripts\\dbTeardownScript.sql"));
@@ -55,7 +65,7 @@ public class connection {
 
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            myConn = DriverManager.getConnection(url, user, password);
+            Connection myConn = DriverManager.getConnection(url, user, password);
             
             ScriptRunner sr = new ScriptRunner(myConn);
             //teardown scripts
@@ -73,6 +83,20 @@ public class connection {
         }
     }
 
+    // public static String select_acc(String query) {
+
+    //     try {
+            
+    //         rs.next();
+    //         String accID = rs.getString("accountID");
+    //         return accID;
+    //     }
+    //     catch (SQLException e) {
+            
+    //     }
+    // }
+
+    
     // public static void connect_db() { //String str1, String str2
 
     //     String TEST = "";
