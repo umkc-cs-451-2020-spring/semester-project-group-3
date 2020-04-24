@@ -33,7 +33,6 @@ create table NotificationTrigger (
     amount decimal(11, 2),
     value varchar(30),
     startDate datetime default current_timestamp,
-    description varchar (320),
     primary key (notificationTriggerID)
 ) engine = InnoDB;
 
