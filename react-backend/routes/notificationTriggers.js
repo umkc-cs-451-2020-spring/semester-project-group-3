@@ -27,7 +27,6 @@ router.post("/", function (req, res, next) {
   var amount = req.query.amount;
   var value = req.query.value;
   var startDate = req.query.startDate;
-  var description = req.query.description;
 
   // convert undefined to null
 
@@ -55,8 +54,6 @@ router.post("/", function (req, res, next) {
     connection.escape(value) +
     "," +
     connection.escape(startDate) +
-    "," +
-    connection.escape(description) +
     ");";
 
   connection.getConnection(function (err, connection) {
