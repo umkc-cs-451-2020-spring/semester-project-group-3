@@ -22,49 +22,71 @@ function isJson(str) {
 }
 
 router.post("/", function (req, res, next) {
-  var associatedAccount = req.query.account;
-  var type = req.query.type;
-  var amount = req.query.amount;
-  var value = req.query.value;
-  var startDate = req.query.startDate;
+  var triggers = req.query.triggers;
 
-  // convert undefined to null
-
-  if (amount == undefined) {
-    amount = null;
+  if (isJson(triggers)) {
+    triggers = JSON.parse(triggers);
   }
 
-  if (value == undefined) {
-    value = null;
-  }
+  console.log(triggers);
 
-  if (startDate == undefined) {
-    startDate = null;
-  }
+  var multiCreateQuery = "";
+  triggers.forEach((trigger, idx, array) => {
+    var associatedAccount = trigger["account"];
 
-  // build query
-  query =
-    "call createNotificationTrigger(" +
-    connection.escape(associatedAccount) +
-    "," +
-    connection.escape(type) +
-    "," +
-    connection.escape(amount) +
-    "," +
-    connection.escape(value) +
-    "," +
-    connection.escape(startDate) +
-    ");";
+    if (associatedAccount == undefined) {
+      return true; // acts as a continue statement
+    }
 
-  connection.getConnection(function (err, connection) {
-    connection.query(query, function (error, results, fields) {
-      // If some error occurs, we throw an error.
-      if (error) throw error;
+    var type = trigger["type"];
+    var amount = trigger["amount"];
+    var value = trigger["value"];
+    var startDate = trigger["startDate"];
 
-      console.log("Successfully created trigger!");
-      res.send(true);
-    });
+    // convert undefined to null
+
+    if (amount == undefined) {
+      amount = null;
+    }
+
+    if (value == undefined) {
+      value = null;
+    }
+
+    if (startDate == undefined) {
+      startDate = null;
+    }
+
+    var query =
+      "call createNotificationTrigger(" +
+      connection.escape(associatedAccount) +
+      "," +
+      connection.escape(type) +
+      "," +
+      connection.escape(amount) +
+      "," +
+      connection.escape(value) +
+      "," +
+      connection.escape(startDate) +
+      ");";
+
+    multiCreateQuery += query;
   });
+
+  if (multiCreateQuery != "") {
+    connection.getConnection(function (err, connection) {
+      connection.query(multiCreateQuery, function (error, results, fields) {
+        // If some error occurs, we throw an error.
+        if (error) throw error;
+
+        console.log("Successfully created triggers!");
+        res.send(true);
+      });
+    });
+  } else {
+    console.log("No triggers to create!");
+    res.send(false);
+  }
 });
 
 router.get("/:associatedAccount", function (req, res, next) {
