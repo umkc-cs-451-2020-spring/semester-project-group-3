@@ -1,9 +1,36 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
-import { renderLogin } from '../../rStore/actions/tabChangeActions';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import { withStyles } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { renderTransaction } from '../../rStore/actions/tabChangeActions';
 import validate from './validate';
 import { useDispatch } from 'react-redux';
+import { transactionType } from '../../rStore/actions/transactionActions';
+
+const theme = createMuiTheme({
+    overrides: {
+      MuiFormControlLabel: {
+        root: {
+          color: 'white'
+        },
+      },
+    },
+  });
+
+const GRadio = withStyles({
+    root: {
+      color: "#74BD43",
+      '&$checked': {
+        color: "#74BD43",
+      },
+    },
+    checked: {},
+  })((props) => <Radio color="default" {...props} />);
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -18,7 +45,7 @@ const renderTextField = (
       {...custom}
       style={{
         backgroundColor: "white",
-        width: "200px"
+        width: "500px"
     }}
     InputProps={{
         style: {
@@ -28,42 +55,48 @@ const renderTextField = (
     />
   );
 
-const SignUp = props => {
+const AddTransactionForm = props => {
     const { handleSubmit, pristine, submitting } = props
+    const [value, setValue] = React.useState('DR');
     const dispatch = useDispatch();
-
+    dispatch(transactionType(value))
+    
     const handleClickCancel = (event) => {
-        dispatch(renderLogin())
+        dispatch(renderTransaction())
     }
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+      };
+
     return (
-        <div className="login-page">
-            <img className="logo-img" src="/logo.png" alt ="Logo" />
-            <div className="App-header">
-                <h1>Sign Up</h1>
+        <div>
+            <div>
+                <h1 style={{color:"white"}}>Add Transaction</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <Field
-                            name="email"
+                            name="amount"
                             component= {renderTextField}
-                            label="Email"
+                            label="Amount"
                         />
                     </div>
                     <div>
                         <Field
-                            name="password"
-                            type="password"
+                            name="description"
                             component= {renderTextField}
-                            label="Password"
+                            label="Description"
                         />
                     </div>
                     <div>
-                        <Field
-                            name="confirmedPword"
-                            type="password"
-                            component= {renderTextField}
-                            label="Confirm Password"
-                        />
+                    <ThemeProvider theme={theme}>
+                        <FormControl component="fieldset">
+                            <RadioGroup value={value} onChange={handleChange}>
+                                <FormControlLabel value="DR" control={<GRadio />} label="Debit" />
+                                <FormControlLabel value="CR" control={<GRadio />} label="Credit" />
+                            </RadioGroup>
+                        </FormControl>
+                    </ThemeProvider>
                     </div>
                     <br/>
                     <div style={{padding: "5px"}}>
@@ -90,6 +123,6 @@ const SignUp = props => {
 }
 
 export default reduxForm({
-    form: 'SignUp',
+    form: 'AddTransactionForm',
     validate
-})(SignUp)
+})(AddTransactionForm)

@@ -50,6 +50,12 @@ function tabChangeReducer(state = initialState, action) {
         currentTab: "Dashboard"
       }
     }
+    case types.ADD_TRANSACTION: {
+      return {
+        currentPage: "App",
+        currentTab: "Add Transaction"
+      }
+    }
     default: return state;
   }
 }

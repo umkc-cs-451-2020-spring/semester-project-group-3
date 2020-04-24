@@ -24,3 +24,4 @@ yarn-error.log*
 
 /react-backend/node_modules
 react-backend/config.js
+/react-backend/transactions_fastcsv.csv

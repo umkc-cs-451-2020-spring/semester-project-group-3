@@ -3,12 +3,14 @@
 }
 
 .logo-img {
-  max-width: 90%;
+  width: 90%;
+  min-width: 90%;
 }
 
 .App-header {
   background-color: #006649;
   width: 30%;
+  min-width: 300px;
   padding-bottom: 45px;
   display: relative;
   flex-direction: column;
@@ -27,7 +29,10 @@
 .login-page {
   background-image: url("/background.jpg"); 
   /* free image from: https://www.pexels.com/photo/green-leaf-1353938/ */
-  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: fixed;
 }
 
 .submit-btn {

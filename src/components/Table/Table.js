@@ -19,11 +19,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
@@ -33,6 +32,29 @@ const SearchArea = styled.div`
   float: right;
   min-width: 425px;
 `
+const theme = createMuiTheme({
+  overrides: {
+    MuiFormControlLabel: {
+      root: {
+        color: 'white'
+      },
+    },
+  },
+});
+
+const GSwitch = withStyles({
+  switchBase: {
+    color: "#74BD43",
+    '&$checked': {
+      color: "#74BD43",
+    },
+    '&$checked + $track': {
+      backgroundColor: "#74BD43",
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 const StyledTextField = withStyles(theme => ({
   root: {
@@ -256,11 +278,11 @@ const useStyles = makeStyles(theme => ({
 export default function EnhancedTable(props) {
   const classes = useStyles();
   const [rows, setRows] = React.useState(props.rows);
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('pDate');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('transId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -318,7 +340,6 @@ export default function EnhancedTable(props) {
   // search functionality lives below this
   const [query, setQuery] = React.useState('');
   const [searchCol, setSearchCol] = React.useState('description');
-
   const inputLabel = React.useRef(null);
   const handleQuery = event => {
     setQuery(event.target.value);
@@ -326,7 +347,6 @@ export default function EnhancedTable(props) {
   const handleChange = event => {
     setSearchCol(event.target.value);
   };
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -387,8 +407,8 @@ export default function EnhancedTable(props) {
                       </StyledTableCell>
                       <TableCell align="right">{row.pDate}</TableCell>
                       <StyledTableCell align="right">{"$"+row.amount+ (row.amount%1=== 0 ? ".00" : '')}</StyledTableCell>
-                      <StyledTableCell align="right">{row.chargeType}</StyledTableCell>
-                      <TableCell align="right">{row.balance + (row.balance%1=== 0 ? ".00" : '')}</TableCell>
+                      <TableCell align="right">{row.chargeType}</TableCell>
+                      <StyledTableCell align="right">{"$"+row.balance + (row.balance%1=== 0 ? ".00" : '')}</StyledTableCell>
                       <TableCell align="right">{row.description}</TableCell>
                     </TableRow>
                   );
@@ -411,10 +431,12 @@ export default function EnhancedTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      <ThemeProvider theme={theme}>
+        <FormControlLabel
+          control={<GSwitch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        />
+      </ThemeProvider>
     </div>
   );
 }
