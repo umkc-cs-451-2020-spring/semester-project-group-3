@@ -12,6 +12,15 @@ const connection = mysql.createPool({
   multipleStatements: true,
 });
 
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 router.post("/", function (req, res, next) {
   var associatedAccount = req.query.account;
   var type = req.query.type;
@@ -105,6 +114,10 @@ router.post("/delete/", function (req, res, next) {
 
 router.post("/update/", function (req, res, next) {
   var triggersToUpdate = req.query.triggers;
+
+  if (isJson(triggersToUpdate)) {
+    triggersToUpdate = JSON.parse(triggersToUpdate);
+  }
 
   console.log(triggersToUpdate);
 
