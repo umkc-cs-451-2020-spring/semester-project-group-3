@@ -43,3 +43,11 @@ null,
 null,
 'Your balance has fallen below ${amount}.');
 
+call createNotificationTrigger(
+'211111110',
+'descriptionContains',
+null,
+"Starbucks",
+null,
+'Transaction with description ${value}.');
+
