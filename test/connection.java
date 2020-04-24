@@ -82,48 +82,4 @@ public class connection {
             exc.printStackTrace();
         }
     }
-
-    // public static String select_acc(String query) {
-
-    //     try {
-            
-    //         rs.next();
-    //         String accID = rs.getString("accountID");
-    //         return accID;
-    //     }
-    //     catch (SQLException e) {
-            
-    //     }
-    // }
-
-    
-    // public static void connect_db() { //String str1, String str2
-
-    //     String TEST = "";
-
-    //     try {
-    //         Class.forName("org.mariadb.jdbc.Driver");
-    //         Connection myConn = DriverManager.getConnection(url, user, password);
-    //         Statement myStmt = myConn.createStatement();
-    //         // ResultSet rs = myStmt.executeQuery(loadTestData());   //str1  select * from Account
-    //         ResultSet rs = myStmt.executeQuery(teardown());
-    //         // while (rs.next()) {
-    //         // System.out.println(rs.getString("accountID") + ", " + rs.getString("email"));
-    //         // }
-    //         rs.next();
-        
-    //         // TEST = rs.getString("accountID");
-    //         // return TEST;
-
-    //         // System.out.println(rs.getString("accountID"));    //str2
-    //         // rs = myStmt.executeQuery("select * from Notification");
-    //         // rs.next();
-    //         // System.out.println(rs.getString("notificationID"));
-
-    //     } catch (Exception exc) {
-    //         exc.printStackTrace();
-    //     }
-    // //     return TEST;
-    //  }
-
 }
