@@ -1,6 +1,22 @@
 -- use landonvolkmann_commerce_project;
 
 insert into
+	NotificationTriggerDescription (type, description)
+values
+	(
+		"balanceBelow",
+        "Balance has fallen below ${amount}."
+	),
+    (
+		"transactionAmountAbove", 
+		"Transaction amount greater than ${amount}."
+	),
+    (
+		"descriptionContains",
+        "Transaction with description containing ${value}."
+    );
+
+insert into
     Account (accountID, email, password, balance)
 values
     (

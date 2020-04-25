@@ -130,9 +130,56 @@ public class test1 {
         catch (Exception exc) {
             System.out.println("Error while executing query");
         }
-
      }
     
+     @Test
+     // This makes sure the notification triggers' type and description are accurately inserted
+     public void test_notification_trigger_descr() {
+
+        String type, description;
+        try {
+
+            String query = "select * from NotificationTriggerDescription";
+            Connection myConn = DriverManager.getConnection(connection.url, connection.user, connection.password);
+            
+            ScriptRunner sr = new ScriptRunner(myConn);
+            //teardown scripts
+            Reader reader = new BufferedReader(new FileReader(".\\react-backend\\sql_scripts\\dbTeardownScript.sql"));
+            //setup scripts
+            Reader reader2 = new BufferedReader(new FileReader(".\\react-backend\\sql_scripts\\dbSetupScripts.sql"));
+            //load test data
+            Reader reader3 = new BufferedReader(new FileReader(".\\test\\loadTestData.sql"));
+            sr.runScript(reader);
+            sr.runScript(reader2);
+            sr.runScript(reader3);
+
+            Statement stmt = myConn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            type = rs.getString("type");
+            description = rs.getString("description");
+
+            assertEquals(type, "balanceBelow");
+            assertEquals(description, "Balance has fallen below ${amount}.");
+            // on to the next row of the table
+            rs.next();
+            type = rs.getString("type");
+            description = rs.getString("description");
+
+            assertEquals(type, "transactionAmountAbove");
+            assertEquals(description, "Transaction amount greater than ${amount}.");
+            // and finally the last row
+            rs.next();
+            type = rs.getString("type");
+            description = rs.getString("description");
+
+            assertEquals(type, "descriptionContains");
+            assertEquals(description, "Transaction with description containing ${value}.");
+        }
+        catch (Exception exc) {
+            System.out.println("Error while executing query");
+        }
+     }
 }
 
 
