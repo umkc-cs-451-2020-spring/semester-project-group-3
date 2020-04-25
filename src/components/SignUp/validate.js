@@ -19,7 +19,7 @@ export default function(values) {
     if (
         values.password !== values.confirmedPword
       ) {
-        errors.confirmedPword = 'Passwords do not match';
+        errors.confirmedPword = "Passwords don't match";
       }
     return errors;
   }

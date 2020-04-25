@@ -32,24 +32,32 @@ const GRadio = withStyles({
     checked: {},
   })((props) => <Radio color="default" {...props} />);
 
-const renderTextField = (
+  const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
   ) => (
     <TextField
       label={label}
       variant="filled"
       hintText={label}
+      autoComplete='off'
       floatingLabelText={label}
       helperText={touched && error}
       {...input}
       {...custom}
       style={{
-        backgroundColor: "white",
-        width: "500px"
+        width: "200px",
+    }}
+    FormHelperTextProps={{
+        style: {
+            color: "red",
+            fontSize: "15px"
+        }
     }}
     InputProps={{
         style: {
-            color: "black"
+            borderRadius: "0",
+            backgroundColor: "white",
+            opacity: "90%",
         }
     }}
     />
