@@ -94,6 +94,8 @@ public class test1 {
 
             Statement stmt = myConn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+
+            // the first row of this table is the first transaction created at Starbucks
             rs.next();
             transactionID = rs.getInt("transactionID");
             accID = rs.getString("associatedAccount");
@@ -110,7 +112,7 @@ public class test1 {
             assertEquals(amount, 2);
             assertEquals(description, "Starbucks");
             assertEquals(historicBalance, 5998);
-            //on to the next "setTransaction" call, the next row in the DB
+            // on to the next "setTransaction" call, the next row in the DB. This row was the Gamestop transaction
             rs.next();
             transactionID = rs.getInt("transactionID");
             accID = rs.getString("associatedAccount");
@@ -127,6 +129,23 @@ public class test1 {
             assertEquals(amount, 20);
             assertEquals(description, "Gamestop");
             assertEquals(historicBalance, 5978);
+            // the next transaction is a Credit, so this will add money to the account
+            rs.next();
+            transactionID = rs.getInt("transactionID");
+            accID = rs.getString("associatedAccount");
+            processingDate = rs.getString("processingDate");
+            type = rs.getString("type");
+            amount = rs.getInt("amount");
+            description = rs.getString("description");
+            historicBalance = rs.getInt("historicBalance");
+
+            assertEquals(transactionID, 3);
+            assertEquals(accID, "233333330");
+            assertEquals(processingDate, "2019-12-01T06:00:00.000Z");
+            assertEquals(type, "CR");
+            assertEquals(amount, 1200);
+            assertEquals(description, "Stimulus Check");
+            assertEquals(historicBalance, 7178);
         }
         catch (Exception exc) {
             System.out.println("Error while executing query");
@@ -156,20 +175,22 @@ public class test1 {
 
             Statement stmt = myConn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+
+            // the first row has a "balance below" trigger
             rs.next();
             type = rs.getString("type");
             description = rs.getString("description");
 
             assertEquals(type, "balanceBelow");
             assertEquals(description, "Balance has fallen below ${amount}.");
-            // on to the next row of the table
+            // on to the next row of the table, which is a "transaction amount above" trigger
             rs.next();
             type = rs.getString("type");
             description = rs.getString("description");
 
             assertEquals(type, "transactionAmountAbove");
             assertEquals(description, "Transaction amount greater than ${amount}.");
-            // and finally the last row
+            // and finally the last row, which is a "description contains" trigger
             rs.next();
             type = rs.getString("type");
             description = rs.getString("description");
@@ -206,6 +227,8 @@ public class test1 {
 
             Statement stmt = myConn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+
+            // this first row has a "balance below" notification trigger
             rs.next();
             notifID = rs.getString("notificationTriggerID");
             accID = rs.getString("associatedAccount");
@@ -222,7 +245,7 @@ public class test1 {
             assertEquals(amount, 0);
             assertNull(value);
             assertNull(startDate);
-            // on to the next row of NotificationTrigger
+            // on to the next row, which is a "description contains" trigger
             rs.next();
             notifID = rs.getString("notificationTriggerID");
             accID = rs.getString("associatedAccount");
@@ -237,6 +260,23 @@ public class test1 {
             assertEquals(type, "descriptionContains");
             assertEquals(active, "1");
             assertEquals(value, "Starbucks");
+            assertNull(value);
+            assertNull(startDate);
+            // next row contains an "amount above" notification trigger
+            rs.next();
+            notifID = rs.getString("notificationTriggerID");
+            accID = rs.getString("associatedAccount");
+            type = rs.getString("type");
+            active = rs.getString("active");
+            amount = rs.getInt("amount");
+            value = rs.getString("value");
+            startDate = rs.getString("startDate");
+
+            assertEquals(notifID, "3");
+            assertEquals(accID, "233333330");
+            assertEquals(type, "amountAbove");
+            assertEquals(active, "1");
+            assertEquals(amount, 100);
             assertNull(value);
             assertNull(startDate);
             

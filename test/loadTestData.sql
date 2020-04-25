@@ -42,6 +42,14 @@ call setTransaction(
     "Gamestop"
 );
 
+call setTransaction(
+    "233333330",
+    "2019-12-01",
+    "CR",
+    1200.00,
+    "Stimulus Check"
+);
+
 call createNotificationTrigger(
 '233333330',
 'balanceBelow',
@@ -54,4 +62,11 @@ call createNotificationTrigger(
 'descriptionContains',
 null,
 "Starbucks",
+null);
+
+call createNotificationTrigger(
+'233333330',
+'amountAbove',
+100.0,
+null,
 null);
