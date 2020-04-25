@@ -12,17 +12,30 @@ const renderTextField = (
       label={label}
       variant="filled"
       hintText={label}
+      autoComplete='off'
       floatingLabelText={label}
       helperText={touched && error}
       {...input}
       {...custom}
       style={{
-        backgroundColor: "white",
-        width: "200px"
+        width: "200px",
+    }}
+    FormHelperTextProps={{
+        style: {
+            color: "red",
+            fontSize: "15px"
+        }
+    }}
+    InputLabelProps={{
+        style: {
+            color: "black",
+        }
     }}
     InputProps={{
         style: {
-            color: "black"
+            borderRadius: "0",
+            backgroundColor: "white",
+            opacity: "85%"
         }
     }}
     />
