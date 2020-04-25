@@ -14,6 +14,7 @@ import java.io.Reader;
 import java.sql.DriverManager;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class test1 {
 
@@ -175,6 +176,70 @@ public class test1 {
 
             assertEquals(type, "descriptionContains");
             assertEquals(description, "Transaction with description containing ${value}.");
+        }
+        catch (Exception exc) {
+            System.out.println("Error while executing query");
+        }
+     }
+
+     @Test
+     // This makes sure that a notification trigger and all necessary values are actually created
+     public void test_create_notification_trigger() {
+
+        String notifID, accID, type, value, startDate, active;
+        int amount;
+        try {
+
+            String query = "select * from NotificationTrigger";
+            Connection myConn = DriverManager.getConnection(connection.url, connection.user, connection.password);
+            
+            ScriptRunner sr = new ScriptRunner(myConn);
+            //teardown scripts
+            Reader reader = new BufferedReader(new FileReader(".\\react-backend\\sql_scripts\\dbTeardownScript.sql"));
+            //setup scripts
+            Reader reader2 = new BufferedReader(new FileReader(".\\react-backend\\sql_scripts\\dbSetupScripts.sql"));
+            //load test data
+            Reader reader3 = new BufferedReader(new FileReader(".\\test\\loadTestData.sql"));
+            sr.runScript(reader);
+            sr.runScript(reader2);
+            sr.runScript(reader3);
+
+            Statement stmt = myConn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            notifID = rs.getString("notificationTriggerID");
+            accID = rs.getString("associatedAccount");
+            type = rs.getString("type");
+            active = rs.getString("active");
+            amount = rs.getInt("amount");
+            value = rs.getString("value");
+            startDate = rs.getString("startDate");
+
+            assertEquals(notifID, "1");
+            assertEquals(accID, "233333330");
+            assertEquals(type, "balanceBelow");
+            assertEquals(active, "1");
+            assertEquals(amount, 0);
+            assertNull(value);
+            assertNull(startDate);
+            // on to the next row of NotificationTrigger
+            rs.next();
+            notifID = rs.getString("notificationTriggerID");
+            accID = rs.getString("associatedAccount");
+            type = rs.getString("type");
+            active = rs.getString("active");
+            amount = rs.getInt("amount");
+            value = rs.getString("value");
+            startDate = rs.getString("startDate");
+
+            assertEquals(notifID, "2");
+            assertEquals(accID, "233333330");
+            assertEquals(type, "descriptionContains");
+            assertEquals(active, "1");
+            assertEquals(value, "Starbucks");
+            assertNull(value);
+            assertNull(startDate);
+            
         }
         catch (Exception exc) {
             System.out.println("Error while executing query");

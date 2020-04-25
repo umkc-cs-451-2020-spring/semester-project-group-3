@@ -41,3 +41,17 @@ call setTransaction(
     20.00,
     "Gamestop"
 );
+
+call createNotificationTrigger(
+'233333330',
+'balanceBelow',
+0.0,
+null,
+null);
+
+call createNotificationTrigger(
+'233333330',
+'descriptionContains',
+null,
+"Starbucks",
+null);
