@@ -25,15 +25,20 @@ alter table
 add
     foreign key(associatedAccount) references Account(accountID);
 
+create table NotificationTriggerDescription (
+	type varchar (30) not null unique,
+    description varchar(320),
+    primary key (type)
+) engine = InnoDB;
+
 create table NotificationTrigger (
     notificationTriggerID int(11) not null auto_increment,
     associatedAccount int(11),
-    type varchar (30),
+    type varchar (30) not null,
 	active bool default true,
     amount decimal(11, 2),
     value varchar(30),
     startDate datetime default current_timestamp,
-    description varchar (320),
     primary key (notificationTriggerID)
 ) engine = InnoDB;
 
@@ -41,6 +46,11 @@ alter table
     NotificationTrigger
 add
     foreign key(associatedAccount) references Account(accountID);
+
+alter table
+    NotificationTrigger
+add
+    foreign key(type) references NotificationTriggerDescription(type);
 
 create table Notification (
     notificationID int(11) not null auto_increment,
