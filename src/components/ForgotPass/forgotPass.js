@@ -26,16 +26,11 @@ const renderTextField = (
             fontSize: "15px"
         }
     }}
-    InputLabelProps={{
-        style: {
-            color: "black",
-        }
-    }}
     InputProps={{
         style: {
             borderRadius: "0",
             backgroundColor: "white",
-            opacity: "85%"
+            opacity: "90%",
         }
     }}
     />

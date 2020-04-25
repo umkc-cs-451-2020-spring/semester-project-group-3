@@ -45,7 +45,7 @@ const GRadio = withStyles({
       {...input}
       {...custom}
       style={{
-        width: "500px",
+        width: "200px",
     }}
     FormHelperTextProps={{
         style: {
@@ -53,16 +53,11 @@ const GRadio = withStyles({
             fontSize: "15px"
         }
     }}
-    InputLabelProps={{
-        style: {
-            color: "black",
-        }
-    }}
     InputProps={{
         style: {
             borderRadius: "0",
             backgroundColor: "white",
-            opacity: "85%"
+            opacity: "90%",
         }
     }}
     />
