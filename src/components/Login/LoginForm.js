@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/core/styles';
 import { renderSignUp, renderApp, renderForgotPass } from '../../rStore/actions/tabChangeActions';
 import { rememberMe, noRemember, setCurrentUser } from '../../rStore/actions/loginActions';
 import validate from './validate';
@@ -21,16 +22,33 @@ const renderTextField = (
       {...input}
       {...custom}
       style={{
-        backgroundColor: "white",
-        width: "200px"
+        width: "200px",
+    }}
+    FormHelperTextProps={{
+        style: {
+            color: "red",
+            fontSize: "15px"
+        }
     }}
     InputProps={{
         style: {
-            color: "black"
+            borderRadius: "0",
+            backgroundColor: "white",
+            opacity: "90%",
         }
     }}
     />
   );
+
+  const GCheckBox = withStyles({
+    root: {
+        color: "#74BD43",
+        '&$checked': {
+          color: "#74BD43",
+        },
+    },
+    checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const Login = props => {
     const { handleSubmit, pristine, submitting } = props
@@ -87,8 +105,7 @@ const Login = props => {
                         <div>
                             <FormControlLabel
                                 value="Remember me"
-                                control={<Checkbox  color="secondary" 
-                                                    defaultUnchecked
+                                control={<GCheckBox defaultUnchecked
                                                     onChange={handleChange} 
                                                     checked={checked} />}
                                 label="Remember me"

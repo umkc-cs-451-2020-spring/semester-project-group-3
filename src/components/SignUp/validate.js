@@ -1,11 +1,9 @@
 export default function(values) {
     const errors = {};
     const requiredFields = [
-      'accountID',
       'email',
       'password',
-      'confirmedPword',
-      'balance'
+      'confirmedPword'
     ];
     requiredFields.forEach(field => {
       if (!values[field]) {
@@ -21,17 +19,7 @@ export default function(values) {
     if (
         values.password !== values.confirmedPword
       ) {
-        errors.confirmedPword = 'Passwords do not match';
+        errors.confirmedPword = "Passwords don't match";
       }
-    if (
-        values.balance && !/^[0-9]{1,6}$/i.test(values.balance)
-        ) {
-        errors.balance = 'Balance must be a positive number';
-        }
-      if (
-        values.accountID && !/^[0-9]{9}$/i.test(values.accountID)
-        ) {
-        errors.accountID = 'Must be a 9 digits number';
-        }
     return errors;
   }

@@ -3,8 +3,7 @@ CREATE DEFINER=`landonvolkmann_admin`@`%` PROCEDURE `createNotificationTrigger`(
     type varchar (30),
     amount decimal(11, 2),
     value varchar(30),
-    startDate date, -- user specified else today
-    description varchar (320)
+    startDate date -- user specified else today
 )
 BEGIN 
     
@@ -15,16 +14,14 @@ BEGIN
         type,
         amount,
         value,
-        startDate,
-        description
+        startDate
 		)
 	values (
 		associatedAccount,
         type,
         amount,
         value,
-        startDate,
-        description
+        startDate
 		);
 	
     else
@@ -33,15 +30,13 @@ BEGIN
 		associatedAccount,
         type,
         amount,
-        value,
-        description
+        value
 		)
 	values (
 		associatedAccount,
         type,
         amount,
-        value,
-        description
+        value
 		);
 	
     end if;

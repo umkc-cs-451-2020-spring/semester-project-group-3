@@ -13,3 +13,7 @@ export const fetchTransactionsFailure = error => ({
   type: types.FETCH_TRANSACTIONS_FAILURE,
   payload: { error }
 });
+ export const transactionType = tt => ({
+   type: types.TRANSACTION_TYPE,
+   payload: {tt}
+ })

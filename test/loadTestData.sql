@@ -1,4 +1,4 @@
-use landonvolkmann_commerce_project;
+-- use landonvolkmann_commerce_project;
 
 insert into
 	NotificationTriggerDescription (type, description)
@@ -16,19 +16,18 @@ values
         "Transaction with description containing ${value}."
     );
 
- insert into
+insert into
     Account (accountID, email, password, balance)
 values
     (
-        "211111110",
-        "test@gmail.com",
-        aes_encrypt("P@ssword1", "Gr0up3!2020"),
-        5000.00
+        "233333330",
+        "unittest@gmail.com",
+        "testP@ssword1",
+        6000.00
     );
 
-
 call setTransaction(
-    "211111110",
+    "233333330",
     "2019-11-01",
     "DR",
     2.00,
@@ -36,32 +35,38 @@ call setTransaction(
 );
 
 call setTransaction(
-    "211111110",
+    "233333330",
     "2019-12-01",
     "DR",
-    35.00,
-    "Gas"
+    20.00,
+    "Gamestop"
 );
 
 call setTransaction(
-    "211111110",
-    "2020-01-12",
+    "233333330",
+    "2019-12-01",
     "CR",
-    100.00,
-    "Payday"
+    1200.00,
+    "Stimulus Check"
 );
 
 call createNotificationTrigger(
-'211111110',
+'233333330',
 'balanceBelow',
 0.0,
 null,
 null);
 
 call createNotificationTrigger(
-'211111110',
+'233333330',
 'descriptionContains',
 null,
 "Starbucks",
 null);
 
+call createNotificationTrigger(
+'233333330',
+'amountAbove',
+100.0,
+null,
+null);

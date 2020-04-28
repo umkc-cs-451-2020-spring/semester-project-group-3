@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import { lighten, makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -11,16 +10,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-
-// I added all the inports youll need for material UI table.
-// Most likely i added to much.
-// Do div css styling like below example.
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  border: 1px solid blue;
-`;
-
 
 const StyledTableCell = withStyles((theme) => ({
   body: {
