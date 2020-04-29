@@ -316,8 +316,8 @@ function NotificationRow(props){
   const [notifPresent, setNotifPresent] = React.useState(present);
   const dispatch = useDispatch();
   const acctID = useSelector((state) => state.loginReducer.accountID);
-  const post_loading = useSelector((state) => state.loginReducer.accountID);
-  const delete_loading = useSelector((state) => state.loginReducer.accountID);
+  const post_loading = useSelector((state) => state.notificationSettingsReducer.post_loading);
+  const delete_loading = useSelector((state) => state.notificationSettingsReducer.delete_loading);
 
 
 
