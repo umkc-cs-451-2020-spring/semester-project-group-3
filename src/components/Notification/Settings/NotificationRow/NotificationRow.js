@@ -221,7 +221,7 @@ function EditNotif(props){
     case "transactionAmountAbove":
       title = "Amount";
       typeTextField= (
-        <AmountText
+        <input
           id={`${type}-Value-${idx}`}
           label="Notif Value"
           variant="outlined"
@@ -233,7 +233,7 @@ function EditNotif(props){
     case "balanceBelow":
       title = "Amount";
       typeTextField= (
-        <AmountText
+        <input
           id={`${type}-Value-${idx}`}
           label="Notif Value"
           variant="outlined"
@@ -245,19 +245,13 @@ function EditNotif(props){
     case "descriptionContains":
       title = "Description Matching";
       typeTextField= (
-        <DescriptionCat
+        <input
           id={`${type}-Value-${idx}`}
           label="Notif Value"
           variant="outlined"
           value={amountValue}
           onChange={(e)=> onAmountChange(e,idx)}
           size="small"/>
-        );
-      break;
-    case "recurringDescription":
-      title = "Recurring Alert";
-      typeTextField= (
-        <div>No Text needed</div>
         );
       break;
     default:
@@ -279,13 +273,13 @@ function EditNotif(props){
         {title}
         {typeTextField}
         {dText}
-        <DescriptionText
+        <input
           id={`${type}-Description-${idx}`}
           label="Descriptive Message"
-          variant="outlined"
+
           value={descriptionValue}
           onChange={(e)=> onDescriptionChange(e,idx)}
-          size="small"
+
         />
       </Specifics>
       <Active>
@@ -365,32 +359,30 @@ function NotificationRow(props){
   async function postSettings(paramsArray) {
     let amount;
     let value;
-    if (type==="descriptionContains"){
-      amount=null;
-      value=paramsArray.amount;
-    }else{
-      value=null;
-      amount=paramsArray.amount;
-    }
     var tempDate = new Date();
-    var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
-    console.log("account=" , acctID ,"&type=" ,
-          type,  "&amount=" , amount ,"&value=", value,"&startDate="
-          ,date ,"&description=" , paramsArray.description);
-    await dispatch(postNotificationSetting(acctID, type, amount,value,date,paramsArray.description));
+    var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate();
+
+    var triggers=[];
+
+    // TODO START here Fix this loop
+    for (var i = 0; i < paramsArray.length; i++){
+      if (type==="descriptionContains"){
+        amount=null;
+        value=paramsArray[i].amount;
+      }else{
+        value=null;
+        amount=paramsArray[i].amount;
+      }
+      triggers.push({"account": acctID, "type": type, "amount": amount, "value":value,"startDate": date});
+      console.log("triggers: " + triggers);
+    }
+    await dispatch(postNotificationSetting(triggers));
   }
-  function postSettingsTest(array,idx){
-    console.log("postSettingsTest: idx=", idx, "array=", array);
-    postSettings(numEditNotifs[idx]).then(idx<numEditNotifs.length && postSettingsTest(array,(idx+1)));
-  }
+
   const handleSaveNumNotifs = () => {
     var idx =0;
-    postSettingsTest(numEditNotifs,0);
-    // numEditNotifs.map((edit)=> {
-    //   console.log("handleSave: ", edit);
-    //   postSettings(edit);
-    // })
-    // postSettings(numEditNotifs[0]);
+    postSettings(numEditNotifs).then(reRenderSettings());
+
     setNumEditNotifs([]);
     setNotifPresent(true);
     // reRenderSettings();
@@ -411,6 +403,16 @@ function NotificationRow(props){
 
       // outer will deal with delete and update.
       // need to pass in the delete and update functions.
+
+
+      // need to style the input boxes to look better.
+      // remove the borders
+      // do the update portion
+
+      // add popup making sure want to delete
+      // change the incon on the delete from database to trashcan
+
+      // figure out what is up with post.
 
       // Do that next
       // the update will use the edit notif    which might get rearranged.

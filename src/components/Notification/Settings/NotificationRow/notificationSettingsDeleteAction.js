@@ -2,7 +2,7 @@ import {
   deleteNotificationSettingsBegin,
   deleteNotificationSettingsSuccess,
   deleteNotificationSettingsFailure
-} from "../../rStore/actions/notificationSettingsActions.js";
+} from "../../../../rStore/actions/notificationSettingsActions.js";
 
 // todo this will be passed an account number.
 export default function deleteNotificationSetting(triggerID) {

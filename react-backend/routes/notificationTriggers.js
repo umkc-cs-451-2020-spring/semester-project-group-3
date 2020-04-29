@@ -13,6 +13,7 @@ const connection = mysql.createPool({
 });
 
 function isJson(str) {
+  console.log("parsing this string " +  str);
   try {
     JSON.parse(str);
   } catch (e) {
@@ -23,25 +24,26 @@ function isJson(str) {
 
 router.post("/", function (req, res, next) {
   var triggers = req.query.triggers;
-
+  console.log("inside post triggers str=" +triggers);
   if (isJson(triggers)) {
     triggers = JSON.parse(triggers);
   }
 
-  console.log(triggers);
+  console.log("after parse triggers = "+ triggers);
 
   var multiCreateQuery = "";
   triggers.forEach((trigger, idx, array) => {
-    var associatedAccount = trigger["account"];
+    console.log("foreach loop trigger=" + trigger);
+    var associatedAccount = trigger.account;
 
     if (associatedAccount == undefined) {
       return true; // acts as a continue statement
     }
 
-    var type = trigger["type"];
-    var amount = trigger["amount"];
-    var value = trigger["value"];
-    var startDate = trigger["startDate"];
+    var type = trigger.type;
+    var amount = trigger.amount;
+    var value = trigger.value;
+    var startDate = trigger.startDate;
 
     // convert undefined to null
 
@@ -56,6 +58,8 @@ router.post("/", function (req, res, next) {
     if (startDate == undefined) {
       startDate = null;
     }
+    console.log("inside post: acount" + associatedAccount + " type: "+ type +
+                " amount:" + amount + " value:" + value + " startDate:" + startDate);
 
     var query =
       "call createNotificationTrigger(" +
@@ -74,6 +78,7 @@ router.post("/", function (req, res, next) {
   });
 
   if (multiCreateQuery != "") {
+    console.log("multiCreateQuery: " + multiCreateQuery);
     connection.getConnection(function (err, connection) {
       connection.query(multiCreateQuery, function (error, results, fields) {
         // If some error occurs, we throw an error.
