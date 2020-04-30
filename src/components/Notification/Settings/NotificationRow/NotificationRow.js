@@ -1,145 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
-import Checkbox from '@material-ui/core/Checkbox';
-import { green, red } from '@material-ui/core/colors';
 import CancelIcon from '@material-ui/icons/Cancel';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import EditNotif from "./Utilities/EditNotif.js";
 import postNotificationSetting from "./notificationSettingsPostAction.js";
 import { useSelector, useDispatch } from "react-redux";
 import deleteNotificationSetting from "./notificationSettingsDeleteAction.js";
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: red[400],
-    '&$checked': {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
 
-const AmountText = withStyles(theme => ({
-  root: {
-    width: '100px',
-  },
-}))(TextField);
-const DescriptionCat = withStyles(theme => ({
-  root: {
-    width: '200px',
-  },
-}))(TextField);
-const DescriptionText = withStyles(theme => ({
-  root: {
-    width: '300px',
-  },
-}))(TextField);
-
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  /* border: 1px solid blue; */
-  position: relative;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 40px auto 35px;
-`
-const Title = styled.div `
-  font-size: 24px;
-  width: 80%;
-  border-bottom: 1px solid black;
-  text-align: left;
-  padding-left: 20px;
-`
-
-
-const Content = styled.div`
-  border: 1px solid blue;
-  position: relative;
-  display: grid;
-  grid-template-columns: auto 15% 8%;
-  grid-template-rows: auto;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  height: fit-content;
-  width: 100%;
-  overflow: hidden;
-  outline: none;
-`
-
-const Specifics = styled.div`
-  border: 1px solid red;
-  font-Size: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  vertical-align: middle;
-  height: fit-content;
-`
-const Active = styled.div`
-  border: 1px solid black;
-  display: flex;
-`
-const Delete = styled.div`
-  border: 1px solid green;
-`
-const Edit = styled.div`
-  border: 1px solid green;
-`
-const ButtonGroup = styled.div`
-  padding-top: 7px;
-  text-align: left;
-  padding-Left: 25px;
-`
-const ActiveText = styled.div`
-  color: ${props => props.checked === true ? green[600] : red[400] };
-`
-
-
-// empty component
-const Empty = styled.div`
-  height: 100%;
-  width: 100%;
-  text-align: left;
-  padding-Left: 25px;
-  padding-Top: 2px;
-  display: ${props => props.isHidden === false ? "block" : "none"};
-`
-
-// 4 columns
-function SettingsRow(props){
-  const {rowData, deleteFunction} = props;
-  console.log(rowData);
-  return(
-    <Wrapper2>
-      <Header>
-        <HeadCell>Description</HeadCell>
-        <HeadCell>Date Added</HeadCell>
-        <HeadCell>Value</HeadCell>
-        <HeadCell>Status</HeadCell>
-      </Header>
-      {rowData.map((row,index) => {
-        console.log("inside row mapping: ", row);
-        var value ="";
-        if (row.type==="descriptionContains"){
-           value= row.value;
-        }else{
-          value= row.amount;
-        }
-        return(
-          <BodyArea index={index}>
-            <BodyCell>{row.description}</BodyCell>
-            <BodyCell>{row.startDate}</BodyCell>
-            <BodyCell>{value}</BodyCell>
-            <BodyCell>{row.active}</BodyCell>
-            <BodyCell><CancelIcon onClick={() => deleteFunction(index)}/></BodyCell>
-          </BodyArea>
-        );
-      })}
-
-    </Wrapper2>
-
-  );
-}
 const Wrapper2 = styled.div`
   height: 100%;
   width: 100%;
@@ -153,14 +21,18 @@ const Wrapper2 = styled.div`
 
 `
 const Header = styled.div `
-  font-size: 18px;
-  width: 100%;
+  font-size: 20px;
+  width: 80%;
   border-bottom: 2px solid grey;
   display: grid;
-  grid-template-columns: 30% 25% 15% 30%;;
+  grid-template-columns: 30% 20% auto;
   grid-template-rows: auto;
   font-weight: bold;
+  padding-left: 4px;
   text-align: left;
+  background: #339966;
+  color: #ffffff;
+  border-radius: 10px     10px      0           0;
 `
 const HeadCell = styled.div `
   width: 100%;
@@ -168,19 +40,86 @@ const HeadCell = styled.div `
 
 const BodyArea = styled.div`
   position: relative;
-  width: 100%;
+  padding-left: 4px;
+  width: 80%;
   display: grid;
-  grid-template-columns: 30% 25% 15% 20% 10%;
+  grid-template-columns: 30% 20% auto ;
   grid-template-rows: auto;
   text-align: left;
+  background: ${props => (props.index%2===0 ? 'white' : 'rgb(220,220,220,.9)')};
+  border-radius: ${props => (props.index === props.cornerRounding -1 ?  "0 0 10px 10px" : null )};
 `
 const BodyCell = styled.div `
-  border-right: 1px solid black;
   font-size: 16px;
   margin:4px;
   width: 100%;
 `
+const BodyCellSpeacial = styled.div `
+  font-size: 16px;
+  margin:4px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 85% 15% ;
+  grid-template-rows: auto;
+`
+const ActiveTextStyle = styled.div`
+  color: ${props => (props.active ? "#74BD43" : "#ff0000")}
+`
+// 3 columns
+function SettingsRow(props){
+  const {rowData, deleteFunction} = props;
+  var rowDataLength = rowData.length;
+  console.log(rowData);
+  return(
+    <Wrapper2>
+      <Header>
+        <HeadCell>Date Added</HeadCell>
+        <HeadCell>Value</HeadCell>
+        <HeadCell>Status</HeadCell>
+      </Header>
+      {rowData.map((row,index) => {
+        console.log("inside row mapping: ", row);
+        var value ="";
+        if (row.type==="descriptionContains"){
+           value= row.value;
+        }else{
+          value="$"+ row.amount;
+        }
+        var activeText = "";
+        if (row.active === 1){
+          activeText = "Active";
+        }else {
+          activeText = "Not Active";
+        }
+        return(
+          <BodyArea key={index} index={index} cornerRounding={rowDataLength}>
+            <BodyCell>{row.startDate}</BodyCell>
+            <BodyCell>{value}</BodyCell>
+            <BodyCellSpeacial>
+              <ActiveTextStyle active={row.active}>
+                {activeText}
+              </ActiveTextStyle>
+              <DeleteForeverOutlinedIcon onClick={() => deleteFunction(index)}/>
+            </BodyCellSpeacial>
 
+          </BodyArea>
+        );
+      })}
+
+    </Wrapper2>
+
+  );
+}
+
+// empty component
+const Empty = styled.div`
+  height: 100%;
+  width: 100%;
+  text-align: left;
+  padding-Left: 25px;
+  padding-Top: 2px;
+  display: ${props => props.isHidden === false ? "block" : "none"};
+`
 function EmptyNotif(props){
   const { isHidden } = props;
   console.log(isHidden);
@@ -190,114 +129,33 @@ function EmptyNotif(props){
 }
 
 
-// data component.
-function Notif(){
-
-  return(
-    <Content>
-      <Specifics></Specifics>
-      <Active></Active>
-      <Edit></Edit>
-    </Content>
-  );
-}
-
-function EditNotif(props){
-  const {
-    type,
-    deleteFunction,
-    idx,
-    onAmountChange,
-    amountValue,
-    activeValue,
-    onActiveChange,
-    onDescriptionChange,
-    descriptionValue } = props;
-
-  // types of text fields depending on what type of notification there is.
-  let title;
-  let typeTextField;
-  switch (type) {
-    case "transactionAmountAbove":
-      title = "Amount";
-      typeTextField= (
-        <input
-          id={`${type}-Value-${idx}`}
-          label="Notif Value"
-          variant="outlined"
-          value={amountValue}
-          onChange={(e)=> onAmountChange(e,idx)}
-          size="small"/>
-        );
-      break;
-    case "balanceBelow":
-      title = "Amount";
-      typeTextField= (
-        <input
-          id={`${type}-Value-${idx}`}
-          label="Notif Value"
-          variant="outlined"
-          value={amountValue}
-          onChange={(e)=> onAmountChange(e,idx)}
-          size="small"/>
-        );
-      break;
-    case "descriptionContains":
-      title = "Description Matching";
-      typeTextField= (
-        <input
-          id={`${type}-Value-${idx}`}
-          label="Notif Value"
-          variant="outlined"
-          value={amountValue}
-          onChange={(e)=> onAmountChange(e,idx)}
-          size="small"/>
-        );
-      break;
-    default:
-      title = "Errrors are present";
-  }
-  // handles checkbox slider text.
-  let activeText;
-  if (activeValue){
-    activeText="Active";
-  }else{
-    activeText="Not Active";
-  }
-  const dText= "Description"
-  const finePrint="This does not have any effect on setting. Is here for your own personal use."
-
-  return(
-    <Content key={`${type}-${idx}`}>
-      <Specifics>
-        {title}
-        {typeTextField}
-        {dText}
-        <input
-          id={`${type}-Description-${idx}`}
-          label="Descriptive Message"
-
-          value={descriptionValue}
-          onChange={(e)=> onDescriptionChange(e,idx)}
-
-        />
-      </Specifics>
-      <Active>
-        <ActiveText checked={activeValue}>{activeText}</ActiveText>
-        <GreenCheckbox checked={activeValue} onChange={(e)=>onActiveChange(e,idx)} />
-      </Active>
-      <Delete>
-        <CancelIcon onClick={() => deleteFunction(idx)}/>
-      </Delete>
-    </Content>
-  );
-}
-
-
 // main component
 // Todo Save button will set numEditNotifs to back to zero
 // Todo Add a condition to render the permanent notifs that will be read from
 // data base
+const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 40px auto 35px;
+`
+const Title = styled.div `
+  font-weight: bold;
+  font-size: 24px;
+  width: 80%;
+  text-align: left;
+  padding-left: 20px;
+  color: #ffffff;
+`
+const ButtonGroup = styled.div`
+  padding-top: 7px;
+  text-align: left;
+  padding-Left: 25px;
+`
+
+
 function NotificationRow(props){
   const {rows, type,reRenderSettings} = props;
   var present ="";
@@ -318,7 +176,7 @@ function NotificationRow(props){
   const handleAddNumNotifs = () => {
     setNotifPresent(true);
     const values = [...numEditNotifs];
-    values.push({ amount: "", active: true, description:"" });
+    values.push({ amount: "", active: true });
     setNumEditNotifs(values);
     console.log(numEditNotifs);
   };
@@ -331,16 +189,9 @@ function NotificationRow(props){
     console.log(numEditNotifs);
   }
   const handleActiveChange = (e, index)=>{
-    console.log("active change",e.target.checked);
+    console.log("active change", e.target.checked);
     var tempEditList = [...numEditNotifs];
     tempEditList[index].active = e.target.checked;
-    setNumEditNotifs(tempEditList)
-    console.log(numEditNotifs);
-  }
-  const handleDescriptionChange = (e, index)=>{
-    console.log("Description change",e.target.value);
-    var tempEditList = [...numEditNotifs];
-    tempEditList[index].description = e.target.value;
     setNumEditNotifs(tempEditList)
     console.log(numEditNotifs);
   }
@@ -361,10 +212,8 @@ function NotificationRow(props){
     let value;
     var tempDate = new Date();
     var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate();
-
     var triggers=[];
 
-    // TODO START here Fix this loop
     for (var i = 0; i < paramsArray.length; i++){
       if (type==="descriptionContains"){
         amount=null;
@@ -382,13 +231,10 @@ function NotificationRow(props){
   const handleSaveNumNotifs = () => {
     var idx =0;
     postSettings(numEditNotifs).then(reRenderSettings());
-
     setNumEditNotifs([]);
     setNotifPresent(true);
-    // reRenderSettings();
-    // post goes here
-
   };
+
   async function deleteSetting(triggerId) {
     await dispatch(deleteNotificationSetting(triggerId));
   }
@@ -397,9 +243,6 @@ function NotificationRow(props){
     console.log("deleteFromDb:  ", triggerId);
     deleteSetting(triggerId).then(reRenderSettings());
   }
-  // todo add function to handle deleting of settings
-  // ********************
-      // Start here
 
       // outer will deal with delete and update.
       // need to pass in the delete and update functions.
@@ -443,9 +286,6 @@ function NotificationRow(props){
     case "descriptionContains":
       title="Description Contains Triggers";
       break;
-    case "recurringDescription":
-      title="Recurring Transaction Triggers";
-      break;
     default:
       title = "Something went wrong. "
 
@@ -464,17 +304,15 @@ function NotificationRow(props){
         {numEditNotifs.map((edits,idx) =>{
           return(
           <EditNotif
+            key={`${type}-Value-${idx}`}
             idx={idx}
             type={type}
             deleteFunction={handleDeleteNumNotifs}
             onAmountChange={handleAmountChange}
             amountValue={edits.amount}
             activeValue={edits.active}
-            descriptionValue={edits.description}
             onAmountChange={handleAmountChange}
             onActiveChange={handleActiveChange}
-            onDescriptionChange={handleDescriptionChange}
-
           />);
         })}
       </div>

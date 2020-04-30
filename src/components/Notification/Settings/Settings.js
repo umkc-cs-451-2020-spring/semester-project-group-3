@@ -8,13 +8,17 @@ function Settings(props){
   const tSettings = rows.filter(x=> x.type === "transactionAmountAbove");
   const bSettings = rows.filter(x=> x.type === "balanceBelow");
   const dSettings = rows.filter(x=> x.type === "descriptionContains");
+  const settings = [tSettings,bSettings,dSettings];
+  const types = ["transactionAmountAbove", "balanceBelow", "descriptionContains"]
+  const numbers = [0,1,2];
+  const rowsOfSettings = numbers.map((number)=> (
+    <NotificationRow key={number} type={types[number]} rows={settings[number]} reRenderSettings={reRenderSettings}/>
+  ));
 
   return (
-    <div>
 
-      <NotificationRow key={"transactionAmountAbove1"} type="transactionAmountAbove" rows={tSettings} reRenderSettings={reRenderSettings}></NotificationRow>
-      <NotificationRow key={"balanceBelow2"} type="balanceBelow" rows={bSettings} reRenderSettings={reRenderSettings}></NotificationRow>
-      <NotificationRow key={"descriptionContains3"} type="descriptionContains" rows={dSettings} reRenderSettings={reRenderSettings}></NotificationRow>
+    <div>
+      {rowsOfSettings}
     </div>
   );
 }

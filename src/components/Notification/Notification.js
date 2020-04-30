@@ -14,11 +14,15 @@ const Title = styled.div`
   width: 100%;
   font-size: 28px;
   text-align: left;
+  font-weight: bold;
   border-bottom: 1px solid grey;
+  color: #ffffff;
 `
 const Description = styled.div`
   width: 100%;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #ffffff;
 `
 
 
