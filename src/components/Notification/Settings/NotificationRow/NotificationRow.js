@@ -188,9 +188,6 @@ function EmptyNotif(props){
 
 
 // main component
-// Todo Save button will set numEditNotifs to back to zero
-// Todo Add a condition to render the permanent notifs that will be read from
-// data base
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -328,37 +325,15 @@ function NotificationRow(props){
     await delay(600);
     await reRenderSettings();
   };
-  // async function deleteSetting(triggerId) {
-  //   await dispatch(deleteNotificationSetting(triggerId));
-  // }
+
   const deleteFromDb=(idx)=>{
     togglePopup();
     const triggerId = rows[idx].notificationTriggerID
     console.log("deleteFromDb:  ", triggerId);
     deleteSetting(triggerId);
   }
-
-      // outer will deal with delete and update.
-      // need to pass in the delete and update functions.
-
-
-      // need to style the input boxes to look better.
-      // remove the borders
-      // do the update portion
-
-      // add popup making sure want to delete
-      // change the incon on the delete from database to trashcan
-
-      // figure out what is up with post.
-
-      // Do that next
-      // the update will use the edit notif    which might get rearranged.
-  // ********************
-
-  // this needs alot of work
-  // ****************************  will use part below
   // Notif Render component.
-  // Need to put numEditNotifs into own component so it updates on return not before it.
+
   let notifData;
 
   if (!notifPresent){
