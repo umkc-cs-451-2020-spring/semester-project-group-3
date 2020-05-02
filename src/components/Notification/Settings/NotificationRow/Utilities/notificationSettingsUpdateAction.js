@@ -2,15 +2,17 @@ import {
   updateNotificationSettingsBegin,
   updateNotificationSettingsSuccess,
   updateNotificationSettingsFailure
-} from "../../rStore/actions/notificationSettingsActions.js";
+} from "../../../../../rStore/actions/notificationSettingsActions.js";
 
 // todo this will be passed an account number.
-export default function updateNotificationSetting(acctID) {
+export default function updateNotificationSetting(trigger) {
   const axios = require("axios");
+  const jTriggers = JSON.stringify(trigger);
+  console.log("inside postNotificationSetting" + jTriggers);
   return (dispatch) => {
     dispatch(updateNotificationSettingsBegin());
     axios
-      .get("/notifications/" + acctID)
+      .post("/notificationTriggers/update?triggers=" + jTriggers)
       // Todo change the above
       .then(function (response) {
         console.log(response);

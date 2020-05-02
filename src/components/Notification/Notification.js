@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import NotificationRow from './Settings/NotificationRow';
 import Settings from "./Settings";
 import fetchNotificationSettings from "./notificationSettingsFetchAction.js";
-import updateNotificationSetting from "./notificationSettingsUpdateAction.js";
 import { useSelector, useDispatch } from "react-redux";
 
 

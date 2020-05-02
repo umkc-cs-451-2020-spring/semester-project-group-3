@@ -81,7 +81,7 @@ const ButtonGroup1 = styled.div`
 `
 
 function SettingsRow(props){
-  const {rowData, popup, update, onUpdateChange} = props;
+  const {rowData, popup, update, onUpdateChange, reRenderSettings} = props;
   console.log(rowData);
   var rowDataLength = rowData.length;
   var tempRowdata=[];
@@ -138,13 +138,13 @@ function SettingsRow(props){
             <UpdateNotif
               key={`${row.type}-Value-${index}`}
               idx={index}
-              triggerId={row.notificationTriggerID}
               type={row.type}
               cancelFunction={handleEditNumNotifs}
               amountValue={value}
               activeValue={activebool}
               update={row.update}
-              onUpdateChange={onUpdateChange}
+              reRenderSettings={reRenderSettings}
+              row={row}
             />
           );
         }
@@ -229,7 +229,7 @@ const SaveButton = styled.button`
 
 `
 function NotificationRow(props){
-  const {rows, type,reRenderSettings} = props;
+  const {rows, type, reRenderSettings} = props;
   var present ="";
   if (rows && rows.length>0 ){
     present = true;
@@ -366,7 +366,7 @@ function NotificationRow(props){
   }
   else {
     if (rows && rows.length > 0){
-      notifData = <SettingsRow rowData={rows} popup={togglePopup} onUpdateChange={handleUpdate} update={updateing} />;
+      notifData = <SettingsRow rowData={rows} popup={togglePopup} onUpdateChange={handleUpdate} update={updateing} reRenderSettings={reRenderSettings}/>;
     }
   }
   let title;

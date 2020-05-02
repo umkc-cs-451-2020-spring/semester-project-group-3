@@ -5,6 +5,8 @@ import { green, red } from '@material-ui/core/colors';
 import CheckBox from "./CheckBox.js";
 import TextField from "./TextField.js";
 import VerticalCenter from "./VerticalCenter.js";
+import updateNotificationSetting from "./notificationSettingsUpdateAction.js";
+import { useSelector, useDispatch } from "react-redux";
 
 
 // Check box component going here. will be moved.
@@ -22,7 +24,7 @@ const Content = styled.div`
   grid-template-rows: auto;
   margin-top: 5px;
   margin-bottom: 5px;
-  height: 100%;
+  height: 90%;
   width: 60%;
   overflow: hidden;
   outline: none;
@@ -69,10 +71,12 @@ export default function UpdateNotif(props){
     type,
     idx,
     cancelFunction,
-    triggerId,
+    row,
     amountValue,
     activeValue,
-    update } = props;
+    update,
+    reRenderSettings  } = props;
+  const dispatch = useDispatch();
 
   // types of text fields depending on what type of notification there is.
   const [amount, setAmount] = React.useState(amountValue.slice(1));
@@ -91,6 +95,45 @@ export default function UpdateNotif(props){
     setActive(tempActive)
     console.log(tempActive);
   }
+
+  const handleSave = ()=>{
+    console.log("Saving");
+    let tempAmount;
+    let tempValue;
+    let tempActive;
+
+    if (type==="descriptionContains"){
+      tempAmount=null;
+      tempValue=amount;
+    }else{
+      tempAmount=amount;
+      tempValue=null;
+    }
+    if (active){
+      tempActive = 1;
+    }else{
+      tempActive = 0;
+    }
+    const rowToSend = [{
+      "active": tempActive,
+      "amount": tempAmount,
+      "associatedAccount": row.associatedAccount,
+      "notificationTriggerID": row.notificationTriggerID,
+      "startDate": row.startDate,
+      "type": row.type,
+      "value": tempValue
+    }];
+    console.log(rowToSend);
+    UpdateSetting(rowToSend);
+
+  }
+  async function UpdateSetting(rowToSend) {
+
+    await dispatch(updateNotificationSetting(rowToSend));
+    await delay(500);
+    await reRenderSettings();
+  }
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
   let typeTextField;
@@ -154,7 +197,7 @@ export default function UpdateNotif(props){
         />
       </Active>
       <ButtonGroup>
-          <SaveButton>
+          <SaveButton onClick={() => handleSave()}>
             Save
           </SaveButton>
 

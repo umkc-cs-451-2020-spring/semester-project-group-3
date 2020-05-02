@@ -136,7 +136,7 @@ router.post("/delete", function(req, res, next) {
   });
 });
 
-router.post("/update/", function (req, res, next) {
+router.post("/update", function (req, res, next) {
   var triggersToUpdate = req.query.triggers;
 
   if (isJson(triggersToUpdate)) {
@@ -147,17 +147,17 @@ router.post("/update/", function (req, res, next) {
 
   var multiUpdateQuery = "";
   triggersToUpdate.forEach((trigger, idx, array) => {
-    var notificationTriggerID = trigger["notificationTriggerID"];
+    var notificationTriggerID = trigger.notificationTriggerID;
 
     if (notificationTriggerID == undefined) {
       return true; // acts as a continue statement
     }
-
-    var type = trigger["type"];
-    var active = trigger["active"];
-    var amount = trigger["amount"];
-    var value = trigger["value"];
-    var startDate = trigger["startDate"];
+    console.log("inside update",trigger.notificationTriggerID);
+    var type = trigger.type;
+    var active = trigger.active;
+    var amount = trigger.amount;
+    var value = trigger.value;
+    var startDate = trigger.startDate;
 
     var query = "update NotificationTrigger set ";
 
