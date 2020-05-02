@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import EditNotif from "./Utilities/EditNotif.js";
+import UpdateNotif from "./Utilities/UpdateNotif.js";
 import PopUp from "./Utilities/PopUp.js";
 import postNotificationSetting from "./notificationSettingsPostAction.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,17 +61,53 @@ const BodyCellSpeacial = styled.div `
   margin:4px;
   width: 100%;
   display: grid;
-  grid-template-columns: 85% 15% ;
+  grid-template-columns: 65% 35% ;
   grid-template-rows: auto;
 `
 const ActiveTextStyle = styled.div`
-  color: ${props => (props.active ? "#74BD43" : "#ff0000")}
+  color: ${props => (props.active ? "#74BD43" : "#ff0000")};
+
 `
-// 3 columns
+const EditButton = styled.button`
+  margin-left: 10px;
+  height: 25px;
+  margin-right: 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  display: ${props => (props.update ? "none" : "null")}};
+`
+const ButtonGroup1 = styled.div`
+  display: flex;
+`
+
 function SettingsRow(props){
-  const {rowData, popup} = props;
-  var rowDataLength = rowData.length;
+  const {rowData, popup, update, onUpdateChange} = props;
   console.log(rowData);
+  var rowDataLength = rowData.length;
+  var tempRowdata=[];
+  for (var i = 0; i< rowDataLength; i++ ){
+    tempRowdata.push({
+      active: rowData[i].active,
+      amount: rowData[i].amount,
+      associatedAccount: rowData[i].associatedAccount ,
+      notificationTriggerID: rowData[i].notificationTriggerID ,
+      startDate: rowData[i].startDate ,
+      type: rowData[i].type ,
+      value: rowData[i].value,
+      update: false
+    });
+  }
+  const [newRowData, setNewRowData] = React.useState(tempRowdata);
+  console.log(newRowData);
+  const handleEditNumNotifs = (index) => {
+    const values = [...newRowData];
+    values[index].update = !values[index].update;
+    setNewRowData(values)
+    console.log(values);
+    onUpdateChange();
+  };
+
+
   return(
     <Wrapper2>
       <Header>
@@ -78,7 +115,7 @@ function SettingsRow(props){
         <HeadCell>Value</HeadCell>
         <HeadCell>Status</HeadCell>
       </Header>
-      {rowData.map((row,index) => {
+      {newRowData.map((row,index) => {
         console.log("inside row mapping: ", row);
         var value ="";
         if (row.type==="descriptionContains"){
@@ -87,11 +124,31 @@ function SettingsRow(props){
           value="$"+ row.amount;
         }
         var activeText = "";
+        var activebool;
         if (row.active === 1){
           activeText = "Active";
+          activebool=true;
         }else {
           activeText = "Not Active";
+          activebool=false;
         }
+        // figure out how the handle amount change and handle active change will work
+        if (row.update){
+          return (
+            <UpdateNotif
+              key={`${row.type}-Value-${index}`}
+              idx={index}
+              triggerId={row.notificationTriggerID}
+              type={row.type}
+              cancelFunction={handleEditNumNotifs}
+              amountValue={value}
+              activeValue={activebool}
+              update={row.update}
+              onUpdateChange={onUpdateChange}
+            />
+          );
+        }
+
         return(
           <BodyArea key={index} index={index} cornerRounding={rowDataLength}>
             <BodyCell>{row.startDate}</BodyCell>
@@ -100,15 +157,15 @@ function SettingsRow(props){
               <ActiveTextStyle active={row.active}>
                 {activeText}
               </ActiveTextStyle>
-              <DeleteForeverOutlinedIcon onClick={() => popup(index)}/>
+              <ButtonGroup1>
+                <EditButton onClick={() => handleEditNumNotifs(index)} update={update}>Edit</EditButton>
+                <DeleteForeverOutlinedIcon onClick={() => popup(index)}/>
+              </ButtonGroup1>
             </BodyCellSpeacial>
-
           </BodyArea>
         );
       })}
-
     </Wrapper2>
-
   );
 }
 
@@ -159,6 +216,7 @@ const AddButton = styled.button`
   height: 25px ;
   font-size: 14px;
   border-radius: 5px;
+  display: ${props => (props.update ? "none" : "null")}};
 
 `
 const SaveButton = styled.button`
@@ -167,7 +225,7 @@ const SaveButton = styled.button`
   background: #74BD43;
   font-size: 14px;
   border-radius: 5px;
-
+  display: ${props => (props.edits.length> 0 ? "null" : "none")}};
 
 `
 function NotificationRow(props){
@@ -181,6 +239,7 @@ function NotificationRow(props){
   const [numEditNotifs, setNumEditNotifs] = React.useState([]);
   const [notifPresent, setNotifPresent] = React.useState(present);
   const [showPopup, setShowPopup] = React.useState(false);
+  const [updateing, setUpdateing] = React.useState(false);
   const [deleteIndex, setDeleteIndex] = React.useState(0);
   const dispatch = useDispatch();
   const acctID = useSelector((state) => state.loginReducer.accountID);
@@ -196,7 +255,9 @@ function NotificationRow(props){
     console.log("togglePopup: " + showPopup + "idx:" + deleteIndex);
   }
 
-
+  const handleUpdate =() => {
+    setUpdateing(!updateing);
+  }
   const handleAddNumNotifs = () => {
     setNotifPresent(true);
     const values = [...numEditNotifs];
@@ -305,7 +366,7 @@ function NotificationRow(props){
   }
   else {
     if (rows && rows.length > 0){
-      notifData = <SettingsRow rowData={rows} popup={togglePopup} />;
+      notifData = <SettingsRow rowData={rows} popup={togglePopup} onUpdateChange={handleUpdate} update={updateing} />;
     }
   }
   let title;
@@ -343,17 +404,16 @@ function NotificationRow(props){
             type={type}
             deleteFunction={handleDeleteNumNotifs}
             onAmountChange={handleAmountChange}
+            onActiveChange={handleActiveChange}
             amountValue={edits.amount}
             activeValue={edits.active}
-            onAmountChange={handleAmountChange}
-            onActiveChange={handleActiveChange}
             update={edits.update}
           />);
         })}
       </div>
       <ButtonGroup>
-        <AddButton onClick={() => handleAddNumNotifs()}>Add New Trigger</AddButton>
-        <SaveButton onClick={() => handleSaveNumNotifs()}>Save Trigger</SaveButton>
+        <AddButton onClick={() => handleAddNumNotifs()} update={updateing}>Add New Trigger</AddButton>
+        <SaveButton onClick={() => handleSaveNumNotifs()} edits={numEditNotifs}>Save Trigger</SaveButton>
       </ButtonGroup>
     </Wrapper>
   );
