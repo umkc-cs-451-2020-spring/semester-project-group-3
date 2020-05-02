@@ -22,7 +22,7 @@ const Content = styled.div`
   grid-template-rows: auto;
   margin-top: 5px;
   height: 100%;
-  width: 50%;
+  width: 57%;
   overflow: hidden;
   outline: none;
   margin-left: 20px;
@@ -57,7 +57,8 @@ export default function EditNotif(props){
     onAmountChange,
     amountValue,
     activeValue,
-    onActiveChange} = props;
+    onActiveChange,
+    update } = props;
 
   // types of text fields depending on what type of notification there is.
 
@@ -116,8 +117,8 @@ export default function EditNotif(props){
       <Active>
         <VerticalCenter itemToCenter={
           <FlexLabel>
-            <CheckBox checked={activeValue} onChange={(e) =>onActiveChange(e,idx)} />
-            <ActiveText checked={activeValue}>{activeText}</ActiveText>
+            <CheckBox checked={activeValue} update={update} onChange={(e) =>onActiveChange(e,idx)} />
+            <ActiveText checked={activeValue} >{activeText}</ActiveText>
           </FlexLabel>}
         />
       </Active>

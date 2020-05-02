@@ -59,7 +59,7 @@ function Notification(){
 
 
   if (fetch_loading ) {
-    return <div>Loading...</div>;
+    return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
 
   return (

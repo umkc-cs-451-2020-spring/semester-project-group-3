@@ -36,11 +36,11 @@ const CheckboxContainer = styled.div`
 `
 
 
-export default function CheckBox ({checked, ...props }){
+export default function CheckBox ({checked, update, ...props }){
   return (
     <CheckboxContainer>
-      <HiddenCheckbox {...props}/>
-      <StyledCheckbox checked={checked}>
+      <HiddenCheckbox {...props} disabled={!update}/>
+      <StyledCheckbox checked={checked} disabled={!update}>
         <Icon viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />
         </Icon>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import EditNotif from "./Utilities/EditNotif.js";
+import PopUp from "./Utilities/PopUp.js";
 import postNotificationSetting from "./notificationSettingsPostAction.js";
 import { useSelector, useDispatch } from "react-redux";
 import deleteNotificationSetting from "./notificationSettingsDeleteAction.js";
@@ -67,7 +68,7 @@ const ActiveTextStyle = styled.div`
 `
 // 3 columns
 function SettingsRow(props){
-  const {rowData, deleteFunction} = props;
+  const {rowData, popup} = props;
   var rowDataLength = rowData.length;
   console.log(rowData);
   return(
@@ -99,7 +100,7 @@ function SettingsRow(props){
               <ActiveTextStyle active={row.active}>
                 {activeText}
               </ActiveTextStyle>
-              <DeleteForeverOutlinedIcon onClick={() => deleteFunction(index)}/>
+              <DeleteForeverOutlinedIcon onClick={() => popup(index)}/>
             </BodyCellSpeacial>
 
           </BodyArea>
@@ -154,8 +155,21 @@ const ButtonGroup = styled.div`
   text-align: left;
   padding-Left: 25px;
 `
+const AddButton = styled.button`
+  height: 25px ;
+  font-size: 14px;
+  border-radius: 5px;
+
+`
+const SaveButton = styled.button`
+  margin-left: 5px;
+  height: 25px;
+  background: #74BD43;
+  font-size: 14px;
+  border-radius: 5px;
 
 
+`
 function NotificationRow(props){
   const {rows, type,reRenderSettings} = props;
   var present ="";
@@ -166,17 +180,27 @@ function NotificationRow(props){
   }
   const [numEditNotifs, setNumEditNotifs] = React.useState([]);
   const [notifPresent, setNotifPresent] = React.useState(present);
+  const [showPopup, setShowPopup] = React.useState(false);
+  const [deleteIndex, setDeleteIndex] = React.useState(0);
   const dispatch = useDispatch();
   const acctID = useSelector((state) => state.loginReducer.accountID);
   const post_loading = useSelector((state) => state.notificationSettingsReducer.post_loading);
   const delete_loading = useSelector((state) => state.notificationSettingsReducer.delete_loading);
 
+  const togglePopup = (idx) => {
+    setShowPopup(!showPopup);
+
+    if (idx){
+      setDeleteIndex(idx);
+    }
+    console.log("togglePopup: " + showPopup + "idx:" + deleteIndex);
+  }
 
 
   const handleAddNumNotifs = () => {
     setNotifPresent(true);
     const values = [...numEditNotifs];
-    values.push({ amount: "", active: true });
+    values.push({ amount: "", active: true , update: false});
     setNumEditNotifs(values);
     console.log(numEditNotifs);
   };
@@ -226,22 +250,31 @@ function NotificationRow(props){
       console.log("triggers: " + triggers);
     }
     await dispatch(postNotificationSetting(triggers));
+    await delay(500);
+    await reRenderSettings();
   }
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
   const handleSaveNumNotifs = () => {
     var idx =0;
-    postSettings(numEditNotifs).then(reRenderSettings());
+    postSettings(numEditNotifs);
     setNumEditNotifs([]);
     setNotifPresent(true);
   };
 
-  async function deleteSetting(triggerId) {
+  const deleteSetting = async (triggerId) => {
     await dispatch(deleteNotificationSetting(triggerId));
-  }
+    await delay(600);
+    await reRenderSettings();
+  };
+  // async function deleteSetting(triggerId) {
+  //   await dispatch(deleteNotificationSetting(triggerId));
+  // }
   const deleteFromDb=(idx)=>{
+    togglePopup();
     const triggerId = rows[idx].notificationTriggerID
     console.log("deleteFromDb:  ", triggerId);
-    deleteSetting(triggerId).then(reRenderSettings());
+    deleteSetting(triggerId);
   }
 
       // outer will deal with delete and update.
@@ -272,7 +305,7 @@ function NotificationRow(props){
   }
   else {
     if (rows && rows.length > 0){
-      notifData = <SettingsRow rowData={rows} deleteFunction={deleteFromDb}/>;
+      notifData = <SettingsRow rowData={rows} popup={togglePopup} />;
     }
   }
   let title;
@@ -292,11 +325,12 @@ function NotificationRow(props){
   }
 
   if (post_loading || delete_loading){
-    return(<div> Loading....</div>);
+    return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
   return (
     <Wrapper>
       <Title>
+        {showPopup ? <PopUp cancel={togglePopup} deleteFunction={deleteFromDb} index={deleteIndex}/>:null}
         {title}
       </Title>
       <div>
@@ -313,12 +347,13 @@ function NotificationRow(props){
             activeValue={edits.active}
             onAmountChange={handleAmountChange}
             onActiveChange={handleActiveChange}
+            update={edits.update}
           />);
         })}
       </div>
       <ButtonGroup>
-        <button onClick={() => handleAddNumNotifs()}>ADD</button>
-        <button onClick={() => handleSaveNumNotifs()}>SAVE</button>
+        <AddButton onClick={() => handleAddNumNotifs()}>Add New Trigger</AddButton>
+        <SaveButton onClick={() => handleSaveNumNotifs()}>Save Trigger</SaveButton>
       </ButtonGroup>
     </Wrapper>
   );

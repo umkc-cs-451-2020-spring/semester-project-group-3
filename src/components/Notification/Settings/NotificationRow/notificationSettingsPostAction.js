@@ -13,7 +13,6 @@ export default function postNotificationSetting(triggers) {
     dispatch(postNotificationSettingsBegin());
     axios
       .post("/notificationTriggers/?triggers=" + jTriggers)
-      // Todo above gets changed and make sure it works
       .then(function (response) {
         console.log(response);
         dispatch(postNotificationSettingsSuccess(response.data));
