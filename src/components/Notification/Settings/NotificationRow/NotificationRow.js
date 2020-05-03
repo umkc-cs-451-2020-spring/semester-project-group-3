@@ -238,6 +238,7 @@ function NotificationRow(props){
   const [showPopup, setShowPopup] = React.useState(false);
   const [updateing, setUpdateing] = React.useState(false);
   const [deleteIndex, setDeleteIndex] = React.useState(0);
+  const [validInput, setValidInput] = React.useState(false);
   const dispatch = useDispatch();
   const acctID = useSelector((state) => state.loginReducer.accountID);
   const post_loading = useSelector((state) => state.notificationSettingsReducer.post_loading);
@@ -267,7 +268,8 @@ function NotificationRow(props){
     console.log("amountChange", e.target.value);
     var tempEditList = [...numEditNotifs];
     tempEditList[index].amount = e.target.value;
-    setNumEditNotifs(tempEditList)
+    setNumEditNotifs(tempEditList);
+    validateData(tempEditList);
     console.log(numEditNotifs);
   }
   const handleActiveChange = (e, index)=>{
@@ -363,6 +365,28 @@ function NotificationRow(props){
   if (post_loading || delete_loading){
     return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
+
+  const validateData = (rowData)=> {
+    var tempCorrectInput=true;
+    rowData.forEach( edit => {
+      console.log("Checking: " + type);
+      if (type === "descriptionContains"){
+        if (!isNaN(edit.amount)){
+          tempCorrectInput= false;
+        }
+      }else{
+        if (isNaN(edit.amount)){
+          tempCorrectInput= false;
+        }
+      }
+    });
+    console.log(tempCorrectInput);
+    if (tempCorrectInput){
+      setValidInput(true);
+    }else {
+      setValidInput(false);
+    }
+  }
   return (
     <Wrapper>
       <Title>
@@ -388,7 +412,7 @@ function NotificationRow(props){
       </div>
       <ButtonGroup>
         <AddButton onClick={() => handleAddNumNotifs()} update={updateing}>Add New Trigger</AddButton>
-        <SaveButton onClick={() => handleSaveNumNotifs()} edits={numEditNotifs}>Save Trigger</SaveButton>
+        <SaveButton onClick={() => handleSaveNumNotifs()} edits={numEditNotifs}  disabled={!validInput}>Save Trigger</SaveButton>
       </ButtonGroup>
     </Wrapper>
   );
