@@ -54,8 +54,15 @@ add
 
 create table Notification (
     notificationID int(11) not null auto_increment,
+    associatedAccount int(11),
 	type varchar (30),
     processingDate datetime,
     description varchar (320),
     primary key (notificationID)
 ) engine = InnoDB;
+
+
+alter table
+    Notification
+add
+    foreign key(associatedAccount) references Account(accountID);
