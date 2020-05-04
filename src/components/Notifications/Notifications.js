@@ -10,6 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Moment from 'moment';
 
 const StyledTableCell = withStyles((theme) => ({
   body: {
@@ -67,7 +68,7 @@ function createRows(notifications) {
       // todo add formating to date data.
       tempRows.push(
         createData(
-          notifications[i].processingDate,
+          Moment(notifications[i].processingDate).format("MM/DD/YYYY LT"),
           notifications[i].type,
           notifications[i].description
         )
