@@ -8,11 +8,12 @@ import PopUp from "./Utilities/PopUp.js";
 import postNotificationSetting from "./notificationSettingsPostAction.js";
 import { useSelector, useDispatch } from "react-redux";
 import deleteNotificationSetting from "./notificationSettingsDeleteAction.js";
+import Moment from 'moment';
 
 
 const Wrapper2 = styled.div`
   height: 100%;
-  width: 100%;
+  width: calc(100% - 20px);
   position: relative;
   display: grid;
   grid-template-columns: 100%;
@@ -91,7 +92,7 @@ function SettingsRow(props){
       amount: rowData[i].amount,
       associatedAccount: rowData[i].associatedAccount ,
       notificationTriggerID: rowData[i].notificationTriggerID ,
-      startDate: rowData[i].startDate ,
+      startDate: Moment(rowData[i].startDate).format("MM/DD/YYYY LT") ,
       type: rowData[i].type ,
       value: rowData[i].value,
       update: false
