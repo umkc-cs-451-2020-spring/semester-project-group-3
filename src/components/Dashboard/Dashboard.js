@@ -1,15 +1,14 @@
 import React from "react";
-import styled from "styled-components";
 import Table from "../Table";
 import Notifications from "../Notifications";
 import fetchTransactions from "./transactionAction.js";
 import fetchNotifications from "./notificationAction.js";
+import Moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 
 function Dashboard() {
-  var username = "connor";
-  var loggedIn = "true";
   const dispatch = useDispatch();
+  Moment.locale('en');
   const acctID = useSelector((state) => state.loginReducer.accountID);
 
   function createData(
@@ -26,11 +25,12 @@ function Dashboard() {
     var tempRows = [];
     if (transaction) {
       for (var i = 0; i < transaction.length; i++) {
-        // todo add formating to date data.
+        transaction[i].type === "DR" ? transaction[i].type = "Debit" : transaction[i].type = "Credit"
+        
         tempRows.push(
           createData(
             transaction[i].transactionID,
-            transaction[i].processingDate,
+            Moment(transaction[i].processingDate).format('MM/DD/YYYY'),
             transaction[i].historicBalance,
             transaction[i].type,
             transaction[i].amount,
@@ -73,7 +73,7 @@ function Dashboard() {
   );
 
   if (loading || notif_loading) {
-    return <div>Loading...</div>;
+    return <div><img src="/loading-spinner.svg" alt ="Loading" /></div>;
   }
   if (error) {
     return <div>Error while fetching transactions: {error}</div>;

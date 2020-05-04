@@ -34,7 +34,11 @@ class NotificationHandler {
     var newNotifications = [];
 
     const getLastNotificationCheckQuery = `select date_format(lastNotificationCheck, ${self.dateTimeFormat}) as lastNotificationCheck from Account where accountID = ${self.accountID};`;
-    const getNotificationTriggersQuery = `select type, amount, value, description from NotificationTrigger where active = true and associatedAccount = ${self.accountID} and startDate < current_timestamp;`;
+    const getNotificationTriggersQuery = `
+    select NotificationTrigger.type, amount, value, NotificationTriggerDescription.description from NotificationTrigger
+    inner join NotificationTriggerDescription on NotificationTrigger.type = NotificationTriggerDescription.type
+    where active = true and associatedAccount = ${self.accountID} and startDate < current_timestamp;
+    `;
     const multiQuery =
       getLastNotificationCheckQuery + getNotificationTriggersQuery;
 
@@ -258,10 +262,11 @@ class NotificationHandler {
   //build insert query for given notification object
   buildArchiveQuery(notification) {
     var archiveNotificationsQuery =
-      "insert into Notification(type, processingDate, description) values(";
+      "insert into Notification(associatedAccount, type, processingDate, description) values(";
     return (
       archiveNotificationsQuery +
-      "'" +
+      this.accountID +
+      ",'" +
       notification["type"] +
       "','" +
       notification["processingDate"] +
@@ -294,7 +299,6 @@ router.get("/:associatedAccount", function (req, res, next) {
   var account = req.params.associatedAccount;
   var handler = new NotificationHandler(account, res);
   handler.getNewNotifications();
-
 });
 
 module.exports = router;

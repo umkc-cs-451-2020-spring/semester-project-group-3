@@ -48,17 +48,16 @@ router.post("/", function(req, res, next) {
 
             var mailOptions = {
                 from: config.email,
-                to: connection.escape(email),
+                to: email,
                 subject: 'Recover password, Commerce Bank',
                 text: 'Here is your recovered password: ' + results[0]["pass"]
             };
 
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
-                    console.log(error);
+                    res.send(error.response)
                 } else {
-                    res.send("Email sent successfully to '" + email + "' !");
-                    console.log('Email sent: ' + info.response);
+                    res.send("Email was successfully sent to " + email + " !");
                 }
             });
          });
