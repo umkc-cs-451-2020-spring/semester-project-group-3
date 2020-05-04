@@ -2,37 +2,83 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo-img {
+  width: 90%;
+  min-width: 90%;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+  background-color: #006649;
+  width: 30%;
+  min-width: 300px;
+  padding-bottom: 45px;
+  display: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  display: inline-block;
   color: white;
+  opacity: 95%;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-page {
+  background-image: url("/background.jpg"); 
+  /* free image from: https://www.pexels.com/photo/green-leaf-1353938/ */
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: fixed;
+}
+
+.submit-btn {
+  background-color: #74BD43;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  min-width: 100px;
+  /* border-radius: 5px; */
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #74BD43;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  min-width: 200px;
+  /* border-radius: 5px; */
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.logout-btn {
+  position: absolute;
+  right: 0;
+  background-color: #74BD43;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  border-color: #006649;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.link-btn {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: arial, sans-serif;
+  font-size: 15px;
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
 }
