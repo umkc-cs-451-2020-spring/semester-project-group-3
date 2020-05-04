@@ -262,10 +262,11 @@ class NotificationHandler {
   //build insert query for given notification object
   buildArchiveQuery(notification) {
     var archiveNotificationsQuery =
-      "insert into Notification(type, processingDate, description) values(";
+      "insert into Notification(associatedAccount, type, processingDate, description) values(";
     return (
       archiveNotificationsQuery +
-      "'" +
+      this.accountID +
+      ",'" +
       notification["type"] +
       "','" +
       notification["processingDate"] +
